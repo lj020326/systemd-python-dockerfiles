@@ -20,31 +20,31 @@ pipeline:
 
   buildImageList:
     - buildImageLabel: systemd-centos-7
-      dockerfile: systemd/centos/7.Dockerfile
+      dockerFile: systemd/centos/7.Dockerfile
     - buildImageLabel: systemd-centos-8
-      dockerfile: systemd/centos/8.Dockerfile
+      dockerFile: systemd/centos/8.Dockerfile
     - buildImageLabel: systemd-debian-8
-      dockerfile: systemd/debian/8.Dockerfile
+      dockerFile: systemd/debian/8.Dockerfile
     - buildImageLabel: systemd-debian-9
-      dockerfile: systemd/debian/9.Dockerfile
+      dockerFile: systemd/debian/9.Dockerfile
     - buildImageLabel: systemd-debian-10
-      dockerfile: systemd/debian/10.Dockerfile
+      dockerFile: systemd/debian/10.Dockerfile
     - buildImageLabel: systemd-debian-11
-      dockerfile: systemd/debian/11.Dockerfile
+      dockerFile: systemd/debian/11.Dockerfile
     - buildImageLabel: systemd-debian-12
-      dockerfile: systemd/debian/12.Dockerfile
+      dockerFile: systemd/debian/12.Dockerfile
     - buildImageLabel: systemd-debian-sid
-      dockerfile: systemd/debian/sid.Dockerfile
+      dockerFile: systemd/debian/sid.Dockerfile
     - buildImageLabel: systemd-fedora-latest
-      dockerfile: systemd/fedora/Dockerfile
+      dockerFile: systemd/fedora/Dockerfile
     - buildImageLabel: systemd-ubuntu-16.04
-      dockerfile: systemd/ubuntu/16.04.Dockerfile
+      dockerFile: systemd/ubuntu/16.04.Dockerfile
     - buildImageLabel: systemd-ubuntu-18.04
-      dockerfile: systemd/ubuntu/18.04.Dockerfile
+      dockerFile: systemd/ubuntu/18.04.Dockerfile
     - buildImageLabel: systemd-ubuntu-20.04
-      dockerfile: systemd/ubuntu/20.04.Dockerfile
+      dockerFile: systemd/ubuntu/20.04.Dockerfile
     - buildImageLabel: systemd-ubuntu-22.04
-      dockerfile: systemd/ubuntu/22.04.Dockerfile
+      dockerFile: systemd/ubuntu/22.04.Dockerfile
 
 """
 
