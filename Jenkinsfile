@@ -41,6 +41,8 @@ pipeline:
       dockerFile: systemd/ubuntu/18.04.Dockerfile
     - buildImageLabel: systemd-ubuntu-20.04
       dockerFile: systemd/ubuntu/20.04.Dockerfile
+    - buildImageLabel: systemd-ubuntu-20.04-python
+      dockerFile: systemd/ubuntu/20.04.python.Dockerfile
     - buildImageLabel: systemd-ubuntu-22.04
       dockerFile: systemd/ubuntu/22.04.Dockerfile
 
