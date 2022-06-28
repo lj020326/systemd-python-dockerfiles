@@ -19,9 +19,6 @@ pipeline:
   logLevel: DEBUG
 
   buildImageList:
-    - buildImageLabel: "step-ca"
-      dockerFile: "docker/Dockerfile.step-ca"
-
     - buildImageLabel: systemd-centos-7
       dockerfile: systemd/centos/7.Dockerfile
     - buildImageLabel: systemd-centos-8
