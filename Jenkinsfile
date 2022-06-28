@@ -41,10 +41,32 @@ pipeline:
       dockerFile: systemd/ubuntu/18.04.Dockerfile
     - buildImageLabel: systemd-ubuntu-20.04
       dockerFile: systemd/ubuntu/20.04.Dockerfile
-    - buildImageLabel: systemd-ubuntu-20.04-python
-      dockerFile: systemd/ubuntu/20.04.python.Dockerfile
     - buildImageLabel: systemd-ubuntu-22.04
       dockerFile: systemd/ubuntu/22.04.Dockerfile
+
+    ## systemd images with python installed
+    - buildImageLabel: systemd-centos-7-python
+      dockerFile: systemd/centos/7.python.Dockerfile
+    - buildImageLabel: systemd-centos-8-python
+      dockerFile: systemd/centos/8.python.Dockerfile
+
+    - buildImageLabel: systemd-debian-8-python
+      dockerFile: systemd/debian/8.python.Dockerfile
+    - buildImageLabel: systemd-debian-9-python
+      dockerFile: systemd/debian/9.python.Dockerfile
+    - buildImageLabel: systemd-debian-10-python
+      dockerFile: systemd/debian/10.python.Dockerfile
+    - buildImageLabel: systemd-debian-11-python
+      dockerFile: systemd/debian/11.python.Dockerfile
+    - buildImageLabel: systemd-debian-12-python
+      dockerFile: systemd/debian/12.python.Dockerfile
+
+    - buildImageLabel: systemd-ubuntu-18.04-python
+      dockerFile: systemd/ubuntu/18.04.Dockerfile
+    - buildImageLabel: systemd-ubuntu-20.04-python
+      dockerFile: systemd/ubuntu/20.04.python.Dockerfile
+    - buildImageLabel: systemd-ubuntu-22.04-python
+      dockerFile: systemd/ubuntu/22.04.python.Dockerfile
 
 """
 
