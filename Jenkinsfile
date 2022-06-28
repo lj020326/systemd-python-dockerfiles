@@ -8,7 +8,6 @@ import com.dettonville.api.pipeline.utils.logging.Logger
 import com.dettonville.api.pipeline.utils.JsonUtils
 
 Logger.init(this, LogLevel.INFO)
-//Logger.init(this, LogLevel.DEBUG)
 Logger log = new Logger(this)
 
 String configYmlStr="""
