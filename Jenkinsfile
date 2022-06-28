@@ -15,7 +15,6 @@ String configYmlStr="""
 ---
 pipeline:
   alwaysEmailList: ljohnson@dettonville.org
-  runInParallel: true
   logLevel: DEBUG
 
   buildImageList:
