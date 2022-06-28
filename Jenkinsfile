@@ -35,8 +35,8 @@ pipeline:
       dockerFile: systemd/debian/12.Dockerfile
     - buildImageLabel: systemd-debian-sid
       dockerFile: systemd/debian/sid.Dockerfile
-    - buildImageLabel: systemd-fedora-latest
-      dockerFile: systemd/fedora/Dockerfile
+    - buildImageLabel: systemd-fedora-36
+      dockerFile: systemd/fedora/36.Dockerfile
     - buildImageLabel: systemd-ubuntu-16.04
       dockerFile: systemd/ubuntu/16.04.Dockerfile
     - buildImageLabel: systemd-ubuntu-18.04
