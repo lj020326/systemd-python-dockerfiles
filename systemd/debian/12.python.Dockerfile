@@ -10,9 +10,9 @@ ENV DEBIAN_FRONTEND noninteractive
 ## ref: https://www.how2shout.com/linux/install-python-3-x-or-2-7-on-debian-11-bullseye-linux/
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-    dbus systemd systemd-cron rsyslog iproute2 python3 python3-apt python3-pip bash sudo ca-certificates && \
+    dbus systemd systemd-cron rsyslog iproute2 python3 python3-apt python3-pip sudo bash ca-certificates && \
     apt-get clean && \
-    rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    rm -rf /usr/share/doc/* /usr/share/man/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
