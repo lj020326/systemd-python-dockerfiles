@@ -12,18 +12,6 @@ jobs:
     strategy:
       matrix:
         include:
-#          - name: openrc-alpine
-#            dockerfile: openrc/alpine/Dockerfile
-#            platforms: |-
-#              linux/amd64
-#            tags: |-
-#              lj020326/openrc-alpine:latest
-#          - name: aports-dev
-#            dockerfile: aports-dev/Dockerfile
-#            platforms: |-
-#              linux/amd64
-#            tags: |-
-#              lj020326/aports-dev:latest
           - name: systemd-centos-7
             dockerfile: systemd/centos/7.Dockerfile
             platforms: |-
@@ -31,22 +19,20 @@ jobs:
 #              linux/arm/v7
 #              linux/arm64
             tags: |-
-              lj020326/systemd-centos:7
+              lj020326/centos7-systemd-python:latest
 #          - name: systemd-centos-8
 #            dockerfile: systemd/centos/8.Dockerfile
 #            platforms: |-
 #              linux/amd64
 #              linux/arm64
 #            tags: |-
-#              lj020326/systemd-centos:8
-#              lj020326/systemd-centos:latest
+#              lj020326/centos8-systemd-python:latest
 #          - name: systemd-debian-8
 #            dockerfile: systemd/debian/8.Dockerfile
 #            platforms: |-
 #              linux/amd64
 #            tags: |-
-#              lj020326/systemd-debian:8
-#              lj020326/systemd-debian:jessie
+#              lj020326/debian8-systemd-python:latest
 #          - name: systemd-debian-9
 #            dockerfile: systemd/debian/9.Dockerfile
 #            platforms: |-
@@ -54,8 +40,7 @@ jobs:
 #              linux/arm/v7
 #              linux/arm64
 #            tags: |-
-#              lj020326/systemd-debian:9
-#              lj020326/systemd-debian:stretch
+#              lj020326/debian9-systemd-python:latest
 #          - name: systemd-debian-10
 #            dockerfile: systemd/debian/10.Dockerfile
 #            platforms: |-
@@ -63,8 +48,7 @@ jobs:
 #              linux/arm/v7
 #              linux/arm64
 #            tags: |-
-#              lj020326/systemd-debian:10
-#              lj020326/systemd-debian:buster
+#              lj020326/debian10-systemd-python:latest
 #          - name: systemd-debian-11
 #            dockerfile: systemd/debian/11.Dockerfile
 #            platforms: |-
@@ -72,9 +56,7 @@ jobs:
 #              linux/arm/v7
 #              linux/arm64
 #            tags: |-
-#              lj020326/systemd-debian:11
-#              lj020326/systemd-debian:bullseye
-#              lj020326/systemd-debian:latest
+#              lj020326/debian11-systemd-python:latest
 #          - name: systemd-debian-12
 #            dockerfile: systemd/debian/12.Dockerfile
 #            platforms: |-
@@ -82,61 +64,39 @@ jobs:
 #              linux/arm/v7
 #              linux/arm64
 #            tags: |-
-#              lj020326/systemd-debian:12
-#              lj020326/systemd-debian:bookworm
-#          - name: systemd-debian-sid
-#            dockerfile: systemd/debian/sid.Dockerfile
+#              lj020326/debian12-systemd-python:latest
+#          - name: systemd-ubuntu-1604
+#            dockerfile: systemd/ubuntu/1604.Dockerfile
 #            platforms: |-
 #              linux/amd64
 #              linux/arm/v7
 #              linux/arm64
 #            tags: |-
-#              lj020326/systemd-debian:sid
-#          - name: systemd-fedora-latest
-#            dockerfile: systemd/fedora/Dockerfile
+#              lj020326/ubuntu1604-systemd-python:latest
+#          - name: systemd-ubuntu-1804
+#            dockerfile: systemd/ubuntu/1804.Dockerfile
 #            platforms: |-
 #              linux/amd64
 #              linux/arm/v7
 #              linux/arm64
 #            tags: |-
-#              lj020326/systemd-fedora:latest
-#          - name: systemd-ubuntu-16.04
-#            dockerfile: systemd/ubuntu/16.04.Dockerfile
+#              lj020326/ubuntu1804-systemd-python:latest
+#          - name: systemd-ubuntu-2004
+#            dockerfile: systemd/ubuntu/2004.Dockerfile
 #            platforms: |-
 #              linux/amd64
 #              linux/arm/v7
 #              linux/arm64
 #            tags: |-
-#              lj020326/systemd-ubuntu:16.04
-#              lj020326/systemd-ubuntu:xenial
-#          - name: systemd-ubuntu-18.04
-#            dockerfile: systemd/ubuntu/18.04.Dockerfile
+#              lj020326/ubuntu2004-systemd-python:latest
+#          - name: systemd-ubuntu-2204
+#            dockerfile: systemd/ubuntu/2204.Dockerfile
 #            platforms: |-
 #              linux/amd64
 #              linux/arm/v7
 #              linux/arm64
 #            tags: |-
-#              lj020326/systemd-ubuntu:18.04
-#              lj020326/systemd-ubuntu:bionic
-#          - name: systemd-ubuntu-20.04
-#            dockerfile: systemd/ubuntu/20.04.Dockerfile
-#            platforms: |-
-#              linux/amd64
-#              linux/arm/v7
-#              linux/arm64
-#            tags: |-
-#              lj020326/systemd-ubuntu:20.04
-#              lj020326/systemd-ubuntu:focal
-#              lj020326/systemd-ubuntu:latest
-#          - name: systemd-ubuntu-22.04
-#            dockerfile: systemd/ubuntu/22.04.Dockerfile
-#            platforms: |-
-#              linux/amd64
-#              linux/arm/v7
-#              linux/arm64
-#            tags: |-
-#              lj020326/systemd-ubuntu:22.04
-#              lj020326/systemd-ubuntu:jammy
+#              lj020326/ubuntu2204-systemd-python:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
