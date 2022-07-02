@@ -17,16 +17,16 @@ jobs:
             platforms: |-
               linux/amd64
               linux/arm/v7
-#              linux/arm64
+              linux/arm64
             tags: |-
               lj020326/centos7-systemd-python:latest
-#          - name: systemd-centos-8
-#            dockerfile: systemd/centos/8.Dockerfile
-#            platforms: |-
-#              linux/amd64
-#              linux/arm64
-#            tags: |-
-#              lj020326/centos8-systemd-python:latest
+          - name: systemd-centos-8
+            dockerfile: systemd/centos/8.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm64
+            tags: |-
+              lj020326/centos8-systemd-python:latest
 #          - name: systemd-debian-8
 #            dockerfile: systemd/debian/8.Dockerfile
 #            platforms: |-
