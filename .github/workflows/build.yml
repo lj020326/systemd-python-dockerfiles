@@ -27,76 +27,68 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/centos8-systemd-python:latest
-#          - name: systemd-debian-8
-#            dockerfile: systemd/debian/8.Dockerfile
-#            platforms: |-
-#              linux/amd64
-#            tags: |-
-#              lj020326/debian8-systemd-python:latest
-#          - name: systemd-debian-9
-#            dockerfile: systemd/debian/9.Dockerfile
-#            platforms: |-
-#              linux/amd64
-#              linux/arm/v7
-#              linux/arm64
-#            tags: |-
-#              lj020326/debian9-systemd-python:latest
-#          - name: systemd-debian-10
-#            dockerfile: systemd/debian/10.Dockerfile
-#            platforms: |-
-#              linux/amd64
-#              linux/arm/v7
-#              linux/arm64
-#            tags: |-
-#              lj020326/debian10-systemd-python:latest
-#          - name: systemd-debian-11
-#            dockerfile: systemd/debian/11.Dockerfile
-#            platforms: |-
-#              linux/amd64
-#              linux/arm/v7
-#              linux/arm64
-#            tags: |-
-#              lj020326/debian11-systemd-python:latest
-#          - name: systemd-debian-12
-#            dockerfile: systemd/debian/12.Dockerfile
-#            platforms: |-
-#              linux/amd64
-#              linux/arm/v7
-#              linux/arm64
-#            tags: |-
-#              lj020326/debian12-systemd-python:latest
-#          - name: systemd-ubuntu-1604
-#            dockerfile: systemd/ubuntu/1604.Dockerfile
-#            platforms: |-
-#              linux/amd64
-#              linux/arm/v7
-#              linux/arm64
-#            tags: |-
-#              lj020326/ubuntu1604-systemd-python:latest
-#          - name: systemd-ubuntu-1804
-#            dockerfile: systemd/ubuntu/1804.Dockerfile
-#            platforms: |-
-#              linux/amd64
-#              linux/arm/v7
-#              linux/arm64
-#            tags: |-
-#              lj020326/ubuntu1804-systemd-python:latest
-#          - name: systemd-ubuntu-2004
-#            dockerfile: systemd/ubuntu/2004.Dockerfile
-#            platforms: |-
-#              linux/amd64
-#              linux/arm/v7
-#              linux/arm64
-#            tags: |-
-#              lj020326/ubuntu2004-systemd-python:latest
-#          - name: systemd-ubuntu-2204
-#            dockerfile: systemd/ubuntu/2204.Dockerfile
-#            platforms: |-
-#              linux/amd64
-#              linux/arm/v7
-#              linux/arm64
-#            tags: |-
-#              lj020326/ubuntu2204-systemd-python:latest
+          - name: systemd-debian-8
+            dockerfile: systemd/debian/8.Dockerfile
+            platforms: |-
+              linux/amd64
+            tags: |-
+              lj020326/debian8-systemd-python:latest
+          - name: systemd-debian-9
+            dockerfile: systemd/debian/9.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian9-systemd-python:latest
+          - name: systemd-debian-10
+            dockerfile: systemd/debian/10.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian10-systemd-python:latest
+          - name: systemd-debian-11
+            dockerfile: systemd/debian/11.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian11-systemd-python:latest
+          - name: systemd-debian-12
+            dockerfile: systemd/debian/12.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian12-systemd-python:latest
+          - name: systemd-ubuntu-1804
+            dockerfile: systemd/ubuntu/1804.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/ubuntu1804-systemd-python:latest
+          - name: systemd-ubuntu-2004
+            dockerfile: systemd/ubuntu/2004.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/ubuntu2004-systemd-python:latest
+          - name: systemd-ubuntu-2204
+            dockerfile: systemd/ubuntu/2204.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/ubuntu2204-systemd-python:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
