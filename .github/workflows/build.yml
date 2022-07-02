@@ -81,14 +81,14 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/ubuntu2004-systemd-python:latest
-          - name: systemd-ubuntu-2204
-            dockerfile: systemd/ubuntu/2204.Dockerfile
-            platforms: |-
-              linux/amd64
-              linux/arm/v7
-              linux/arm64
-            tags: |-
-              lj020326/ubuntu2204-systemd-python:latest
+#          - name: systemd-ubuntu-2204
+#            dockerfile: systemd/ubuntu/2204.Dockerfile
+#            platforms: |-
+#              linux/amd64
+#              linux/arm/v7
+#              linux/arm64
+#            tags: |-
+#              lj020326/ubuntu2204-systemd-python:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
