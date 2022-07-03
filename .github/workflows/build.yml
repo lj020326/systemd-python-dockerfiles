@@ -148,14 +148,14 @@ jobs:
               linux/amd64
             tags: |-
               lj020326/aports-dev-python:latest
-          - name: systemd-centos7-python
-            dockerfile: systemd/centos/7.python.Dockerfile
-            platforms: |-
-              linux/amd64
-              linux/arm/v7
-              linux/arm64
-            tags: |-
-              lj020326/centos7-systemd-python:latest
+#          - name: systemd-centos7-python
+#            dockerfile: systemd/centos/7.python.Dockerfile
+#            platforms: |-
+#              linux/amd64
+#              linux/arm/v7
+#              linux/arm64
+#            tags: |-
+#              lj020326/centos7-systemd-python:latest
           - name: systemd-centos8-python
             dockerfile: systemd/centos/8.python.Dockerfile
             platforms: |-
