@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* &&\
     sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
 
-RUN yum upgrade -y
+RUN dnf upgrade -y
 
 # Dependencies for Ansible
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
