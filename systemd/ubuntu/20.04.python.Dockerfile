@@ -1,4 +1,4 @@
-FROM jrei/systemd-ubuntu:20.04
+FROM lj020326/ubuntu2004-systemd:latest
 #FROM media.johnson.int/systemd-ubuntu-20.04:latest
 LABEL maintainer="Lee Johnson <ljohnson@dettonville.org>"
 

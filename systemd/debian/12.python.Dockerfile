@@ -1,5 +1,4 @@
-FROM jrei/systemd-debian:12
-#FROM media.johnson.int/systemd-debian-12:latest
+FROM lj020326/debian12-systemd:latest
 LABEL maintainer="Lee Johnson <ljohnson@dettonville.org>"
 
 ENV container docker

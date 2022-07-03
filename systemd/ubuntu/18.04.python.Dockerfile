@@ -1,4 +1,4 @@
-FROM jrei/systemd-ubuntu:18.04
+FROM lj020326/ubuntu1804-systemd:latest
 #FROM media.johnson.int/systemd-ubuntu-22.04:latest
 LABEL maintainer="Lee Johnson <ljohnson@dettonville.org>"
 

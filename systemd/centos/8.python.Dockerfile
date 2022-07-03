@@ -1,5 +1,4 @@
-FROM jrei/systemd-centos:8
-#FROM media.johnson.int/systemd-centos-8:latest
+FROM lj020326/centos8-systemd:latest
 LABEL maintainer="Lee Johnson <ljohnson@dettonville.org>"
 
 ENV container docker

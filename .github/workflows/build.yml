@@ -13,18 +13,107 @@ jobs:
       matrix:
         include:
           - name: openrc-alpine
-            dockerfile: openrc/alpine/python.Dockerfile
+            dockerfile: openrc/alpine/Dockerfile
             platforms: |-
               linux/amd64
             tags: |-
               lj020326/openrc-alpine:latest
           - name: aports-dev
-            dockerfile: aports-dev/python.Dockerfile
+            dockerfile: aports-dev/Dockerfile
             platforms: |-
               linux/amd64
             tags: |-
               lj020326/aports-dev:latest
           - name: systemd-centos-7
+            dockerfile: systemd/centos/7.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/centos7-systemd:latest
+          - name: systemd-centos-8
+            dockerfile: systemd/centos/8.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm64
+            tags: |-
+              lj020326/centos8-systemd:latest
+          - name: systemd-debian-8
+            dockerfile: systemd/debian/8.Dockerfile
+            platforms: |-
+              linux/amd64
+            tags: |-
+              lj020326/debian8-systemd:latest
+          - name: systemd-debian-9
+            dockerfile: systemd/debian/9.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian9-systemd:latest
+          - name: systemd-debian-10
+            dockerfile: systemd/debian/10.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian10-systemd:latest
+          - name: systemd-debian-11
+            dockerfile: systemd/debian/11.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian11-systemd:latest
+          - name: systemd-debian-12
+            dockerfile: systemd/debian/12.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian12-systemd:latest
+          - name: systemd-ubuntu-1804
+            dockerfile: systemd/ubuntu/18.04.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/ubuntu1804-systemd:latest
+          - name: systemd-ubuntu-2004
+            dockerfile: systemd/ubuntu/20.04.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/ubuntu2004-systemd:latest
+          - name: systemd-ubuntu-2204
+            dockerfile: systemd/ubuntu/22.04.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/ubuntu2204-systemd:latest
+          - name: openrc-alpine-python
+            dockerfile: openrc/alpine/python.Dockerfile
+            platforms: |-
+              linux/amd64
+            tags: |-
+              lj020326/openrc-alpine-python:latest
+          - name: aports-dev-python
+            dockerfile: aports-dev/python.Dockerfile
+            platforms: |-
+              linux/amd64
+            tags: |-
+              lj020326/aports-dev-python:latest
+          - name: systemd-centos7-python
             dockerfile: systemd/centos/7.python.Dockerfile
             platforms: |-
               linux/amd64
@@ -32,20 +121,20 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/centos7-systemd-python:latest
-          - name: systemd-centos-8
+          - name: systemd-centos8-python
             dockerfile: systemd/centos/8.python.Dockerfile
             platforms: |-
               linux/amd64
               linux/arm64
             tags: |-
               lj020326/centos8-systemd-python:latest
-          - name: systemd-debian-8
+          - name: systemd-debian8-python
             dockerfile: systemd/debian/8.python.Dockerfile
             platforms: |-
               linux/amd64
             tags: |-
               lj020326/debian8-systemd-python:latest
-          - name: systemd-debian-9
+          - name: systemd-debian9-python
             dockerfile: systemd/debian/9.python.Dockerfile
             platforms: |-
               linux/amd64
@@ -53,7 +142,7 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/debian9-systemd-python:latest
-          - name: systemd-debian-10
+          - name: systemd-debian10-python
             dockerfile: systemd/debian/10.python.Dockerfile
             platforms: |-
               linux/amd64
@@ -61,7 +150,7 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/debian10-systemd-python:latest
-          - name: systemd-debian-11
+          - name: systemd-debian11-python
             dockerfile: systemd/debian/11.python.Dockerfile
             platforms: |-
               linux/amd64
@@ -69,7 +158,7 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/debian11-systemd-python:latest
-          - name: systemd-debian-12
+          - name: systemd-debian12-python
             dockerfile: systemd/debian/12.python.Dockerfile
             platforms: |-
               linux/amd64
@@ -77,7 +166,7 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/debian12-systemd-python:latest
-          - name: systemd-ubuntu-1804
+          - name: systemd-ubuntu1804-python
             dockerfile: systemd/ubuntu/18.04.python.Dockerfile
             platforms: |-
               linux/amd64
@@ -85,7 +174,7 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/ubuntu1804-systemd-python:latest
-          - name: systemd-ubuntu-2004
+          - name: systemd-ubuntu2004-python
             dockerfile: systemd/ubuntu/20.04.python.Dockerfile
             platforms: |-
               linux/amd64
@@ -93,7 +182,7 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/ubuntu2004-systemd-python:latest
-          - name: systemd-ubuntu-2204
+          - name: systemd-ubuntu2204-python
             dockerfile: systemd/ubuntu/22.04.python.Dockerfile
             platforms: |-
               linux/amd64
