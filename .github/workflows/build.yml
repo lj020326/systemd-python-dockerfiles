@@ -7,7 +7,7 @@ on:
     - cron: '0 0 1 * *'
 
 jobs:
-  docker:
+  docker-systemd:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -101,6 +101,40 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/ubuntu2204-systemd:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: lj020326
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Build and push ${{ matrix.name }}
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          platforms: ${{ matrix.platforms }}
+          push: true
+          tags: ${{ matrix.tags }}
+          labels: |
+            maintainer=${{ github.repository_owner }}
+            org.opencontainers.image.vendor=${{ github.repository_owner }}
+            org.opencontainers.image.revision=${{ github.sha }}
+
+  docker-systemd-python:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
           - name: openrc-alpine-python
             dockerfile: openrc/alpine/python.Dockerfile
             platforms: |-
@@ -201,7 +235,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Login to DockerHub
-        uses: docker/login-action@v1 
+        uses: docker/login-action@v1
         with:
           username: lj020326
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
