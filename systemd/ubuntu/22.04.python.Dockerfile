@@ -1,5 +1,5 @@
 FROM lj020326/ubuntu2204-systemd:latest
-#FROM media.johnson.int/systemd-ubuntu-22.04:latest
+#FROM media.johnson.int/systemd-ubuntu2204:latest
 LABEL maintainer="Lee Johnson <ljohnson@dettonville.org>"
 
 ENV container docker
