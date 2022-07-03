@@ -7,7 +7,8 @@ ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
-RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
+#RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
+RUN yum install -y python sudo bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
 
 RUN systemctl set-default multi-user.target
 
