@@ -132,6 +132,7 @@ jobs:
 
   docker-systemd-python:
     runs-on: ubuntu-latest
+    needs: docker-systemd
     strategy:
       matrix:
         include:
