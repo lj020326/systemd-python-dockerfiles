@@ -1,4 +1,4 @@
-FROM lj020326/centos8-systemd:latest
+FROM lj020326/redhat8-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build_date="2022-07-06"
 

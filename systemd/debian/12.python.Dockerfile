@@ -1,5 +1,6 @@
 FROM lj020326/debian12-systemd:latest
-LABEL maintainer="Lee Johnson <ljohnson@dettonville.org>"
+LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+LABEL build_date="2022-07-06"
 
 ENV container docker
 ENV LC_ALL C

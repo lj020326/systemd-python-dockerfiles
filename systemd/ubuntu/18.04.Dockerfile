@@ -1,4 +1,6 @@
 FROM ubuntu:18.04
+LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+LABEL build_date="2022-07-06"
 
 ENV container docker
 ENV LC_ALL C

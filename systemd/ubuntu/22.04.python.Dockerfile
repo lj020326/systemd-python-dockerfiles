@@ -1,6 +1,7 @@
 FROM lj020326/ubuntu2204-systemd:latest
-#FROM media.johnson.int/systemd-ubuntu2204:latest
-LABEL maintainer="Lee Johnson <ljohnson@dettonville.org>"
+#FROM registry.johnson.int/systemd-ubuntu2204:latest
+LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+LABEL build_date="2022-07-06"
 
 ENV container docker
 ENV LC_ALL C

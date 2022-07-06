@@ -1,8 +1,12 @@
-FROM centos:7
+FROM fedora:35
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build_date="2022-07-06"
 
 ENV container docker
+
+RUN dnf -y update \
+    && dnf -y install systemd \
+    && dnf clean all
 
 RUN cd /lib/systemd/system/sysinit.target.wants/; \
     for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done
