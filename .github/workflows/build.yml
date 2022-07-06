@@ -39,6 +39,21 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/centos8-systemd:latest
+          - name: systemd-redhat-7
+            dockerfile: systemd/redhat/7.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/redhat7-systemd:latest
+          - name: systemd-redhat-8
+            dockerfile: systemd/redhat/8.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm64
+            tags: |-
+              lj020326/redhat8-systemd:latest
           - name: systemd-debian-8
             dockerfile: systemd/debian/8.Dockerfile
             platforms: |-
@@ -148,14 +163,14 @@ jobs:
               linux/amd64
             tags: |-
               lj020326/aports-dev-python:latest
-#          - name: systemd-centos7-python
-#            dockerfile: systemd/centos/7.python.Dockerfile
-#            platforms: |-
-#              linux/amd64
+          - name: systemd-centos7-python
+            dockerfile: systemd/centos/7.python.Dockerfile
+            platforms: |-
+              linux/amd64
 #              linux/arm/v7
 #              linux/arm64
-#            tags: |-
-#              lj020326/centos7-systemd-python:latest
+            tags: |-
+              lj020326/centos7-systemd-python:latest
           - name: systemd-centos8-python
             dockerfile: systemd/centos/8.python.Dockerfile
             platforms: |-
