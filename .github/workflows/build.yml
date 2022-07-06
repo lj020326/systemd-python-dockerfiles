@@ -54,6 +54,13 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/redhat8-systemd:latest
+          - name: systemd-fedora35
+            dockerfile: systemd/fedora/35.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm64
+            tags: |-
+              lj020326/fedora35-systemd:latest
           - name: systemd-debian-8
             dockerfile: systemd/debian/8.Dockerfile
             platforms: |-
@@ -167,8 +174,8 @@ jobs:
             dockerfile: systemd/centos/7.python.Dockerfile
             platforms: |-
               linux/amd64
-#              linux/arm/v7
-#              linux/arm64
+              linux/arm/v7
+              linux/arm64
             tags: |-
               lj020326/centos7-systemd-python:latest
           - name: systemd-centos8-python
@@ -178,6 +185,13 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/centos8-systemd-python:latest
+          - name: systemd-fedora35-python
+            dockerfile: systemd/fedora/35.python.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm64
+            tags: |-
+              lj020326/fedora35-systemd-python:latest
           - name: systemd-debian8-python
             dockerfile: systemd/debian/8.python.Dockerfile
             platforms: |-
