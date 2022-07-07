@@ -6,9 +6,6 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-#subscription-manager refresh
-#subscription-manager attach --auto
-
 ## enable EPEL
 RUN yum -y install epel-release
 
