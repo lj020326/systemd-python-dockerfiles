@@ -25,6 +25,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ## ref: https://www.wachid.web.id/2021/01/how-to-solved-peer-reports-incompatible.html
 #RUN yum update -y nss curl libcurl
+RUN yum update curl
 
 ## ref: https://access.redhat.com/discussions/3140721
 #RUN rpm --import http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 &&\
