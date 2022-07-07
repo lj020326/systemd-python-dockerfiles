@@ -6,6 +6,8 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
+subscription-manager config --rhsm.manage_repos=0
+
 ## enable EPEL
 RUN yum -y install epel-release
 
