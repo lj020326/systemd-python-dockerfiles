@@ -25,6 +25,8 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ## ref: https://www.wachid.web.id/2021/01/how-to-solved-peer-reports-incompatible.html
 #RUN yum update -y nss curl libcurl
+
+RUN yum --disablerepo=\* --enablerepo=base,updates
 RUN yum update curl
 
 ## ref: https://access.redhat.com/discussions/3140721
