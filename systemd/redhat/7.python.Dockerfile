@@ -13,14 +13,19 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ## enable EPEL
 ## ref: https://unix.stackexchange.com/questions/598028/how-to-install-epel-release-in-red-hat-linux-7-8
-RUN subscription-manager repos --enable "rhel-*-optional-rpms" --enable "rhel-*-extras-rpms"  --enable "rhel-ha-for-rhel-*-server-rpms"
+#RUN subscription-manager repos --enable "rhel-*-optional-rpms" --enable "rhel-*-extras-rpms"  --enable "rhel-ha-for-rhel-*-server-rpms"
 
+## this does not work for rhel7 container
 #RUN yum -y install epel-release
 #RUN yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 ## ref: https://webhostinggeeks.com/howto/epel-yum-repository-on-linux/
+#RUN rpm --import https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 &&\
+#    rpm -Uvh https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm
+
+## ref: https://access.redhat.com/discussions/3140721
 RUN rpm --import https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 &&\
-    rpm -Uvh https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm
+    rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
 
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 #RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
