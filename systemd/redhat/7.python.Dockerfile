@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ## disable subscription-manager
 ## ref: https://bugzilla.redhat.com/show_bug.cgi?id=1623262
-#subscription-manager config --rhsm.manage_repos=0
+#RUN subscription-manager config --rhsm.manage_repos=0
 RUN sed -i s/1/0/g /etc/yum/pluginconf.d/subscription-manager.conf
 
 ## enable EPEL
