@@ -25,7 +25,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ## ref: https://access.redhat.com/discussions/3140721
 RUN rpm --import https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 &&\
-    rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+    rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 #RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
