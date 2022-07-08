@@ -27,7 +27,7 @@ pipeline:
       dockerFile: systemd/redhat/8.Dockerfile
     - buildImageLabel: fedora35-systemd
       dockerFile: systemd/fedora/35.Dockerfile
-    - buildImageLabel: fedora8-systemd
+    - buildImageLabel: fedora36-systemd
       dockerFile: systemd/fedora/36.Dockerfile
 
     - buildImageLabel: debian8-systemd
@@ -42,8 +42,6 @@ pipeline:
       dockerFile: systemd/debian/12.Dockerfile
     - buildImageLabel: systemd-debian-sid
       dockerFile: systemd/debian/sid.Dockerfile
-    - buildImageLabel: fedora36-systemd
-      dockerFile: systemd/fedora/36.Dockerfile
     - buildImageLabel: ubuntu1604-systemd
       dockerFile: systemd/ubuntu/16.04.Dockerfile
     - buildImageLabel: ubuntu1804-systemd
@@ -59,6 +57,7 @@ pipeline:
     - buildImageLabel: centos8-systemd-python
       dockerFile: systemd/centos/8.python.Dockerfile
     - buildImageLabel: redhat7-systemd-python
+      buildDir: systemd/redhat
       dockerFile: systemd/redhat/7.python.Dockerfile
     - buildImageLabel: redhat8-systemd-python
       dockerFile: systemd/redhat/8.python.Dockerfile
