@@ -9,6 +9,14 @@ on:
 jobs:
   docker-systemd-centos:
     runs-on: ubuntu-latest
+
+    concurrency:
+#      group: ${{ github.head_ref || github.run_id }}
+#      group: ${{ github.ref }}
+#      cancel-in-progress: false
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
     strategy:
       matrix:
         include:
