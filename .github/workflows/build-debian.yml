@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
-#      cancel-in-progress: true
+      cancel-in-progress: true
     strategy:
       matrix:
         include:
@@ -87,7 +87,7 @@ jobs:
     needs: docker-systemd-debian
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
-#      cancel-in-progress: true
+      cancel-in-progress: true
     strategy:
       matrix:
         include:
