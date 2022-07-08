@@ -14,12 +14,14 @@ jobs:
         include:
           - name: systemd-redhat7
             dockerfile: systemd/redhat/7.Dockerfile
+            context: .
             platforms: |-
               linux/amd64
             tags: |-
               lj020326/redhat7-systemd:latest
           - name: systemd-redhat8
             dockerfile: systemd/redhat/8.Dockerfile
+            context: .
             platforms: |-
               linux/amd64
               linux/arm64
@@ -62,13 +64,14 @@ jobs:
         include:
           - name: systemd-redhat7-python
             dockerfile: systemd/redhat/7.python.Dockerfile
-            workdir: systemd/redhat
+            context: systemd/redhat
             platforms: |-
               linux/amd64
             tags: |-
               lj020326/redhat7-systemd-python:latest
           - name: systemd-redhat8-python
             dockerfile: systemd/redhat/8.python.Dockerfile
+            context: systemd/redhat
             platforms: |-
               linux/amd64
               linux/arm64
@@ -93,7 +96,7 @@ jobs:
       - name: Build and push ${{ matrix.name }}
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ${{ matrix.context }}
           file: ${{ matrix.dockerfile }}
           platforms: ${{ matrix.platforms }}
           push: true
