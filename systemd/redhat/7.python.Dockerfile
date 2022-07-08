@@ -6,21 +6,19 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN cat > /etc/yum.repos.d/centos-os.repo << EOF
-[centos-os]
-name=Centos os - $basearch
-baseurl=http://mirror.centos.org/centos/7/os/x86_64/
-enabled=1
-gpgcheck=0
-EOF
+RUN echo "[centos-os]\n\
+name=Centos os - $basearch\n\
+baseurl=http://mirror.centos.org/centos/7/os/x86_64/\n\
+enabled=1\n\
+gpgcheck=0\n\
+" > /etc/yum.repos.d/centos-os.repo
 
-RUN cat > /etc/yum.repos.d/centos-extras.repo << EOF
-[centos-extras]
-name=Centos extras - $basearch
-baseurl=http://mirror.centos.org/centos/7/extras/x86_64
-enabled=1
-gpgcheck=0
-EOF
+RUN echo "[centos-extras]\n\
+name=Centos extras - $basearch\n\
+baseurl=http://mirror.centos.org/centos/7/extras/x86_64\n\
+enabled=1\n\
+gpgcheck=0\n\
+" > /etc/yum.repos.d/centos-extras.repo
 
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
