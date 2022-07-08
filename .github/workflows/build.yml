@@ -24,7 +24,7 @@ jobs:
               linux/amd64
             tags: |-
               lj020326/aports-dev:latest
-          - name: systemd-centos-7
+          - name: systemd-centos7
             dockerfile: systemd/centos/7.Dockerfile
             platforms: |-
               linux/amd64
@@ -32,22 +32,20 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/centos7-systemd:latest
-          - name: systemd-centos-8
+          - name: systemd-centos8
             dockerfile: systemd/centos/8.Dockerfile
             platforms: |-
               linux/amd64
               linux/arm64
             tags: |-
               lj020326/centos8-systemd:latest
-          - name: systemd-redhat-7
+          - name: systemd-redhat7
             dockerfile: systemd/redhat/7.Dockerfile
             platforms: |-
               linux/amd64
-              linux/arm/v7
-              linux/arm64
             tags: |-
               lj020326/redhat7-systemd:latest
-          - name: systemd-redhat-8
+          - name: systemd-redhat8
             dockerfile: systemd/redhat/8.Dockerfile
             platforms: |-
               linux/amd64
@@ -68,13 +66,13 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/fedora36-systemd:latest
-          - name: systemd-debian-8
+          - name: systemd-debian8
             dockerfile: systemd/debian/8.Dockerfile
             platforms: |-
               linux/amd64
             tags: |-
               lj020326/debian8-systemd:latest
-          - name: systemd-debian-9
+          - name: systemd-debian9
             dockerfile: systemd/debian/9.Dockerfile
             platforms: |-
               linux/amd64
@@ -82,7 +80,7 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/debian9-systemd:latest
-          - name: systemd-debian-10
+          - name: systemd-debian10
             dockerfile: systemd/debian/10.Dockerfile
             platforms: |-
               linux/amd64
@@ -90,7 +88,7 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/debian10-systemd:latest
-          - name: systemd-debian-11
+          - name: systemd-debian11
             dockerfile: systemd/debian/11.Dockerfile
             platforms: |-
               linux/amd64
@@ -98,7 +96,7 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/debian11-systemd:latest
-          - name: systemd-debian-12
+          - name: systemd-debian12
             dockerfile: systemd/debian/12.Dockerfile
             platforms: |-
               linux/amd64
@@ -106,7 +104,7 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/debian12-systemd:latest
-          - name: systemd-ubuntu-1804
+          - name: systemd-ubuntu1804
             dockerfile: systemd/ubuntu/18.04.Dockerfile
             platforms: |-
               linux/amd64
@@ -114,7 +112,7 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/ubuntu1804-systemd:latest
-          - name: systemd-ubuntu-2004
+          - name: systemd-ubuntu2004
             dockerfile: systemd/ubuntu/20.04.Dockerfile
             platforms: |-
               linux/amd64
@@ -122,7 +120,7 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/ubuntu2004-systemd:latest
-          - name: systemd-ubuntu-2204
+          - name: systemd-ubuntu2204
             dockerfile: systemd/ubuntu/22.04.Dockerfile
             platforms: |-
               linux/amd64
@@ -192,6 +190,21 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/centos8-systemd-python:latest
+
+          - name: systemd-redhat7-python
+            dockerfile: systemd/redhat/7.python.Dockerfile
+            platforms: |-
+              linux/amd64
+            tags: |-
+              lj020326/redhat7-systemd-python:latest
+          - name: systemd-redhat8-python
+            dockerfile: systemd/redhat/8.python.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm64
+            tags: |-
+              lj020326/redhat8-systemd-python:latest
+
           - name: systemd-fedora35-python
             dockerfile: systemd/fedora/35.python.Dockerfile
             platforms: |-
