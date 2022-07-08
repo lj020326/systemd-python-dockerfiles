@@ -1,0 +1,153 @@
+name: Docker debian images build
+
+on:
+  push:
+    branches: ['*']
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  docker-systemd:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: systemd-debian8
+            dockerfile: systemd/debian/8.Dockerfile
+            platforms: |-
+              linux/amd64
+            tags: |-
+              lj020326/debian8-systemd:latest
+          - name: systemd-debian9
+            dockerfile: systemd/debian/9.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian9-systemd:latest
+          - name: systemd-debian10
+            dockerfile: systemd/debian/10.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian10-systemd:latest
+          - name: systemd-debian11
+            dockerfile: systemd/debian/11.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian11-systemd:latest
+          - name: systemd-debian12
+            dockerfile: systemd/debian/12.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian12-systemd:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: lj020326
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Build and push ${{ matrix.name }}
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          platforms: ${{ matrix.platforms }}
+          push: true
+          tags: ${{ matrix.tags }}
+          labels: |
+            maintainer=${{ github.repository_owner }}
+            org.opencontainers.image.vendor=${{ github.repository_owner }}
+            org.opencontainers.image.revision=${{ github.sha }}
+
+  docker-systemd-python:
+    runs-on: ubuntu-latest
+    needs: docker-systemd
+    strategy:
+      matrix:
+        include:
+          - name: systemd-debian8-python
+            dockerfile: systemd/debian/8.python.Dockerfile
+            platforms: |-
+              linux/amd64
+            tags: |-
+              lj020326/debian8-systemd-python:latest
+          - name: systemd-debian9-python
+            dockerfile: systemd/debian/9.python.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian9-systemd-python:latest
+          - name: systemd-debian10-python
+            dockerfile: systemd/debian/10.python.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian10-systemd-python:latest
+          - name: systemd-debian11-python
+            dockerfile: systemd/debian/11.python.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian11-systemd-python:latest
+          - name: systemd-debian12-python
+            dockerfile: systemd/debian/12.python.Dockerfile
+            platforms: |-
+              linux/amd64
+              linux/arm/v7
+              linux/arm64
+            tags: |-
+              lj020326/debian12-systemd-python:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: lj020326
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Build and push ${{ matrix.name }}
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          platforms: ${{ matrix.platforms }}
+          push: true
+          tags: ${{ matrix.tags }}
+          labels: |
+            maintainer=${{ github.repository_owner }}
+            org.opencontainers.image.vendor=${{ github.repository_owner }}
+            org.opencontainers.image.revision=${{ github.sha }}
