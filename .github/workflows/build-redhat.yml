@@ -62,6 +62,7 @@ jobs:
         include:
           - name: systemd-redhat7-python
             dockerfile: systemd/redhat/7.python.Dockerfile
+            workdir: systemd/redhat
             platforms: |-
               linux/amd64
             tags: |-
