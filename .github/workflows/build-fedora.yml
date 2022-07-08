@@ -58,6 +58,9 @@ jobs:
   docker-systemd-python-fedora:
     runs-on: ubuntu-latest
     needs: docker-systemd-fedora
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
     strategy:
       matrix:
         include:
