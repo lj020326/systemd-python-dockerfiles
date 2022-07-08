@@ -10,7 +10,7 @@ jobs:
   docker-systemd-ubuntu:
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
       cancel-in-progress: true
     strategy:
       matrix:
@@ -72,7 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: docker-systemd-ubuntu
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
       cancel-in-progress: true
     strategy:
       matrix:
