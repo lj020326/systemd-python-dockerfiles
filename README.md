@@ -1,6 +1,7 @@
 # This repository contains my Dockerfiles
 
 [![Docker images build](https://github.com/j8r/dockerfiles/actions/workflows/build.yml/badge.svg)](https://github.com/j8r/dockerfiles/actions/workflows/build.yml)
+[![License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat)](LICENSE)
 
 Image builds are triggered automatically each month.
 
