@@ -58,7 +58,7 @@ pipeline:
       dockerFile: systemd/centos/8.python.Dockerfile
     - buildImageLabel: redhat7-systemd-python
       buildDir: systemd/redhat
-      dockerFile: systemd/redhat/7.python.Dockerfile
+      dockerFile: 7.python.Dockerfile
     - buildImageLabel: redhat8-systemd-python
       dockerFile: systemd/redhat/8.python.Dockerfile
     - buildImageLabel: fedora35-systemd-python
