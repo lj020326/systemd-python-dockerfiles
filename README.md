@@ -1,6 +1,11 @@
 # This repository contains my Dockerfiles
 
-[![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/tree/master/.github/workflows/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/tree/master/.github/workflows)
+[![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-alpine.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-alpine.yml)
+[![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-redhat.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-redhat.yml)
+[![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-centos.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-centos.yml)
+[![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-ubuntu.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-ubuntu.yml)
+[![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-debian.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-debian.yml)
+[![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-fedora.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-fedora.yml)
 [![License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat)](LICENSE)
 
 Image builds are triggered automatically each month.
