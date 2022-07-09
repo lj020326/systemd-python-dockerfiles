@@ -6,7 +6,7 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN yum --disableplugin subscription-manager update
+RUN dnf --disableplugin subscription-manager update
 RUN dnf upgrade -y
 
 # Dependencies for Ansible
