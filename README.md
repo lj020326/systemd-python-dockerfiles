@@ -1,5 +1,3 @@
-# This repository contains my Dockerfiles
-
 [![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-alpine.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-alpine.yml)
 [![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-redhat.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-redhat.yml)
 [![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-centos.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-centos.yml)
@@ -8,6 +6,8 @@
 [![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-fedora.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-fedora.yml)
 [![License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat)](LICENSE)
 [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/leejjohnson/)
+
+# This repository contains systemd enabled dockerfiles
 
 Image builds are triggered automatically each month.
 
