@@ -3,8 +3,8 @@ name: Docker ubuntu images build
 on:
   push:
     branches: ['*']
-  schedule:
-    - cron: '0 0 1 * *'
+#  schedule:
+#    - cron: '0 0 1 * *'
 
 ## ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
 concurrency:
