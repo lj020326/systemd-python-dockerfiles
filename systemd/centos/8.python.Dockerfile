@@ -13,9 +13,14 @@ RUN sed -i 's/^mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* &&\
 RUN dnf upgrade -y
 
 # Dependencies for Ansible
+## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
-RUN dnf makecache && dnf install --nodocs -y bash python3 sudo && dnf clean all
+RUN dnf makecache && dnf install --nodocs -y bash \
+    python3 sudo \
+    openldap-devel python3-devel \
+    && \
+    dnf clean all
 
 RUN systemctl set-default multi-user.target
 
