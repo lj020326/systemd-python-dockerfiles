@@ -30,13 +30,13 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/fedora35-systemd:latest
-          - name: systemd-fedora36
-            dockerfile: systemd/fedora/36.Dockerfile
-            platforms: |-
-              linux/amd64
-              linux/arm64
-            tags: |-
-              lj020326/fedora36-systemd:latest
+#          - name: systemd-fedora36
+#            dockerfile: systemd/fedora/36.Dockerfile
+#            platforms: |-
+#              linux/amd64
+#              linux/arm64
+#            tags: |-
+#              lj020326/fedora36-systemd:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -84,13 +84,13 @@ jobs:
               linux/arm64
             tags: |-
               lj020326/fedora35-systemd-python:latest
-          - name: systemd-fedora36-python
-            dockerfile: systemd/fedora/36.python.Dockerfile
-            platforms: |-
-              linux/amd64
-              linux/arm64
-            tags: |-
-              lj020326/fedora36-systemd-python:latest
+#          - name: systemd-fedora36-python
+#            dockerfile: systemd/fedora/36.python.Dockerfile
+#            platforms: |-
+#              linux/amd64
+#              linux/arm64
+#            tags: |-
+#              lj020326/fedora36-systemd-python:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
