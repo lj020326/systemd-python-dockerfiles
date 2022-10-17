@@ -7,13 +7,15 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
+# Dependencies for Ansible
+## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-ubuntu-systemd/blob/master/Dockerfile
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
       dbus systemd systemd-cron rsyslog iproute2 \
       sudo bash ca-certificates \
       python3 python3-apt python3-pip \
-      build-essential python3-dev python2.7-dev \
+      build-essential python3-dev \
       libldap2-dev libsasl2-dev slapd ldap-utils tox \
       && \
     apt-get clean && \

@@ -10,6 +10,7 @@ RUN dnf --disableplugin subscription-manager update -y
 RUN dnf upgrade -y
 
 # Dependencies for Ansible
+## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
 RUN dnf makecache && dnf install --nodocs -y bash python3 sudo && dnf clean all
