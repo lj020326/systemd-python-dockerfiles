@@ -15,7 +15,7 @@ RUN apt-get update && \
         sudo bash ca-certificates \
         python python-apt python-pip \
         build-essential python-dev \
-        libldap2-dev libsasl2-dev slapd ldap-utils tox \
+        libldap2-dev libsasl2-dev slapd ldap-utils \
         && \
     apt-get clean && \
     rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
