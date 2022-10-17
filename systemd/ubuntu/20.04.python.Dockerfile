@@ -14,7 +14,7 @@ RUN apt-get update && \
     apt-get install --no-install-recommends -y \
         dbus systemd systemd-cron rsyslog iproute2 \
         sudo bash ca-certificates \
-        python python-apt python-pip \
+        python python-apt \
         build-essential python-dev \
         libldap2-dev libsasl2-dev slapd ldap-utils tox \
         && \
