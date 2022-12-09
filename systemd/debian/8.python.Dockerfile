@@ -21,10 +21,13 @@ ENV DEBIAN_FRONTEND noninteractive
 #    apt-get clean && \
 #    rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y \
-      dbus systemd systemd-cron rsyslog iproute2 python python-apt bash sudo ca-certificates && \
-    apt-get clean
+## ref: https://hub.docker.com/r/jrei/systemd-debian/dockerfile
+RUN apt-get update \
+    && apt-get install -y systemd systemd-sysv \
+        sudo bash ca-certificates \
+        python python-apt bash \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
