@@ -9,17 +9,24 @@ ENV DEBIAN_FRONTEND noninteractive
 # Dependencies for Ansible
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
+#RUN apt-get update && \
+#    apt-get install --no-install-recommends -y \
+#        dbus systemd systemd-cron rsyslog iproute2 \
+#        sudo bash ca-certificates \
+#        python python-apt bash \
 #        libldap2-dev libsasl2-dev slapd ldap-utils \
 #        build-essential python-dev \
 #        python-pip \
+#        && \
+#    apt-get clean && \
+#    rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-        dbus systemd systemd-cron rsyslog iproute2 \
-        sudo bash ca-certificates \
-        python python-apt bash \
-        && \
-    apt-get clean && \
-    rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
+      dbus systemd systemd-cron rsyslog iproute2 python python-apt bash sudo ca-certificates && \
+    apt-get clean
+
+RUN rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
