@@ -4,7 +4,7 @@ on:
   push:
     branches: ['*']
 #  schedule:
-#    - cron: '0 0 1 * *'
+#    - cron: '30 0 1 * *'
 
 ### ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
 #concurrency:
@@ -21,6 +21,9 @@ jobs:
       cancel-in-progress: false
 
     strategy:
+      fail-fast: false
+      ## ref: https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
+      max-parallel: 2
       matrix:
         include:
           - name: systemd-redhat7
@@ -76,6 +79,9 @@ jobs:
       cancel-in-progress: true
 
     strategy:
+      fail-fast: false
+      ## ref: https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
+      max-parallel: 2
       matrix:
         include:
           - name: systemd-redhat7-python
@@ -112,7 +118,7 @@ jobs:
       - name: Build and push ${{ matrix.name }}
         uses: docker/build-push-action@v3
         with:
-          context: ${{ matrix.context }}
+          context: .
           file: ${{ matrix.dockerfile }}
           platforms: ${{ matrix.platforms }}
           push: true
