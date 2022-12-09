@@ -132,6 +132,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: If the same workflow is already running from a previous commit, wait for it to finish
+        uses: ahmadnassri/action-workflow-queue@v1
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
