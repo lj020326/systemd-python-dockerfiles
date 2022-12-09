@@ -25,12 +25,9 @@ jobs:
       ## ref: https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
       max-parallel: 2
       matrix:
-        build:
-          - redhat7
-          - redhat8
         include:
-          - build: redhat7
-            systemd-build:
+          - distro: redhat7
+            systemd-distro:
               name: systemd-redhat7
               dockerfile: systemd/redhat/7.Dockerfile
               context: .
@@ -38,7 +35,7 @@ jobs:
                 linux/amd64
               tags: |-
                 lj020326/redhat7-systemd:latest
-            systemd-python-build:
+            systemd-python-distro:
               name: systemd-redhat7-python
               dockerfile: systemd/redhat/7.python.Dockerfile
               context: systemd/redhat
@@ -47,8 +44,8 @@ jobs:
               tags: |-
                 lj020326/redhat7-systemd-python:latest
 
-          - build: redhat8
-            systemd-build:
+          - distro: redhat8
+            systemd-distro:
               name: systemd-redhat8
               dockerfile: systemd/redhat/8.Dockerfile
               context: .
@@ -57,7 +54,7 @@ jobs:
                 linux/arm64
               tags: |-
                 lj020326/redhat8-systemd:latest
-            systemd-python-build:
+            systemd-python-distro:
               name: systemd-redhat8-python
               dockerfile: systemd/redhat/8.python.Dockerfile
               context: systemd/redhat
@@ -82,27 +79,27 @@ jobs:
           username: lj020326
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Build and push ${{ matrix.build.systemd-build.name }}
+      - name: Build and push ${{ matrix.systemd-distro.name }}
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ${{ matrix.build.systemd-build.dockerfile }}
-          platforms: ${{ matrix.build.systemd-build.platforms }}
+          file: ${{ matrix.systemd-distro.dockerfile }}
+          platforms: ${{ matrix.systemd-distro.platforms }}
           push: true
-          tags: ${{ matrix.build.systemd-build.tags }}
+          tags: ${{ matrix.systemd-distro.tags }}
           labels: |
             maintainer=${{ github.repository_owner }}
             org.opencontainers.image.vendor=${{ github.repository_owner }}
             org.opencontainers.image.revision=${{ github.sha }}
 
-      - name: Build and push ${{ matrix.build.systemd-python-build.name }}
+      - name: Build and push ${{ matrix.systemd-python-distro.name }}
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ${{ matrix.build.systemd-python-build.dockerfile }}
-          platforms: ${{ matrix.build.systemd-python-build.platforms }}
+          file: ${{ matrix.systemd-python-distro.dockerfile }}
+          platforms: ${{ matrix.systemd-python-distro.platforms }}
           push: true
-          tags: ${{ matrix.build.systemd-python-build.tags }}
+          tags: ${{ matrix.systemd-python-distro.tags }}
           labels: |
             maintainer=${{ github.repository_owner }}
             org.opencontainers.image.vendor=${{ github.repository_owner }}

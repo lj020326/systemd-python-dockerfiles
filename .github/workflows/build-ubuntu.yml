@@ -25,13 +25,13 @@ jobs:
       ## ref: https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
       max-parallel: 2
       matrix:
-        build:
-          - ubuntu1804
-          - ubuntu2004
-          - ubuntu2204
+#        build:
+#          - ubuntu1804
+#          - ubuntu2004
+#          - ubuntu2204
         include:
-          - build: ubuntu1804
-            systemd-build:
+          - distro: ubuntu1804
+            systemd-distro:
               name: systemd-ubuntu1804
               dockerfile: systemd/ubuntu/18.04.Dockerfile
               platforms: |-
@@ -40,7 +40,7 @@ jobs:
                 linux/arm64
               tags: |-
                 lj020326/ubuntu1804-systemd:latest
-            systemd-python-build:
+            systemd-python-distro:
               name: systemd-ubuntu1804-python
               dockerfile: systemd/ubuntu/18.04.python.Dockerfile
               platforms: |-
@@ -50,8 +50,8 @@ jobs:
               tags: |-
                 lj020326/ubuntu1804-systemd-python:latest
 
-          - build: ubuntu2004
-            systemd-build:
+          - distro: ubuntu2004
+            systemd-distro:
               name: systemd-ubuntu2004
               dockerfile: systemd/ubuntu/20.04.Dockerfile
               platforms: |-
@@ -60,7 +60,7 @@ jobs:
                 linux/arm64
               tags: |-
                 lj020326/ubuntu2004-systemd:latest
-            systemd-python-build:
+            systemd-python-distro:
               name: systemd-ubuntu2004-python
               dockerfile: systemd/ubuntu/20.04.python.Dockerfile
               platforms: |-
@@ -70,8 +70,8 @@ jobs:
               tags: |-
                 lj020326/ubuntu2004-systemd-python:latest
 
-          - build: ubuntu2204
-            systemd-build:
+          - distro: ubuntu2204
+            systemd-distro:
               name: systemd-ubuntu2204
               dockerfile: systemd/ubuntu/22.04.Dockerfile
               platforms: |-
@@ -80,7 +80,7 @@ jobs:
                 linux/arm64
               tags: |-
                 lj020326/ubuntu2204-systemd:latest
-            systemd-python-build:
+            systemd-python-distro:
               name: systemd-ubuntu2204-python
               dockerfile: systemd/ubuntu/22.04.python.Dockerfile
               platforms: |-
@@ -106,27 +106,27 @@ jobs:
           username: lj020326
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Build and push ${{ matrix.build.systemd-build.name }}
+      - name: Build and push ${{ matrix.systemd-distro.name }}
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ${{ matrix.build.systemd-build.dockerfile }}
-          platforms: ${{ matrix.build.systemd-build.platforms }}
+          file: ${{ matrix.systemd-distro.dockerfile }}
+          platforms: ${{ matrix.systemd-distro.platforms }}
           push: true
-          tags: ${{ matrix.build.systemd-build.tags }}
+          tags: ${{ matrix.systemd-distro.tags }}
           labels: |
             maintainer=${{ github.repository_owner }}
             org.opencontainers.image.vendor=${{ github.repository_owner }}
             org.opencontainers.image.revision=${{ github.sha }}
 
-      - name: Build and push ${{ matrix.build.systemd-python-build.name }}
+      - name: Build and push ${{ matrix.systemd-python-distro.name }}
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ${{ matrix.build.systemd-python-build.dockerfile }}
-          platforms: ${{ matrix.build.systemd-python-build.platforms }}
+          file: ${{ matrix.systemd-python-distro.dockerfile }}
+          platforms: ${{ matrix.systemd-python-distro.platforms }}
           push: true
-          tags: ${{ matrix.build.systemd-python-build.tags }}
+          tags: ${{ matrix.systemd-python-distro.tags }}
           labels: |
             maintainer=${{ github.repository_owner }}
             org.opencontainers.image.vendor=${{ github.repository_owner }}
