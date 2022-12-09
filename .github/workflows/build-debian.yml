@@ -6,15 +6,11 @@ on:
 #  schedule:
 #    - cron: '30 0 1 * *'
 
-### ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
-#concurrency:
-#  group: ${{ github.workflow }}-${{ github.event.pull_request.head.label || github.head_ref || github.ref }}
-#  cancel-in-progress: true
-
 jobs:
   docker-systemd-debian:
     runs-on: ubuntu-latest
 
+    ## ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
     concurrency:
       group: ${{ github.workflow }}-systemd-debian-${{ github.ref }}
 #      cancel-in-progress: true
