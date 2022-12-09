@@ -10,11 +10,11 @@ jobs:
   docker-systemd-ubuntu:
     runs-on: ubuntu-latest
 
-    ## ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
-    concurrency:
-      group: ${{ github.workflow }}-systemd-ubuntu-${{ github.ref }}
-#      cancel-in-progress: true
-      cancel-in-progress: false
+#    ## ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
+#    concurrency:
+#      group: ${{ github.workflow }}-systemd-ubuntu-${{ github.ref }}
+##      cancel-in-progress: true
+#      cancel-in-progress: false
 
     strategy:
       fail-fast: false
