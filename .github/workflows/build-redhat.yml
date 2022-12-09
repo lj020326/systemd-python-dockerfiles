@@ -95,7 +95,7 @@ jobs:
       - name: Build and push ${{ matrix.systemd-python-distro.name }}
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ${{ matrix.systemd-python-distro.context }}
           file: ${{ matrix.systemd-python-distro.dockerfile }}
           platforms: ${{ matrix.systemd-python-distro.platforms }}
           push: true
