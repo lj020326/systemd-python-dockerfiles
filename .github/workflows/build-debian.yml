@@ -30,6 +30,7 @@ jobs:
             systemd-distro:
               name: systemd-debian8
               dockerfile: systemd/debian/8.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
               tags: |-
@@ -37,6 +38,7 @@ jobs:
             systemd-python-distro:
               name: systemd-debian8-python
               dockerfile: systemd/debian/8.python.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
               tags: |-
@@ -46,6 +48,7 @@ jobs:
             systemd-distro:
               name: systemd-debian9
               dockerfile: systemd/debian/9.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -55,6 +58,7 @@ jobs:
             systemd-python-distro:
               name: systemd-debian9-python
               dockerfile: systemd/debian/9.python.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -66,6 +70,7 @@ jobs:
             systemd-distro:
               name: systemd-debian10
               dockerfile: systemd/debian/10.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -75,6 +80,7 @@ jobs:
             systemd-python-distro:
               name: systemd-debian10-python
               dockerfile: systemd/debian/10.python.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -86,6 +92,7 @@ jobs:
             systemd-distro:
               name: systemd-debian11
               dockerfile: systemd/debian/11.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -95,6 +102,7 @@ jobs:
             systemd-python-distro:
               name: systemd-debian11-python
               dockerfile: systemd/debian/11.python.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -106,6 +114,7 @@ jobs:
             systemd-distro:
               name: systemd-debian12
               dockerfile: systemd/debian/12.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -115,6 +124,7 @@ jobs:
             systemd-python-distro:
               name: systemd-debian12-python
               dockerfile: systemd/debian/12.python.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -141,7 +151,7 @@ jobs:
       - name: Build and push ${{ matrix.systemd-distro.name }}
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ${{ matrix.systemd-distro.context }}
           file: ${{ matrix.systemd-distro.dockerfile }}
           platforms: ${{ matrix.systemd-distro.platforms }}
           push: true
@@ -154,7 +164,7 @@ jobs:
       - name: Build and push ${{ matrix.systemd-python-distro.name }}
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ${{ matrix.systemd-python-distro.context }}
           file: ${{ matrix.systemd-python-distro.dockerfile }}
           platforms: ${{ matrix.systemd-python-distro.platforms }}
           push: true

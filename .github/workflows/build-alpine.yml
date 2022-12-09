@@ -30,6 +30,7 @@ jobs:
             systemd-distro:
               name: openrc-alpine
               dockerfile: openrc/alpine/Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
               tags: |-
@@ -37,6 +38,7 @@ jobs:
             systemd-python-distro:
               name: openrc-alpine-python
               dockerfile: openrc/alpine/python.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
               tags: |-
@@ -46,6 +48,7 @@ jobs:
             systemd-distro:
               name: aports-dev
               dockerfile: aports-dev/Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
               tags: |-
@@ -53,6 +56,7 @@ jobs:
             systemd-python-distro:
               name: aports-dev-python
               dockerfile: aports-dev/python.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
               tags: |-
@@ -76,7 +80,7 @@ jobs:
       - name: Build and push ${{ matrix.systemd-distro.name }}
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ${{ matrix.systemd-distro.context }}
           file: ${{ matrix.systemd-distro.dockerfile }}
           platforms: ${{ matrix.systemd-distro.platforms }}
           push: true
@@ -89,7 +93,7 @@ jobs:
       - name: Build and push ${{ matrix.systemd-python-distro.name }}
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ${{ matrix.systemd-python-distro.context }}
           file: ${{ matrix.systemd-python-distro.dockerfile }}
           platforms: ${{ matrix.systemd-python-distro.platforms }}
           push: true

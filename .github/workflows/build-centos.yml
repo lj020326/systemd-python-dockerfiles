@@ -30,6 +30,7 @@ jobs:
             systemd-distro:
               name: systemd-centos7
               dockerfile: systemd/centos/7.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -39,6 +40,7 @@ jobs:
             systemd-python-distro:
               name: systemd-centos7-python
               dockerfile: systemd/centos/7.python.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm64
@@ -49,6 +51,7 @@ jobs:
             systemd-distro:
               name: systemd-centos8
               dockerfile: systemd/centos/8.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm64
@@ -57,6 +60,7 @@ jobs:
             systemd-python-distro:
               name: systemd-centos8-python
               dockerfile: systemd/centos/8.python.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm64
@@ -81,7 +85,7 @@ jobs:
       - name: Build and push ${{ matrix.systemd-distro.name }}
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ${{ matrix.systemd-distro.context }}
           file: ${{ matrix.systemd-distro.dockerfile }}
           platforms: ${{ matrix.systemd-distro.platforms }}
           push: true
@@ -94,7 +98,7 @@ jobs:
       - name: Build and push ${{ matrix.systemd-python-distro.name }}
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ${{ matrix.systemd-python-distro.context }}
           file: ${{ matrix.systemd-python-distro.dockerfile }}
           platforms: ${{ matrix.systemd-python-distro.platforms }}
           push: true

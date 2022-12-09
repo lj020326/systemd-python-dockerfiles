@@ -6,34 +6,21 @@ on:
 #  schedule:
 #    - cron: '30 0 1 * *'
 
-### ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
-#concurrency:
-#  group: ${{ github.workflow }}-${{ github.event.pull_request.head.label || github.head_ref || github.ref }}
-#  cancel-in-progress: true
-
 jobs:
   docker-systemd-ubuntu:
     runs-on: ubuntu-latest
-
-#    concurrency:
-#      group: ${{ github.workflow }}-systemd-${{ github.ref }}
-##      cancel-in-progress: true
-#      cancel-in-progress: false
 
     strategy:
       fail-fast: false
       ## ref: https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
 #      max-parallel: 2
       matrix:
-#        build:
-#          - ubuntu1804
-#          - ubuntu2004
-#          - ubuntu2204
         include:
           - distro: ubuntu1804
             systemd-distro:
               name: systemd-ubuntu1804
               dockerfile: systemd/ubuntu/18.04.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -43,6 +30,7 @@ jobs:
             systemd-python-distro:
               name: systemd-ubuntu1804-python
               dockerfile: systemd/ubuntu/18.04.python.Dockerfile
+              context: systemd/ubuntu
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -54,6 +42,7 @@ jobs:
             systemd-distro:
               name: systemd-ubuntu2004
               dockerfile: systemd/ubuntu/20.04.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -63,6 +52,7 @@ jobs:
             systemd-python-distro:
               name: systemd-ubuntu2004-python
               dockerfile: systemd/ubuntu/20.04.python.Dockerfile
+              context: systemd/ubuntu
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -74,6 +64,7 @@ jobs:
             systemd-distro:
               name: systemd-ubuntu2204
               dockerfile: systemd/ubuntu/22.04.Dockerfile
+              context: .
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -83,6 +74,7 @@ jobs:
             systemd-python-distro:
               name: systemd-ubuntu2204-python
               dockerfile: systemd/ubuntu/22.04.python.Dockerfile
+              context: systemd/ubuntu
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -109,7 +101,7 @@ jobs:
       - name: Build and push ${{ matrix.systemd-distro.name }}
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ${{ matrix.systemd-distro.context }}
           file: ${{ matrix.systemd-distro.dockerfile }}
           platforms: ${{ matrix.systemd-distro.platforms }}
           push: true
@@ -122,7 +114,7 @@ jobs:
       - name: Build and push ${{ matrix.systemd-python-distro.name }}
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ${{ matrix.systemd-python-distro.context }}
           file: ${{ matrix.systemd-python-distro.dockerfile }}
           platforms: ${{ matrix.systemd-python-distro.platforms }}
           push: true

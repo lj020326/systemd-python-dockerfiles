@@ -6,19 +6,9 @@ on:
 #  schedule:
 #    - cron: '30 0 1 * *'
 
-### ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
-#concurrency:
-#  group: ${{ github.workflow }}-${{ github.event.pull_request.head.label || github.head_ref || github.ref }}
-#  cancel-in-progress: true
-
 jobs:
   docker-systemd-redhat:
     runs-on: ubuntu-latest
-
-#    concurrency:
-#      group: ${{ github.workflow }}-systemd-${{ github.ref }}
-##      cancel-in-progress: true
-#      cancel-in-progress: false
 
     strategy:
       fail-fast: false
@@ -82,7 +72,7 @@ jobs:
       - name: Build and push ${{ matrix.systemd-distro.name }}
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ${{ matrix.systemd-distro.context }}
           file: ${{ matrix.systemd-distro.dockerfile }}
           platforms: ${{ matrix.systemd-distro.platforms }}
           push: true
