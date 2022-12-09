@@ -15,10 +15,10 @@ jobs:
   docker-systemd-debian:
     runs-on: ubuntu-latest
 
-#    concurrency:
-#      group: ${{ github.workflow }}-systemd-${{ github.ref }}
-##      cancel-in-progress: true
-#      cancel-in-progress: false
+    concurrency:
+      group: ${{ github.workflow }}-systemd-debian-${{ github.ref }}
+#      cancel-in-progress: true
+      cancel-in-progress: false
 
     strategy:
       fail-fast: false
