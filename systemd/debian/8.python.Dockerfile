@@ -55,6 +55,22 @@ RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 RUN systemctl set-default multi-user.target
 RUN systemctl mask dev-hugepages.mount sys-fs-fuse-connections.mount
 
+# The machine-id should be generated when creating the container. This will be
+# done automatically if the file is not present, so let's delete it.
+RUN rm -f           \
+    /etc/machine-id \
+    /var/lib/dbus/machine-id
+
+
+# Configure systemd.
+#
+# For running systemd inside a Docker container, some additional tweaks are
+# required. Some of them have already been applied above.
+#
+# The 'container' environment variable tells systemd that it's running inside a
+# Docker container environment.
+ENV container docker
+
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run", "/run/lock"]
 STOPSIGNAL SIGRTMIN+3
 
