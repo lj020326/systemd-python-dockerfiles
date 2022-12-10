@@ -36,7 +36,9 @@ RUN apt-get install -y --no-install-recommends \
         systemd      \
         systemd-sysv \
         cron         \
-        anacron
+        anacron      \
+        sudo bash ca-certificates \
+        python python-apt bash
 
 RUN apt-get clean
 RUN rm -rf                        \
