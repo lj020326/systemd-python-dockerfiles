@@ -35,10 +35,9 @@ RUN apt-get dist-upgrade -y
 RUN apt-get install -y --no-install-recommends \
         systemd      \
         systemd-sysv \
-        cron         \
-        anacron      \
-        sudo bash ca-certificates \
-        python python-apt bash
+        systemd-cron \
+        bash sudo ca-certificates
+#        python python-apt bash
 
 RUN apt-get clean
 RUN rm -rf                        \
