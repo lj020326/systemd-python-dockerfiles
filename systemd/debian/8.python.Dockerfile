@@ -21,14 +21,30 @@ ENV DEBIAN_FRONTEND noninteractive
 #    apt-get clean && \
 #    rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-## ref: https://hub.docker.com/r/jrei/systemd-debian/dockerfile
-RUN apt-get update \
-    && apt-get install -y systemd systemd-sysv \
-        sudo bash ca-certificates \
-        python python-apt bash
+### ref: https://hub.docker.com/r/jrei/systemd-debian/dockerfile
+#RUN apt-get update \
+#    && apt-get install -y systemd systemd-sysv \
+#        sudo bash ca-certificates \
+#        python python-apt bash \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+## ref: https://github.com/alehaa/docker-debian-systemd/blob/master/Dockerfile
+RUN apt-get update
+RUN apt-get dist-upgrade -y
+RUN apt-get install -y --no-install-recommends \
+        systemd      \
+        systemd-sysv \
+        cron         \
+        anacron
+
+RUN apt-get clean
+RUN rm -rf                        \
+    /var/lib/apt/lists/*          \
+    /var/log/alternatives.log     \
+    /var/log/apt/history.log      \
+    /var/log/apt/term.log         \
+    /var/log/dpkg.log
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
