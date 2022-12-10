@@ -25,11 +25,10 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
     && apt-get install -y systemd systemd-sysv \
         sudo bash ca-certificates \
-        python python-apt bash \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+        python python-apt bash
 
-RUN rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
