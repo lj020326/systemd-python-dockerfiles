@@ -46,7 +46,9 @@ RUN rm -rf                        \
     /var/log/alternatives.log     \
     /var/log/apt/history.log      \
     /var/log/apt/term.log         \
-    /var/log/dpkg.log
+    /var/log/dpkg.log \
+    /var/tmp/* \
+    /tmp/*
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
