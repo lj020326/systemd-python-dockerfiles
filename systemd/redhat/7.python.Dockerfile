@@ -14,6 +14,11 @@ COPY ./centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 #    && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf \
 #    && yum clean all
 
+## ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
+RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
+    && sed -i 's/enabled=1/enabled=1/g' /etc/yum/pluginconf.d/subscription-manager.conf \
+    && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf
+
 RUN yum install -y \
     sudo bash \
     openldap-devel \
