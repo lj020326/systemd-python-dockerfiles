@@ -33,11 +33,8 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 RUN apt-get dist-upgrade -y
 RUN apt-get install -y --no-install-recommends \
-        systemd      \
-        systemd-sysv \
-        systemd-cron
-#        bash sudo ca-certificates
-#        python python-apt bash
+        bash sudo ca-certificates \
+        python python-apt bash
 
 RUN apt-get clean
 RUN rm -rf                        \
