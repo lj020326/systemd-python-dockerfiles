@@ -56,7 +56,7 @@ COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
 ## deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main
 RUN set -eux; \
-    docker-install bash sudo ca-certificates python python-apt
+    docker-install bash sudo rsyslog ca-certificates python python-apt
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
