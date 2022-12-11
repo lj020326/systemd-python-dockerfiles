@@ -1,6 +1,7 @@
-FROM debian:jessie
+## ref: https://stackoverflow.com/questions/74531081/debian-8-jessie-archive-debian-org-gpg-error-keyexpired-since-2022-11-19-what-n
+#FROM debian:jessie
+FROM debian/eol:jessie
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build_date="2022-07-06"
 
 ENV container docker
 ENV LC_ALL C
@@ -14,10 +15,19 @@ ENV DEBIAN_FRONTEND noninteractive
 # Docker container environment.
 ENV container docker
 
-RUN apt-get update \
-    && apt-get install -y systemd systemd-sysv \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+#RUN apt-get update \
+#    && apt-get install -y systemd systemd-sysv \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+## using approach used here:
+## https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
+COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
+
+RUN set -eux; \
+    \
+    echo "deb http://ftp.debian.org/debian jessie-backports main" >/etc/apt/sources.list.d/backports.list; \
+    docker-install systemd systemd-sysv
 
 RUN cd /lib/systemd/system/sysinit.target.wants/ \
     && rm $(ls | grep -v systemd-tmpfiles-setup)
