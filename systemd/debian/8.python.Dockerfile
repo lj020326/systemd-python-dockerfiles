@@ -50,7 +50,17 @@ RUN rm -f           \
     /etc/machine-id \
     /var/lib/dbus/machine-id
 
+# The host's cgroup filesystem need's to be mounted (read-only) in the
+# container. '/run', '/run/lock' and '/tmp' need to be tmpfs filesystems when
+# running the container without 'CAP_SYS_ADMIN'.
+#
+# NOTE: For running Debian stretch, 'CAP_SYS_ADMIN' still needs to be added, as
+#       stretch's version of systemd is not recent enough. Buster will run just
+#       fine without 'CAP_SYS_ADMIN'.
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run", "/run/lock"]
+
+# A different stop signal is required, so systemd will initiate a shutdown when
+# running 'docker stop <container>'.
 STOPSIGNAL SIGRTMIN+3
 
 CMD ["/sbin/init", "--log-target=journal"]
