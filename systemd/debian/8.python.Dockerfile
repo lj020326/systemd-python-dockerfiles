@@ -10,7 +10,6 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
 
 ## Dependencies for Ansible
-## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
 RUN set -eux; \
