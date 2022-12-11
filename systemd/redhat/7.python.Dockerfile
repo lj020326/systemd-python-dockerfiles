@@ -8,22 +8,23 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY ./centos-os.repo.ini /etc/yum.repos.d/centos-os.repo
 COPY ./centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 
-## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
-#RUN yum makecache fast \
-#    && yum install -y python sudo yum-plugin-ovl bash \
-#    && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf \
-#    && yum clean all
-
 ## ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
-#RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
-#    && sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
-#    && sed -i 's/enabled=1/enabled=0/g' /etc/yum.conf
+RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
+    && sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
+    && sed -i 's/enabled=1/enabled=0/g' /etc/yum.conf
 
-# Update image
-RUN yum repolist --disablerepo=* && \
-    yum-config-manager --disable \* > /dev/null && \
-    yum-config-manager --enable rhel-7-server-rpms > /dev/null
+## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
+RUN yum makecache fast \
+    && yum install -y python sudo yum-plugin-ovl bash \
+    && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf \
+    && yum clean all
 RUN yum update -y
+
+## Update image
+#RUN yum repolist --disablerepo=* && \
+#    yum-config-manager --disable \* > /dev/null && \
+#    yum-config-manager --enable rhel-7-server-rpms > /dev/null
+#RUN yum update -y
 
 ### Add necessary Red Hat repos here
 #RUN REPOLIST=rhel-7-server-rpms,rhel-7-server-optional-rpms && \
