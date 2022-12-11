@@ -6,15 +6,6 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-# Configure systemd.
-#
-# For running systemd inside a Docker container, some additional tweaks are
-# required. Some of them have already been applied above.
-#
-# The 'container' environment variable tells systemd that it's running inside a
-# Docker container environment.
-ENV container docker
-
 RUN apt-get update \
     && apt-get install -y systemd systemd-sysv \
     && apt-get clean \

@@ -1,6 +1,5 @@
 FROM ubuntu:20.04
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build_date="2022-07-06"
 
 ENV container docker
 ENV LC_ALL C
@@ -23,6 +22,12 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /lib/systemd/system/anaconda.target.wants/* \
     /lib/systemd/system/plymouth* \
     /lib/systemd/system/systemd-update-utmp*
+
+# The machine-id should be generated when creating the container. This will be
+# done automatically if the file is not present, so let's delete it.
+RUN rm -f           \
+    /etc/machine-id \
+    /var/lib/dbus/machine-id
 
 VOLUME [ "/sys/fs/cgroup" ]
 

@@ -24,6 +24,12 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /lib/systemd/system/plymouth* \
     /lib/systemd/system/systemd-update-utmp*
 
+# The machine-id should be generated when creating the container. This will be
+# done automatically if the file is not present, so let's delete it.
+RUN rm -f           \
+    /etc/machine-id \
+    /var/lib/dbus/machine-id
+
 VOLUME [ "/sys/fs/cgroup" ]
 
 CMD ["/lib/systemd/systemd"]
