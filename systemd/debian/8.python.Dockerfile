@@ -26,13 +26,11 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
 
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
-## deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main
 #RUN set -eux; \
 #    echo "deb http://ftp.debian.org/debian jessie-backports main" >/etc/apt/sources.list.d/backports.list; \
-#    docker-install bash sudo rsyslog ca-certificates python python-apt
+#    echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" >/etc/apt/sources.list.d/backports.list; \
 
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
-## deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main
 RUN set -eux; \
     docker-install \
         dbus systemd systemd-cron rsyslog iproute2 \
