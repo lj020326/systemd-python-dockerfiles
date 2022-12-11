@@ -6,7 +6,7 @@ ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
 COPY ./centos-os.repo.ini /etc/yum.repos.d/centos-os.repo
-COPY ./centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
+#COPY ./centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 #RUN yum makecache fast \
