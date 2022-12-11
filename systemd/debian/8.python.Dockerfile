@@ -30,13 +30,22 @@ ENV DEBIAN_FRONTEND noninteractive
 #    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ## ref: https://github.com/alehaa/docker-debian-systemd/blob/master/Dockerfile
-RUN apt-get update
-RUN apt-get dist-upgrade -y
-RUN apt-get install -f -y --no-install-recommends \
-        bash sudo ca-certificates \
-        python python-apt bash
+#RUN apt-get update
+#RUN apt-get dist-upgrade -y
+#RUN apt-get install -f -y --no-install-recommends \
+#        bash sudo ca-certificates python python-apt
+#
+#RUN apt-get clean
 
-RUN apt-get clean
+## using approach used here:
+## https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
+COPY docker-apt-install.sh /usr/local/sbin/docker-install
+
+RUN set -eux; \
+    \
+    echo "deb http://ftp.debian.org/debian jessie-backports main" >/etc/apt/sources.list.d/backports.list; \
+    docker-install bash sudo ca-certificates python python-apt
+
 RUN rm -rf                        \
     /var/lib/apt/lists/*          \
     /var/log/alternatives.log     \
