@@ -24,9 +24,12 @@ ENV container docker
 ## https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
 COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
 
+#RUN set -eux; \
+#    \
+#    echo "deb http://ftp.debian.org/debian jessie-backports main" >/etc/apt/sources.list.d/backports.list; \
+#    docker-install systemd systemd-sysv
+
 RUN set -eux; \
-    \
-    echo "deb http://ftp.debian.org/debian jessie-backports main" >/etc/apt/sources.list.d/backports.list; \
     docker-install systemd systemd-sysv
 
 RUN cd /lib/systemd/system/sysinit.target.wants/ \

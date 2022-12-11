@@ -48,9 +48,12 @@ ENV DEBIAN_FRONTEND noninteractive
 ## https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
 COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
 
+#RUN set -eux; \
+#    \
+#    echo "deb http://ftp.debian.org/debian jessie-backports main" >/etc/apt/sources.list.d/backports.list; \
+#    docker-install bash sudo ca-certificates python python-apt
+
 RUN set -eux; \
-    \
-    echo "deb http://ftp.debian.org/debian jessie-backports main" >/etc/apt/sources.list.d/backports.list; \
     docker-install bash sudo ca-certificates python python-apt
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
