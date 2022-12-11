@@ -36,6 +36,14 @@ ENV DEBIAN_FRONTEND noninteractive
 #        bash sudo ca-certificates python python-apt
 #
 #RUN apt-get clean
+#RUN rm -rf                        \
+#    /var/lib/apt/lists/*          \
+#    /var/log/alternatives.log     \
+#    /var/log/apt/history.log      \
+#    /var/log/apt/term.log         \
+#    /var/log/dpkg.log \
+#    /var/tmp/* \
+#    /tmp/*
 
 ## using approach used here:
 ## https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
@@ -45,15 +53,6 @@ RUN set -eux; \
     \
     echo "deb http://ftp.debian.org/debian jessie-backports main" >/etc/apt/sources.list.d/backports.list; \
     docker-install bash sudo ca-certificates python python-apt
-
-RUN rm -rf                        \
-    /var/lib/apt/lists/*          \
-    /var/log/alternatives.log     \
-    /var/log/apt/history.log      \
-    /var/log/apt/term.log         \
-    /var/log/dpkg.log \
-    /var/tmp/* \
-    /tmp/*
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 

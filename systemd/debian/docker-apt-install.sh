@@ -61,6 +61,12 @@ apt-install "$@"
 
 echo
 echo "Cleaning up..."
-rm -rf /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/* \
+    /var/log/alternatives.log \
+    /var/log/apt/history.log \
+    /var/log/apt/term.log \
+    /var/log/dpkg.log \
+    /var/tmp/* \
+    /tmp/*
 
 # docker's official debian and ubuntu images do apt-get clean for us
