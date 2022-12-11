@@ -15,6 +15,12 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /lib/systemd/system/basic.target.wants/* \
     /lib/systemd/system/anaconda.target.wants/*
 
+# The machine-id should be generated when creating the container. This will be
+# done automatically if the file is not present, so let's delete it.
+RUN rm -f           \
+    /etc/machine-id \
+    /var/lib/dbus/machine-id
+
 VOLUME [ "/sys/fs/cgroup" ]
 
 CMD ["/usr/sbin/init"]
