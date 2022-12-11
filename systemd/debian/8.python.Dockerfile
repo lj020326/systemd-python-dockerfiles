@@ -47,7 +47,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ## using approach used here:
 ## https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
-COPY docker-apt-install.sh /usr/local/sbin/docker-install
+COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
 
 RUN set -eux; \
     \
