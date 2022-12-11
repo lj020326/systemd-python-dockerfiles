@@ -5,31 +5,13 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-# Dependencies for Ansible
-## MUST install devel libs for python-ldap to work
-## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
-#RUN apt-get update && \
-#    apt-get install --no-install-recommends -y \
-#        dbus systemd systemd-cron rsyslog iproute2 \
-#        sudo bash ca-certificates \
-#        python python-apt bash \
-#        libldap2-dev libsasl2-dev slapd ldap-utils \
-#        build-essential python-dev \
-#        python-pip \
-#        && \
-#    apt-get clean && \
-#    rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-
 ## using approach used here:
 ## https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
 COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
 
+## Dependencies for Ansible
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
-#RUN set -eux; \
-#    echo "deb http://ftp.debian.org/debian jessie-backports main" >/etc/apt/sources.list.d/backports.list; \
-#    echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" >/etc/apt/sources.list.d/backports.list; \
-
+## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
 RUN set -eux; \
     docker-install \
