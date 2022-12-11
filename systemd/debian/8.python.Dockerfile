@@ -32,7 +32,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ## ref: https://github.com/alehaa/docker-debian-systemd/blob/master/Dockerfile
 RUN apt-get update
 RUN apt-get dist-upgrade -y
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get install -f -y --no-install-recommends \
         bash sudo ca-certificates \
         python python-apt bash
 
