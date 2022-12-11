@@ -34,7 +34,7 @@ jobs:
             systemd-python-distro:
               name: openrc-alpine-python
               dockerfile: openrc/alpine/python.Dockerfile
-              context: .
+              context: openrc/alpine
               platforms: |-
                 linux/amd64
               tags: |-
@@ -52,7 +52,7 @@ jobs:
             systemd-python-distro:
               name: aports-dev-python
               dockerfile: aports-dev/python.Dockerfile
-              context: .
+              context: aports-dev
               platforms: |-
                 linux/amd64
               tags: |-

@@ -26,7 +26,7 @@ jobs:
             systemd-distro:
               name: systemd-redhat7
               dockerfile: systemd/redhat/7.Dockerfile
-              context: .
+              context: systemd/redhat
               platforms: |-
                 linux/amd64
               tags: |-
@@ -44,7 +44,7 @@ jobs:
             systemd-distro:
               name: systemd-redhat8
               dockerfile: systemd/redhat/8.Dockerfile
-              context: .
+              context: systemd/redhat
               platforms: |-
                 linux/amd64
                 linux/arm64

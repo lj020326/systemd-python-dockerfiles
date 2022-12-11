@@ -26,7 +26,7 @@ jobs:
             systemd-distro:
               name: systemd-ubuntu1804
               dockerfile: systemd/ubuntu/18.04.Dockerfile
-              context: .
+              context: systemd/ubuntu
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -48,7 +48,7 @@ jobs:
             systemd-distro:
               name: systemd-ubuntu2004
               dockerfile: systemd/ubuntu/20.04.Dockerfile
-              context: .
+              context: systemd/ubuntu
               platforms: |-
                 linux/amd64
                 linux/arm/v7
@@ -70,7 +70,7 @@ jobs:
             systemd-distro:
               name: systemd-ubuntu2204
               dockerfile: systemd/ubuntu/22.04.Dockerfile
-              context: .
+              context: systemd/ubuntu
               platforms: |-
                 linux/amd64
                 linux/arm/v7
