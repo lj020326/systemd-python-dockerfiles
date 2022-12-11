@@ -15,18 +15,18 @@ ENV DEBIAN_FRONTEND noninteractive
 #    && yum clean all
 
 ## ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
-#RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
-#    && sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
-#    && sed -i 's/enabled=1/enabled=0/g' /etc/yum.conf
+RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
+    && sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
+    && sed -i 's/enabled=1/enabled=0/g' /etc/yum.conf
 
 ### Add necessary Red Hat repos here
-RUN REPOLIST=rhel-7-server-rpms,rhel-7-server-optional-rpms && \
-    yum -y update-minimal --disablerepo "*" --enablerepo rhel-7-server-rpms --setopt=tsflags=nodocs \
-      --security --sec-severity=Important --sec-severity=Critical && \
-    yum -y install --disablerepo "*" --enablerepo ${REPOLIST} --setopt=tsflags=nodocs \
-        sudo bash \
-        openldap-devel \
-        python python-devel
+#RUN REPOLIST=rhel-7-server-rpms,rhel-7-server-optional-rpms && \
+#    yum -y update-minimal --disablerepo "*" --enablerepo rhel-7-server-rpms --setopt=tsflags=nodocs \
+#      --security --sec-severity=Important --sec-severity=Critical && \
+RUN yum -y install --disablerepo "*" --enablerepo ${REPOLIST} --setopt=tsflags=nodocs \
+    sudo bash \
+    openldap-devel \
+    python python-devel
 
 RUN systemctl set-default multi-user.target
 
