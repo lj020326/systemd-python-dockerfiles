@@ -20,43 +20,26 @@ ENV DEBIAN_FRONTEND noninteractive
 #    apt-get clean && \
 #    rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-### ref: https://hub.docker.com/r/jrei/systemd-debian/dockerfile
-#RUN apt-get update \
-#    && apt-get install -y systemd systemd-sysv \
-#        sudo bash ca-certificates \
-#        python python-apt bash \
-#    && apt-get clean \
-#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-## ref: https://github.com/alehaa/docker-debian-systemd/blob/master/Dockerfile
-#RUN apt-get update
-#RUN apt-get dist-upgrade -y
-#RUN apt-get install -f -y --no-install-recommends \
-#        bash sudo ca-certificates python python-apt
-#
-#RUN apt-get clean
-#RUN rm -rf                        \
-#    /var/lib/apt/lists/*          \
-#    /var/log/alternatives.log     \
-#    /var/log/apt/history.log      \
-#    /var/log/apt/term.log         \
-#    /var/log/dpkg.log \
-#    /var/tmp/* \
-#    /tmp/*
 
 ## using approach used here:
 ## https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
 COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
 
+## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
+## deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main
 #RUN set -eux; \
-#    \
 #    echo "deb http://ftp.debian.org/debian jessie-backports main" >/etc/apt/sources.list.d/backports.list; \
-#    docker-install bash sudo ca-certificates python python-apt
+#    docker-install bash sudo rsyslog ca-certificates python python-apt
 
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
 ## deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main
 RUN set -eux; \
-    docker-install bash sudo rsyslog ca-certificates python python-apt
+    docker-install \
+        dbus systemd systemd-cron rsyslog iproute2 \
+        sudo bash ca-certificates \
+        python python-apt python-pip \
+        libldap2-dev libsasl2-dev slapd ldap-utils \
+        build-essential python-dev
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
@@ -68,7 +51,6 @@ RUN systemctl mask dev-hugepages.mount sys-fs-fuse-connections.mount
 RUN rm -f           \
     /etc/machine-id \
     /var/lib/dbus/machine-id
-
 
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run", "/run/lock"]
 STOPSIGNAL SIGRTMIN+3
