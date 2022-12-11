@@ -14,8 +14,12 @@ RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.
     && sed -i 's/enabled=1/enabled=0/g' /etc/yum.conf
 
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
+#RUN yum makecache fast \
+#    && yum install -y python sudo yum-plugin-ovl bash \
+#    && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf \
+#    && yum clean all
 RUN yum makecache fast \
-    && yum install -y python sudo yum-plugin-ovl bash \
+    && yum install -y python sudo bash \
     && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf \
     && yum clean all
 RUN yum update -y
