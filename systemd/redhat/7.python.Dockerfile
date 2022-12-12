@@ -11,6 +11,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ## ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
 ## ref: https://stackoverflow.com/questions/11696113/yum-on-centos-stuck-at-loaded-plugins-fastestmirror
+## ref: https://github.com/RHsyseng/container-rhel-examples/blob/master/starter/Dockerfile
 RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
     && sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/enabled_repos_upload.conf \
     && sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/fastestmirror.conf \
