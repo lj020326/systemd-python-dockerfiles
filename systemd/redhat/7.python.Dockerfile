@@ -5,8 +5,6 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-#COPY ./centos-os.repo.ini /etc/yum.repos.d/centos-os.repo
-#COPY ./centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 #COPY ./redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
 
 ## ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
