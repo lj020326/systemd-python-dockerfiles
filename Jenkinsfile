@@ -19,99 +19,99 @@ pipeline:
   buildImageList:
     - buildImageLabel: centos7-systemd
       buildDir: systemd/centos
-      dockerFile: systemd/centos/7.Dockerfile
+      dockerFile: 7.Dockerfile
     - buildImageLabel: centos8-systemd
       buildDir: systemd/centos
-      dockerFile: systemd/centos/8.Dockerfile
+      dockerFile: 8.Dockerfile
     - buildImageLabel: redhat7-systemd
       buildDir: systemd/redhat
-      dockerFile: systemd/redhat/7.Dockerfile
+      dockerFile: 7.Dockerfile
     - buildImageLabel: redhat8-systemd
       buildDir: systemd/redhat
-      dockerFile: systemd/redhat/8.Dockerfile
+      dockerFile: 8.Dockerfile
     - buildImageLabel: fedora35-systemd
       buildDir: systemd/fedora
-      dockerFile: systemd/fedora/35.Dockerfile
+      dockerFile: 35.Dockerfile
     - buildImageLabel: fedora36-systemd
       buildDir: systemd/fedora
-      dockerFile: systemd/fedora/36.Dockerfile
+      dockerFile: 36.Dockerfile
 
     - buildImageLabel: debian8-systemd
       buildDir: systemd/debian
-      dockerFile: systemd/debian/8.Dockerfile
+      dockerFile: 8.Dockerfile
     - buildImageLabel: debian9-systemd
       buildDir: systemd/debian
-      dockerFile: systemd/debian/9.Dockerfile
+      dockerFile: 9.Dockerfile
     - buildImageLabel: debian10-systemd
       buildDir: systemd/debian
-      dockerFile: systemd/debian/10.Dockerfile
+      dockerFile: 10.Dockerfile
     - buildImageLabel: debian11-systemd
       buildDir: systemd/debian
-      dockerFile: systemd/debian/11.Dockerfile
+      dockerFile: 11.Dockerfile
     - buildImageLabel: debian12-systemd
       buildDir: systemd/debian
-      dockerFile: systemd/debian/12.Dockerfile
+      dockerFile: 12.Dockerfile
     - buildImageLabel: systemd-debian-sid
       buildDir: systemd/debian
-      dockerFile: systemd/debian/sid.Dockerfile
+      dockerFile: sid.Dockerfile
     - buildImageLabel: ubuntu1604-systemd
       buildDir: systemd/ubuntu
-      dockerFile: systemd/ubuntu/16.04.Dockerfile
+      dockerFile: 16.04.Dockerfile
     - buildImageLabel: ubuntu1804-systemd
       buildDir: systemd/ubuntu
-      dockerFile: systemd/ubuntu/18.04.Dockerfile
+      dockerFile: 18.04.Dockerfile
     - buildImageLabel: ubuntu2004-systemd
       buildDir: systemd/ubuntu
-      dockerFile: systemd/ubuntu/20.04.Dockerfile
+      dockerFile: 20.04.Dockerfile
     - buildImageLabel: ubuntu2204-systemd
       buildDir: systemd/ubuntu
-      dockerFile: systemd/ubuntu/22.04.Dockerfile
+      dockerFile: 22.04.Dockerfile
 
     ## systemd images with python installed
     - buildImageLabel: centos7-systemd-python
       buildDir: systemd/centos
-      dockerFile: systemd/centos/7.python.Dockerfile
+      dockerFile: 7.python.Dockerfile
     - buildImageLabel: centos8-systemd-python
       buildDir: systemd/centos
-      dockerFile: systemd/centos/8.python.Dockerfile
+      dockerFile: 8.python.Dockerfile
     - buildImageLabel: redhat7-systemd-python
       buildDir: systemd/redhat
       dockerFile: 7.python.Dockerfile
     - buildImageLabel: redhat8-systemd-python
       buildDir: systemd/redhat
-      dockerFile: systemd/redhat/8.python.Dockerfile
+      dockerFile: 8.python.Dockerfile
     - buildImageLabel: fedora35-systemd-python
       buildDir: systemd/fedora
-      dockerFile: systemd/fedora/35.python.Dockerfile
+      dockerFile: 35.python.Dockerfile
     - buildImageLabel: fedora8-systemd-python
       buildDir: systemd/fedora
-      dockerFile: systemd/fedora/36.python.Dockerfile
+      dockerFile: 36.python.Dockerfile
 
     - buildImageLabel: debian8-systemd-python
       buildDir: systemd/debian
-      dockerFile: systemd/debian/8.python.Dockerfile
+      dockerFile: 8.python.Dockerfile
     - buildImageLabel: debian9-systemd-python
       buildDir: systemd/debian
-      dockerFile: systemd/debian/9.python.Dockerfile
+      dockerFile: 9.python.Dockerfile
     - buildImageLabel: debian10-systemd-python
       buildDir: systemd/debian
-      dockerFile: systemd/debian/10.python.Dockerfile
+      dockerFile: 10.python.Dockerfile
     - buildImageLabel: debian11-systemd-python
       buildDir: systemd/debian
-      dockerFile: systemd/debian/11.python.Dockerfile
+      dockerFile: 11.python.Dockerfile
     - buildImageLabel: debian12-systemd-python
       buildDir: systemd/debian
-      dockerFile: systemd/debian/12.python.Dockerfile
+      dockerFile: 12.python.Dockerfile
 
     - buildImageLabel: ubuntu1804-systemd-python
       buildDir: systemd/ubuntu
-      dockerFile: systemd/ubuntu/18.04.Dockerfile
+      dockerFile: 18.04.Dockerfile
     - buildImageLabel: ubuntu2004-systemd-python
       buildDir: systemd/ubuntu
-      dockerFile: systemd/ubuntu/20.04.python.Dockerfile
+      dockerFile: 20.04.python.Dockerfile
     - buildImageLabel: ubuntu2204-systemd-python
       buildDir: systemd/ubuntu
-      dockerFile: systemd/ubuntu/22.04.python.Dockerfile
+      dockerFile: 22.04.python.Dockerfile
 
 """
 
