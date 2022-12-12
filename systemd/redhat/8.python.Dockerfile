@@ -7,6 +7,9 @@ ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN dnf --disableplugin subscription-manager update -y
+
+## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
+RUN dnf -y install https://repo.ius.io/ius-release-el$(rpm -E '%{rhel}').rpm
 RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 #RUN yum-config-manager --enable epel
 RUN dnf upgrade -y

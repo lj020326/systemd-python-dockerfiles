@@ -17,9 +17,9 @@ RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.
 RUN yum repolist --disablerepo=* && \
     yum-config-manager --disable \* > /dev/null
 
+## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
+RUN yum -y install https://repo.ius.io/ius-release-el$(rpm -E '%{rhel}').rpm
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
-#RUN yum-config-manager --enable epel
-
 RUN yum update -y
 
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
