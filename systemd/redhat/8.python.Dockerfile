@@ -7,7 +7,7 @@ ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN dnf --disableplugin subscription-manager update -y
-RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 #RUN yum-config-manager --enable epel
 RUN dnf upgrade -y
 
