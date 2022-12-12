@@ -5,6 +5,9 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
+#COPY ./centos-os.repo.ini /etc/yum.repos.d/centos-os.repo
+#COPY ./centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
+
 # Dependencies for Ansible
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
