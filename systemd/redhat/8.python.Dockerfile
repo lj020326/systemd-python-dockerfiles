@@ -6,10 +6,10 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN dnf --disableplugin subscription-manager update -y
-RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
-#RUN yum-config-manager --enable epel
-RUN dnf upgrade -y
+#RUN dnf --disableplugin subscription-manager update -y
+#RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+##RUN yum-config-manager --enable epel
+#RUN dnf upgrade -y
 
 # Dependencies for Ansible
 ## MUST install devel libs for python-ldap to work
