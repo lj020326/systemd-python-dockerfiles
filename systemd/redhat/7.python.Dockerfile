@@ -18,7 +18,8 @@ RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.
     && sed -i 's/enabled=1/enabled=0/g' /etc/yum.conf
 
 RUN yum repolist --disablerepo=* && \
-    yum-config-manager --disable \* > /dev/null
+    yum-config-manager --disable \* > /dev/null && \
+    yum-config-manager --enable rhel-7-server-rpms > /dev/null
 
 ## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
