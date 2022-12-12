@@ -18,7 +18,6 @@ RUN yum repolist --disablerepo=* && \
     yum-config-manager --disable \* > /dev/null
 
 ## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
-RUN yum -y install https://repo.ius.io/ius-release-el$(rpm -E '%{rhel}').rpm
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 RUN yum update -y
 
