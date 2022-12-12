@@ -5,24 +5,14 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-COPY ./centos-os.repo.ini /etc/yum.repos.d/centos-os.repo
-COPY ./centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
+#COPY ./centos-os.repo.ini /etc/yum.repos.d/centos-os.repo
+#COPY ./centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
+#COPY ./redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
 
 ## ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
 RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
     && sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
     && sed -i 's/enabled=1/enabled=0/g' /etc/yum.conf
-
-## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
-#RUN yum makecache fast \
-#    && yum install -y python sudo yum-plugin-ovl bash \
-#    && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf \
-#    && yum clean all
-RUN yum makecache fast \
-    && yum install -y python sudo bash \
-    && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf \
-    && yum clean all
-RUN yum update -y
 
 ## Update image
 #RUN yum repolist --disablerepo=* && \
@@ -35,10 +25,28 @@ RUN yum update -y
 #    yum -y update-minimal --disablerepo "*" --enablerepo rhel-7-server-rpms --setopt=tsflags=nodocs \
 #      --security --sec-severity=Important --sec-severity=Critical && \
 #    yum -y install --disablerepo "*" --enablerepo ${REPOLIST} --setopt=tsflags=nodocs \
-RUN yum -y install \
-    sudo bash \
-    openldap-devel \
-    python python-devel
+
+RUN yum repolist --disablerepo=* && \
+    yum-config-manager --disable \* > /dev/null
+
+RUN yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+#RUN yum-config-manager --enable epel
+
+## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
+#RUN yum makecache fast \
+#    && yum install -y python sudo yum-plugin-ovl bash \
+#    && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf \
+#    && yum clean all
+RUN yum makecache fast \
+    && yum install -y python sudo bash \
+    && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf \
+    && yum clean all
+RUN yum update -y
+
+#RUN yum -y install \
+#    sudo bash \
+#    openldap-devel \
+#    python python-devel
 
 RUN systemctl set-default multi-user.target
 
