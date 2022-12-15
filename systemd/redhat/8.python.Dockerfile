@@ -8,6 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN dnf --disableplugin subscription-manager update -y
 
+## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
 RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 #RUN yum-config-manager --enable epel
