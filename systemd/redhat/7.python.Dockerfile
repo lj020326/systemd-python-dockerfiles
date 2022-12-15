@@ -5,7 +5,8 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-#COPY ./redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
+COPY ./centos-os.repo.ini /etc/yum.repos.d/centos-os.repo
+COPY ./centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 
 ## ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
 ## ref: https://stackoverflow.com/questions/11696113/yum-on-centos-stuck-at-loaded-plugins-fastestmirror
