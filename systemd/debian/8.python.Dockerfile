@@ -22,7 +22,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-        dbus systemd systemd-cron \
+        systemd \
         bash ca-certificates \
         python python-apt python-pip \
         && \
