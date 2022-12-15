@@ -16,7 +16,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ##RUN set -eux; docker-install systemd python python-apt python-pip
 #RUN set -eux; docker-install python python-apt python-pip
 
-RUN apt-get update && apt-get install -y python python-apt python-pip
+RUN apt-get update -y && apt-get install -y python python-apt python-pip
 
 #RUN apt-get update && \
 #    apt-get install --no-install-recommends -y \
