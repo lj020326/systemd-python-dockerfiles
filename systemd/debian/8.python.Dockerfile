@@ -5,20 +5,31 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-## using approach used here:
-## https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
-COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
+### using approach used here:
+### https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
+#COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
+#
+### Dependencies for Ansible
+### ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
+### ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
+#RUN set -eux; \
+#    docker-install \
+#        dbus systemd systemd-cron rsyslog iproute2 \
+#        sudo bash ca-certificates \
+#        python python-apt python-pip \
+#        libldap2-dev libsasl2-dev slapd ldap-utils \
+#        build-essential python-dev
 
-## Dependencies for Ansible
-## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
-## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
-RUN set -eux; \
-    docker-install \
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
         dbus systemd systemd-cron rsyslog iproute2 \
         sudo bash ca-certificates \
         python python-apt python-pip \
+        build-essential python-dev \
         libldap2-dev libsasl2-dev slapd ldap-utils \
-        build-essential python-dev
+        && \
+    apt-get clean && \
+    rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
