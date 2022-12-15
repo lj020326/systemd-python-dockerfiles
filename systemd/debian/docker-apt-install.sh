@@ -9,7 +9,7 @@
 set -e
 
 function apt-install {
-    apt-get install --no-install-recommends -y "$@"
+    apt-get install --no-install-recommends -f -y "$@"
 }
 
 function retry {
