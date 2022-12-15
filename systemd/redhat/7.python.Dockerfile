@@ -23,10 +23,7 @@ RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(r
 RUN yum update -y
 
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
-RUN yum -y install \
-    sudo bash \
-    openldap-devel \
-    python python-devel
+RUN yum -y install bash python
 
 RUN systemctl set-default multi-user.target
 
