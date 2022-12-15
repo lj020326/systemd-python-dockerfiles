@@ -5,9 +5,9 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-## using approach used here:
-## https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
-COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
+### using approach used here:
+### https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
+#COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
 
 ## Dependencies for Ansible
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
