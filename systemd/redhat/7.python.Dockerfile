@@ -12,8 +12,7 @@ COPY ./centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 ## ref: https://stackoverflow.com/questions/11696113/yum-on-centos-stuck-at-loaded-plugins-fastestmirror
 ## ref: https://github.com/RHsyseng/container-rhel-examples/blob/master/starter/Dockerfile
 ## ref: https://pnyiu.github.io/2017/11/17/Docker-on-RHEL-7-4-Apache-HTTPD-and-Tomcat/
-RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf \
-    && sed -i 's/enabled=1/enabled=0/g' /etc/yum.conf
+RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
 
 RUN yum repolist --disablerepo=* && \
     yum-config-manager --disable \* > /dev/null && \
