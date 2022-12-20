@@ -5,6 +5,10 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
+## ref: https://octopus.com/blog/using-ubuntu-docker-image
+RUN echo 'APT::Install-Suggests "0";' >> /etc/apt/apt.conf.d/00-docker
+RUN echo 'APT::Install-Recommends "0";' >> /etc/apt/apt.conf.d/00-docker
+
 RUN apt-get update \
     && apt-get install -y systemd systemd-sysv \
     && apt-get clean \
