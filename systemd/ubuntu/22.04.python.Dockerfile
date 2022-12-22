@@ -1,5 +1,6 @@
-#FROM lj020326/ubuntu2204-systemd:latest
-FROM registry.johnson.int/systemd-ubuntu2204:latest
+## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
+ARG IMAGE_REGISTRY=registry.johnson.int:5000
+FROM $IMAGE_REGISTRY/systemd-ubuntu2204:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
 ENV container docker
