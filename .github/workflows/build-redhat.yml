@@ -97,6 +97,7 @@ jobs:
           context: ${{ matrix.systemd-python-distro.context }}
           file: ${{ matrix.systemd-python-distro.dockerfile }}
           platforms: ${{ matrix.systemd-python-distro.platforms }}
+          build-args: IMAGE_REGISTRY=${{ github.repository_owner }}
           push: true
           tags: ${{ matrix.systemd-python-distro.tags }}
           labels: |

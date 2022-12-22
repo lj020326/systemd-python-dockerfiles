@@ -1,5 +1,7 @@
-FROM lj020326/redhat7-systemd:latest
+ARG IMAGE_REGISTRY=registry.johnson.int:5000
+FROM $IMAGE_REGISTRY/redhat7-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+LABEL build="2022121501"
 
 ENV container docker
 ENV LC_ALL C
