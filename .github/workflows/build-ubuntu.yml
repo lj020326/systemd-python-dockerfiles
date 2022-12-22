@@ -35,7 +35,7 @@ jobs:
                 lj020326/ubuntu1804-systemd:latest
             systemd-python-distro:
               name: systemd-ubuntu1804-python
-              dockerfile: systemd/ubuntu/github.18.04.python.Dockerfile
+              dockerfile: systemd/ubuntu/18.04.python.Dockerfile
               context: systemd/ubuntu
               platforms: |-
                 linux/amd64
@@ -57,7 +57,7 @@ jobs:
                 lj020326/ubuntu2004-systemd:latest
             systemd-python-distro:
               name: systemd-ubuntu2004-python
-              dockerfile: systemd/ubuntu/github.20.04.python.Dockerfile
+              dockerfile: systemd/ubuntu/20.04.python.Dockerfile
               context: systemd/ubuntu
               platforms: |-
                 linux/amd64
@@ -79,7 +79,7 @@ jobs:
                 lj020326/ubuntu2204-systemd:latest
             systemd-python-distro:
               name: systemd-ubuntu2204-python
-              dockerfile: systemd/ubuntu/github.22.04.python.Dockerfile
+              dockerfile: systemd/ubuntu/22.04.python.Dockerfile
               context: systemd/ubuntu
               platforms: |-
                 linux/amd64
