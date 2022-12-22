@@ -53,7 +53,7 @@ pipeline:
     - buildImageLabel: debian12-systemd
       buildDir: systemd/debian
       dockerFile: 12.Dockerfile
-    - buildImageLabel: systemd-debian-sid
+    - buildImageLabel: debian-sid-systemd
       buildDir: systemd/debian
       dockerFile: sid.Dockerfile
 
