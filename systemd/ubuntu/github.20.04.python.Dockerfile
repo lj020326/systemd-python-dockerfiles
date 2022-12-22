@@ -1,5 +1,5 @@
-#FROM lj020326/ubuntu1804-systemd:latest
-FROM registry.johnson.int/systemd-ubuntu1804:latest
+FROM lj020326/ubuntu2004-systemd:latest
+#FROM registry.johnson.int/systemd-ubuntu2004:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
 ENV container docker
@@ -14,7 +14,7 @@ RUN apt-get update && \
     apt-get install --no-install-recommends -y \
         dbus systemd systemd-cron rsyslog iproute2 \
         sudo bash ca-certificates \
-        python python-apt python-pip python-ldap \
+        python python-apt \
         build-essential python-dev \
         libldap2-dev libsasl2-dev libssl-dev slapd ldap-utils tox \
         && \

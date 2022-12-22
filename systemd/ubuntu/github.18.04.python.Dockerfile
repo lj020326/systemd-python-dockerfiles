@@ -1,5 +1,5 @@
-#FROM lj020326/ubuntu1804-systemd:latest
-FROM registry.johnson.int/systemd-ubuntu1804:latest
+FROM lj020326/ubuntu1804-systemd:latest
+#FROM registry.johnson.int/systemd-ubuntu1804:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
 ENV container docker

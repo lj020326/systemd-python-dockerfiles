@@ -1,5 +1,5 @@
-#FROM lj020326/ubuntu1804-systemd:latest
-FROM registry.johnson.int/systemd-ubuntu1804:latest
+FROM lj020326/ubuntu2204-systemd:latest
+#FROM registry.johnson.int/systemd-ubuntu2204:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
 ENV container docker
@@ -14,14 +14,14 @@ RUN apt-get update && \
     apt-get install --no-install-recommends -y \
         dbus systemd systemd-cron rsyslog iproute2 \
         sudo bash ca-certificates \
-        python python-apt python-pip python-ldap \
-        build-essential python-dev \
+        python3 python3-apt python3-pip python3-ldap \
+        build-essential python3-dev \
         libldap2-dev libsasl2-dev libssl-dev slapd ldap-utils tox \
         && \
     apt-get clean && \
     rm -rf /usr/share/doc/* /usr/share/man/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN sed -i 's/^\(module(load="imklog")\)/#\1/' /etc/rsyslog.conf
+RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
 RUN systemctl set-default multi-user.target
 RUN systemctl mask dev-hugepages.mount sys-fs-fuse-connections.mount

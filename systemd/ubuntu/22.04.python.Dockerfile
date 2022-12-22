@@ -1,5 +1,5 @@
-FROM lj020326/ubuntu2204-systemd:latest
-#FROM registry.johnson.int/systemd-ubuntu2204:latest
+#FROM lj020326/ubuntu2204-systemd:latest
+FROM registry.johnson.int/systemd-ubuntu2204:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
 ENV container docker
