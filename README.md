@@ -9,6 +9,16 @@
 
 Image builds are triggered automatically each month.
 
+## Status
+
+[![GitHub issues](https://img.shields.io/github/issues/lj020326/systemd-python-dockerfiles.svg?style=flat-square)](https://github.com/lj020326/systemd-python-dockerfiles/issues)
+[![GitHub stars](https://img.shields.io/github/stars/lj020326/systemd-python-dockerfiles.svg?style=flat-square)](https://github.com/lj020326/systemd-python-dockerfiles/stargazers)
+[![Docker Pulls - centos7-systemd-python](https://img.shields.io/docker/pulls/lj020326/centos7-systemd-python.svg?style=flat-square)](https://hub.docker.com/repository/docker/lj020326/centos7-systemd-python/)
+[![Docker Pulls - centos8-systemd-python](https://img.shields.io/docker/pulls/lj020326/centos8-systemd-python.svg?style=flat-square)](https://hub.docker.com/repository/docker/lj020326/centos8-systemd-python/)
+[![Docker Pulls - redhat8-systemd-python](https://img.shields.io/docker/pulls/lj020326/redhat8-systemd-python.svg?style=flat-square)](https://hub.docker.com/repository/docker/lj020326/redhat8-systemd-python/)
+[![Docker Pulls - ubuntu2204-systemd-python](https://img.shields.io/docker/pulls/lj020326/ubuntu2204-systemd-python.svg?style=flat-square)](https://hub.docker.com/repository/docker/lj020326/ubuntu2204-systemd-python/)
+[![Docker Pulls - debian12-systemd-python](https://img.shields.io/docker/pulls/lj020326/debian12-systemd-python.svg?style=flat-square)](https://hub.docker.com/repository/docker/lj020326/debian12-systemd-python/)
+
 ## Directory structure
 
 - [aports-dev](./aports-dev) contains an image for Alpine Linux aports development.
