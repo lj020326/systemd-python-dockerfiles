@@ -54,11 +54,6 @@ $ MOLECULE_DISTRO=redhat8-systemd-python molecule login
 $ molecule destroy
 ```
 
-
-## License
-
-Copyright (c) 2019-2022 Lee Johnson - GNU License
-
 ## Contact
 
 [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/leejjohnson/)
