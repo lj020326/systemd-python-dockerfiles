@@ -1,7 +1,7 @@
 ARG IMAGE_REGISTRY=media.johnson.int:5000
 FROM $IMAGE_REGISTRY/centos7-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build="2022121501"
+LABEL build="2023010401"
 
 ENV container docker
 ENV LC_ALL C
