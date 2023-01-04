@@ -7,7 +7,7 @@
 
 # This repository contains systemd-python enabled dockerfiles
 
-The systemd-python enabled docker images can be found on [dockerhub](https://hub.docker.com/repositories/lj020326?search=systemd).  The corresponding dockerfile image definitions for the systemd-python enabled docker platform containers can be found [here](systemd).  
+The systemd-python enabled docker images defined here can be found on [dockerhub](https://hub.docker.com/repositories/lj020326?search=systemd).  
 
 ## Status
 
