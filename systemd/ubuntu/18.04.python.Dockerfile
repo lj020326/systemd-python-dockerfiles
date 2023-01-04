@@ -13,11 +13,8 @@ ENV DEBIAN_FRONTEND noninteractive
 ## ref: https://stackoverflow.com/questions/4768446/i-cant-install-python-ldap
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-        dbus systemd systemd-cron rsyslog iproute2 \
         sudo bash ca-certificates \
-        python python-apt python-pip python-ldap \
-        build-essential python-dev \
-        libldap2-dev libsasl2-dev libssl-dev slapd ldap-utils tox \
+        python python-apt python-pip \
         && \
     apt-get clean && \
     rm -rf /usr/share/doc/* /usr/share/man/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
