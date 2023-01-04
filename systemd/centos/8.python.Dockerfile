@@ -17,12 +17,13 @@ RUN dnf upgrade -y
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
-RUN dnf makecache && dnf install --nodocs -y \
-    sudo bash \
-    openldap-devel \
-    python3 python3-devel \
-    && \
-    dnf clean all
+RUN dnf makecache
+RUN dnf install --nodocs -y \
+    sudo \
+    bash \
+    python3
+
+RUN dnf clean all
 
 RUN systemctl set-default multi-user.target
 
