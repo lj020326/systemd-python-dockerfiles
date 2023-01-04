@@ -13,8 +13,12 @@ ENV DEBIAN_FRONTEND noninteractive
 ## ref: https://stackoverflow.com/questions/4768446/i-cant-install-python-ldap
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-        sudo bash ca-certificates \
-        python3 python3-apt python3-pip \
+        sudo \
+        bash \
+        ca-certificates \
+        python3 \
+        python3-apt \
+        python3-pip \
         && \
     apt-get clean && \
     rm -rf /usr/share/doc/* /usr/share/man/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
