@@ -17,8 +17,16 @@ ENV DEBIAN_FRONTEND noninteractive
 #RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
 RUN yum install -y \
     sudo \
-    bash \
-    python
+    bash
+
+RUN yum install -y \
+    python2-pip \
+    python2-cryptography \
+    python-netaddr \
+    python3 \
+    python3-pip \
+    python3-libselinux \
+    python3-virtualenv
 
 RUN systemctl set-default multi-user.target
 
