@@ -20,13 +20,13 @@ RUN yum install -y \
     bash
 
 RUN yum install -y \
-    python2-pip \
-    python2-cryptography \
-    python-netaddr \
-    python3 \
-    python3-pip \
-    python3-libselinux \
-    python3-virtualenv
+    python-pip \
+    python-cryptography \
+    python-netaddr
+#    python3 \
+#    python3-pip \
+#    python3-libselinux \
+#    python3-virtualenv
 
 RUN systemctl set-default multi-user.target
 
