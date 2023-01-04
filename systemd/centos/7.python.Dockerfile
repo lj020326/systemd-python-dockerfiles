@@ -20,6 +20,7 @@ RUN yum install -y \
     bash
 
 RUN yum install -y \
+    python \
     python-pip \
     python-libselinux \
     python-cryptography \
