@@ -18,7 +18,6 @@ RUN apt-get update && \
         ca-certificates \
         python \
         python-apt \
-        python-pip \
         && \
     apt-get clean && \
     rm -rf /usr/share/doc/* /usr/share/man/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
