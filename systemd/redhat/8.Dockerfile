@@ -23,5 +23,5 @@ RUN rm -f           \
 
 VOLUME [ "/sys/fs/cgroup" ]
 
-CMD ["/usr/sbin/init"]
-#CMD ["/usr/lib/systemd/systemd"]
+#CMD ["/usr/sbin/init"]
+CMD ["/usr/lib/systemd/systemd"]
