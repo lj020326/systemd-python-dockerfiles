@@ -29,6 +29,7 @@ RUN rm -f           \
     /etc/machine-id \
     /var/lib/dbus/machine-id
 
-VOLUME [ "/sys/fs/cgroup" ]
+#VOLUME [ "/sys/fs/cgroup" ]
+VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 
 CMD ["/lib/systemd/systemd"]
