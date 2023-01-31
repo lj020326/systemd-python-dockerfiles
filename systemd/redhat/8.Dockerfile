@@ -1,4 +1,5 @@
-FROM registry.access.redhat.com/ubi8/ubi
+FROM registry.access.redhat.com/ubi8/ubi-init
+#FROM registry.access.redhat.com/ubi8/ubi
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build_date="2023-01-04"
 
