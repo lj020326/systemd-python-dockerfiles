@@ -41,7 +41,8 @@ RUN rm -f           \
 # NOTE: For running Debian stretch, 'CAP_SYS_ADMIN' still needs to be added, as
 #       stretch's version of systemd is not recent enough. Buster will run just
 #       fine without 'CAP_SYS_ADMIN'.
-VOLUME [ "/sys/fs/cgroup" ]
+#VOLUME [ "/sys/fs/cgroup" ]
+VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 
 # A different stop signal is required, so systemd will initiate a shutdown when
 # running 'docker stop <container>'.
