@@ -4,10 +4,12 @@ LABEL build_date="2023-01-04"
 
 ENV container docker
 
-RUN cd /lib/systemd/system/sysinit.target.wants/; \
-    for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done
-
-RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
+## ref: https://ilhicas.com/2018/08/20/Using-molecule-with-docker.html
+RUN yum -y swap -- remove fakesystemd -- install systemd systemd-libs initscripts
+RUN yum -y update; yum clean all; \
+(cd /lib/systemd/system/sysinit.target.wants/; \
+    for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+rm -f /lib/systemd/system/multi-user.target.wants/* \
     /etc/systemd/system/*.wants/* \
     /lib/systemd/system/local-fs.target.wants/* \
     /lib/systemd/system/sockets.target.wants/*udev* \
