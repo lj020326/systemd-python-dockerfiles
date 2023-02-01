@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOCKER_CONTAINER_NAME=ubuntu22
+DOCKER_CONTAINER_NAME=systemd-ubuntu22
 #DOCKER_NAMESPACE=media.johnson.int:5000
 DOCKER_NAMESPACE=lj020326
 DOCKER_IMAGE=${DOCKER_NAMESPACE}/ubuntu2204-systemd-python:latest

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOCKER_CONTAINER_NAME=redhat8
+DOCKER_CONTAINER_NAME=systemd-redhat8
 #DOCKER_NAMESPACE=media.johnson.int:5000
 DOCKER_NAMESPACE=lj020326
 DOCKER_IMAGE=${DOCKER_NAMESPACE}/redhat8-systemd-python:latest
