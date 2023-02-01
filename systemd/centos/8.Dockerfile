@@ -4,10 +4,10 @@ LABEL build_date="2023-01-04"
 
 ENV container docker
 
-RUN cd /lib/systemd/system/sysinit.target.wants/; \
-    for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done
-
-RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
+## ref: https://github.com/geerlingguy/docker-centos8-ansible/blob/master/Dockerfile
+RUN (cd /lib/systemd/system/sysinit.target.wants/; \
+for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+rm -f /lib/systemd/system/multi-user.target.wants/* \
     /etc/systemd/system/*.wants/* \
     /lib/systemd/system/local-fs.target.wants/* \
     /lib/systemd/system/sockets.target.wants/*udev* \
