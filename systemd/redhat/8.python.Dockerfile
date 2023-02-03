@@ -10,11 +10,14 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN dnf --disableplugin subscription-manager update -y
 RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
 
+COPY ./centos8-linux-baseOS.repo.ini /etc/yum.repos.d/centos8-linux-baseOS.repo
+
 ## ref: https://linuxconfig.org/redhat-8-epel-install-guide
 ## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
 RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 #RUN yum-config-manager --enable epel
+
 RUN dnf upgrade -y
 
 # Dependencies for Ansible
