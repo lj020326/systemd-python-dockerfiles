@@ -13,7 +13,8 @@ RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.
 COPY ./centos8-linux-baseOS.repo.ini /etc/yum.repos.d/centos8-linux-baseOS.repo
 COPY ./centos8-linux-extras.repo.ini /etc/yum.repos.d/centos8-linux-extras.repo
 
-COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+#COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+RUN curl -K https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 
 ## ref: https://linuxconfig.org/redhat-8-epel-install-guide
 ## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
