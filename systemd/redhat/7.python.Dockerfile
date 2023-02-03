@@ -16,8 +16,8 @@ RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.
 RUN yum repolist --disablerepo=* && \
     yum-config-manager --disable \* > /dev/null
 
-COPY ./centos-os.repo.ini /etc/yum.repos.d/centos-os.repo
-COPY ./centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
+COPY ./centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
+COPY ./centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 
 ## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
