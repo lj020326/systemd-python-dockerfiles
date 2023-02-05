@@ -21,4 +21,5 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
 
 VOLUME [ "/sys/fs/cgroup" ]
 
-CMD ["/usr/sbin/init"]
+CMD ["/sbin/init"]
+#CMD ["/usr/sbin/init"]

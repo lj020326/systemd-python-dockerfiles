@@ -58,5 +58,6 @@ VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 # running 'docker stop <container>'.
 STOPSIGNAL SIGRTMIN+3
 
-CMD ["/usr/sbin/init"]
+CMD ["/sbin/init"]
+#CMD ["/usr/sbin/init"]
 #CMD ["/usr/lib/systemd/systemd"]

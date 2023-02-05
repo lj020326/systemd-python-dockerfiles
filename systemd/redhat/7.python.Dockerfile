@@ -33,4 +33,5 @@ VOLUME [ "/sys/fs/cgroup" ]
 
 STOPSIGNAL SIGRTMIN+3
 
-CMD ["/usr/sbin/init"]
+CMD ["/sbin/init"]
+#CMD ["/usr/sbin/init"]

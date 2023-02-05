@@ -25,4 +25,5 @@ RUN rm -f           \
 
 VOLUME [ "/sys/fs/cgroup" ]
 
-CMD ["/usr/sbin/init"]
+CMD ["/sbin/init"]
+#CMD ["/usr/sbin/init"]
