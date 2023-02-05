@@ -11,6 +11,7 @@ RUN dnf --disableplugin subscription-manager update -y
 RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
 
 COPY ./centos8-linux-baseOS.repo.ini /etc/yum.repos.d/centos8-linux-baseOS.repo
+COPY ./centos8-linux-appstream.repo.ini /etc/yum.repos.d/centos8-linux-appstream.repo
 COPY ./centos8-linux-extras.repo.ini /etc/yum.repos.d/centos8-linux-extras.repo
 
 #COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
