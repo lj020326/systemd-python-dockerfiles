@@ -10,6 +10,9 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN dnf --disableplugin subscription-manager update -y
 RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
 
+COPY ./redhat8-ubi.repo.ini /etc/yum.repos.d/ubi.repo
+COPY ./redhat8-epel.repo.ini /etc/yum.repos.d/epel.repo
+
 COPY ./centos8-linux-baseOS.repo.ini /etc/yum.repos.d/centos8-linux-baseOS.repo
 COPY ./centos8-linux-extras.repo.ini /etc/yum.repos.d/centos8-linux-extras.repo
 COPY ./centos8-linux-appstream.repo.ini /etc/yum.repos.d/centos8-linux-appstream.repo
