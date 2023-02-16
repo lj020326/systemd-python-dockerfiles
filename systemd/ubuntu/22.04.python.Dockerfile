@@ -1,5 +1,5 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
-ARG IMAGE_REGISTRY=media.johnson.int:5000
+ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/ubuntu2204-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 

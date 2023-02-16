@@ -1,4 +1,4 @@
-ARG IMAGE_REGISTRY=media.johnson.int:5000
+ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/fedora36-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build="2023010401"
