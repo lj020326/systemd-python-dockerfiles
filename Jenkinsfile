@@ -16,6 +16,9 @@ pipeline:
   alwaysEmailList: ljohnson@dettonville.org
   logLevel: DEBUG
 
+  buildArgs:
+    IMAGE_REGISTRY: media.johnson.int:5000
+
   buildImageList:
     - buildImageLabel: centos7-systemd
       buildDir: systemd/centos
