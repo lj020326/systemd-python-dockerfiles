@@ -29,6 +29,7 @@ RUN yum install -y \
     python \
     python-pip \
     python-libselinux \
+    python-virtualenv \
     python-cryptography \
     python-netaddr \
     python3 \

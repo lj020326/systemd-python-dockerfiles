@@ -41,12 +41,13 @@ RUN yum install -y \
     python \
     python-pip \
     python-libselinux \
-    python-netaddr
-#    python-cryptography \
-#    python3 \
-#    python3-pip \
-#    python3-libselinux \
-#    python3-virtualenv
+    python-virtualenv \
+    python-cryptography \
+    python-netaddr \
+    python3 \
+    python3-pip \
+    python3-libselinux \
+    python3-virtualenv
 
 RUN systemctl set-default multi-user.target
 
