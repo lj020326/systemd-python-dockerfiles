@@ -41,8 +41,8 @@ RUN yum install -y \
     python \
     python-pip \
     python-libselinux \
-    python-cryptography \
     python-netaddr
+#    python-cryptography \
 #    python3 \
 #    python3-pip \
 #    python3-libselinux \
