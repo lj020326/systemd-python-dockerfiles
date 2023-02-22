@@ -40,8 +40,8 @@ RUN yum install -y \
 RUN yum install -y \
     python \
     python-pip \
+    python-jinja2 \
     libselinux-python \
-    python-virtualenv \
     python-netaddr \
     python3 \
     python3-pip \
