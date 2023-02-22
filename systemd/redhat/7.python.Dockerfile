@@ -24,8 +24,28 @@ COPY ./centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 RUN yum update -y
 
+### ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
+#RUN yum -y install bash python
+
+# Dependencies for Ansible
+## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
-RUN yum -y install bash python
+## MUST install devel libs for python-ldap to work
+#RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
+RUN yum install -y \
+    sudo \
+    bash
+
+RUN yum install -y \
+    python \
+    python-pip \
+    python-libselinux \
+    python-cryptography \
+    python-netaddr
+#    python3 \
+#    python3-pip \
+#    python3-libselinux \
+#    python3-virtualenv
 
 RUN systemctl set-default multi-user.target
 
