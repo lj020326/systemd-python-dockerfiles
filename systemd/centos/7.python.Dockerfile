@@ -18,10 +18,11 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN yum install -y \
     epel-release
 
-RUN yum upgrade -y
+RUN yum update -y
 
 RUN yum install -y \
     sudo \
+    which \
     bash
 
 RUN yum install -y \

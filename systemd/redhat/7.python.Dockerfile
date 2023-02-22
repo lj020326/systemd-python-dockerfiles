@@ -34,6 +34,7 @@ RUN yum update -y
 #RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
 RUN yum install -y \
     sudo \
+    which \
     bash
 
 RUN yum install -y \
