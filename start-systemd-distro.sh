@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
 DOCKER_CONTAINER_DISTRO=${1:-ubuntu2204}
+DOCKER_CMD=${2:-/usr/sbin/init}
+
 DOCKER_CONTAINER_NAME=systemd-${DOCKER_CONTAINER_DISTRO}
 #DOCKER_NAMESPACE=media.johnson.int:5000
 DOCKER_NAMESPACE=lj020326
 DOCKER_IMAGE=${DOCKER_NAMESPACE}/${DOCKER_CONTAINER_DISTRO}-systemd-python:latest
 #DOCKER_CMD=/lib/systemd/systemd
-DOCKER_CMD=/usr/sbin/init
 
 ## ref: https://github.com/j8r/dockerfiles
 ## ref: https://stackoverflow.com/questions/53383431/how-to-enable-systemd-on-dockerfile-with-ubuntu18-04
