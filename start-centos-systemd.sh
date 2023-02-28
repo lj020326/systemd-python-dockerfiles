@@ -17,7 +17,6 @@ docker run \
   -d \
   ${DOCKER_IMAGE} \
   ${DOCKER_CMD}
-#  ${DOCKER_IMAGE} ${DOCKER_CMD}
 
 echo "wait for container to start"
 sleep 3
