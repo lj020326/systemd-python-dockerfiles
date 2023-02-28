@@ -15,7 +15,8 @@ docker run \
   --tmpfs /run \
   --tmpfs /tmp \
   -d \
-  ${DOCKER_IMAGE}
+  ${DOCKER_IMAGE} \
+  ${DOCKER_CMD}
 #  ${DOCKER_IMAGE} ${DOCKER_CMD}
 
 echo "wait for container to start"
