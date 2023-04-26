@@ -7,13 +7,17 @@ ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
 ## ref: https://unix.stackexchange.com/questions/371890/debian-the-repository-does-not-have-a-release-file
-#RUN echo "deb http://archive.debian.org/debian stretch main contrib" > /etc/apt/sources.list
+RUN echo "deb http://archive.debian.org/debian stretch main contrib" > /etc/apt/sources.list
 
 ## ref: https://stackoverflow.com/questions/52939411/build-error-failed-to-fetch-http-deb-debian-org-debian-dists-jessie-updates-m
-RUN sed -i '/stretch-updates/d' /etc/apt/sources.list  # Now archived
+#RUN sed -i '/stretch-updates/d' /etc/apt/sources.list  # Now archived
+
+#RUN apt-get update \
+#    && apt-get install -y systemd systemd-sysv \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN apt-get update \
-    && apt-get install -y systemd systemd-sysv \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
