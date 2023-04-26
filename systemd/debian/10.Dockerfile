@@ -5,6 +5,8 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
+## ref: https://stackoverflow.com/questions/68802802/repository-http-security-debian-org-debian-security-buster-updates-inrelease
+#RUN apt-get --allow-releaseinfo-change-suite update \
 RUN apt-get update \
     && apt-get install -y systemd systemd-sysv \
     && apt-get clean \
