@@ -12,7 +12,8 @@ ENV DEBIAN_FRONTEND noninteractive
 ## ref: https://stackoverflow.com/questions/52939411/build-error-failed-to-fetch-http-deb-debian-org-debian-dists-jessie-updates-m
 #RUN sed -i '/stretch-updates/d' /etc/apt/sources.list  # Now archived
 
-RUN apt-get update \
+#RUN apt-get update \
+RUN apt-get update --allow-releaseinfo-change \
     && apt-get install -y systemd systemd-sysv \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
