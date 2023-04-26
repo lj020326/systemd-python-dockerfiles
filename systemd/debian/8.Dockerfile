@@ -9,7 +9,8 @@ ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
 ## ref: https://stackoverflow.com/questions/52939411/build-error-failed-to-fetch-http-deb-debian-org-debian-dists-jessie-updates-m
-RUN echo "deb http://deb.debian.org/debian jessie main" > /etc/apt/sources.list
+#RUN echo "deb http://deb.debian.org/debian jessie main" > /etc/apt/sources.list
+RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list
 
 ## using approach used here:
 ## https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
