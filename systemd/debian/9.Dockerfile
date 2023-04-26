@@ -5,6 +5,8 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
+echo "deb http://archive.debian.org/debian stretch main contrib non-free" > /etc/apt/sources.list
+
 RUN apt-get update \
     && apt-get install -y systemd systemd-sysv \
     && apt-get clean \
