@@ -18,14 +18,14 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-## using approach used here:
-## https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
-COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
-
-## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
-## deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main
-RUN set -eux; \
-    docker-install systemd systemd-sysv
+### using approach used here:
+### https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
+#COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
+#
+### ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
+### deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main
+#RUN set -eux; \
+#    docker-install systemd systemd-sysv
 
 RUN cd /lib/systemd/system/sysinit.target.wants/ \
     && rm $(ls | grep -v systemd-tmpfiles-setup)
