@@ -13,8 +13,8 @@ ENV DEBIAN_FRONTEND noninteractive
 #RUN echo "deb http://archive.debian.org/debian jessie main" > /etc/apt/sources.list
 #RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list
 
-RUN sed -i '/stretch-updates/d' /etc/apt/sources.list \
-    && sed -i '/stretch\/updates/d' /etc/apt/sources.list
+RUN sed -i '/jessie-updates/d' /etc/apt/sources.list \
+    && sed -i '/jessie\/updates/d' /etc/apt/sources.list
 
 RUN apt-get update \
     && apt-get clean \
