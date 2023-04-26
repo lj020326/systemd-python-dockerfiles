@@ -14,10 +14,14 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list
 
 RUN apt-get update \
-    && apt-get install -y systemd systemd-sysv \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+#RUN apt-get update \
+#    && apt-get install -y systemd systemd-sysv \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+#
 ### using approach used here:
 ### https://github.com/WyseNynja/dockerfile-debian/blob/jessie/Dockerfile
 #COPY ./docker-apt-install.sh /usr/local/sbin/docker-install
