@@ -1,12 +1,13 @@
 FROM debian:stretch
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+LABEL build="2023042601"
 
 ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
 ## ref: https://unix.stackexchange.com/questions/371890/debian-the-repository-does-not-have-a-release-file
-RUN echo "deb http://archive.debian.org/debian stretch main contrib non-free" > /etc/apt/sources.list
+#RUN echo "deb http://archive.debian.org/debian stretch main contrib non-free" > /etc/apt/sources.list
 
 RUN apt-get update \
     && apt-get install -y systemd systemd-sysv \
