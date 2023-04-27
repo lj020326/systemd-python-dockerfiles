@@ -1,7 +1,7 @@
-#FROM debian:stretch
+FROM debian:stretch
 #FROM debian:stretch-20220622
 #FROM debian:stretch-20220125
-FROM debian:stretch-20210721
+#FROM debian:stretch-20210721
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build="2023042601"
 
