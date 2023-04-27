@@ -14,6 +14,7 @@ RUN apt-get update && \
     apt-get install --no-install-recommends -y \
         sudo bash ca-certificates \
         python python-pip \
+        python3-apt \
         && \
     apt-get clean && \
     rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
