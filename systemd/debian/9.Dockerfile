@@ -34,6 +34,7 @@ RUN apt-get update \
     && apt-get install --allow-downgrades -y dbus \
             libsystemd0=232-25+deb9u12 \
             systemd=232-25+deb9u12 \
+    && apt-get install --allow-downgrades -y \
             iptables=1.6.0+snapshot20161117-6 \
             libip4tc0=1.6.0+snapshot20161117-6 \
     && apt-get install --allow-downgrades -y curl \
