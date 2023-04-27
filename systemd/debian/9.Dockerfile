@@ -15,17 +15,22 @@ RUN echo "deb http://archive.debian.org/debian stretch main contrib non-free" > 
 #RUN sed -i '/stretch-updates/d' /etc/apt/sources.list \
 #    && sed -i '/stretch\/updates/d' /etc/apt/sources.list
 
-RUN apt-get update \
-    && apt-get install -y dbus \
-            systemd=232-25+deb9u12 \
-            libsystemd-dev=232-25+deb9u12 \
-            libsystemd0=232-25+deb9u12 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 #RUN apt-get update \
+#    && apt-get install --allow-downgrades -y dbus \
+#            systemd=232-25+deb9u12 \
+#            libsystemd-dev=232-25+deb9u12 \
+#            libsystemd0=232-25+deb9u12 \
 #    && apt-get clean \
 #    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+#RUN apt-get update \
+#    && apt-get install -y dbus systemd \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN apt-get install -y dbus systemd \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #RUN cd /lib/systemd/system/sysinit.target.wants/ \
 #    && rm $(ls | grep -v systemd-tmpfiles-setup)
