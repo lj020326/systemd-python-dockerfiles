@@ -24,17 +24,13 @@ RUN echo "deb http://archive.debian.org/debian stretch main contrib non-free" > 
 #    && apt-get clean \
 #    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-#RUN apt-get update \
-#    && apt-get install -y dbus systemd \
-#    && apt-get clean \
-#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN apt-get install -y dbus systemd \
+RUN apt-get update \
+    && apt-get install -y systemd systemd-sysv \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-#RUN cd /lib/systemd/system/sysinit.target.wants/ \
-#    && rm $(ls | grep -v systemd-tmpfiles-setup)
+RUN cd /lib/systemd/system/sysinit.target.wants/ \
+    && rm $(ls | grep -v systemd-tmpfiles-setup)
 
 RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /etc/systemd/system/*.wants/* \
