@@ -12,8 +12,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-        dbus systemd-cron \
-        sudo bash ca-certificates \
+        dbus sudo bash ca-certificates \
         python python-pip \
         && \
     apt-get clean && \
