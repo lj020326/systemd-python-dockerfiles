@@ -36,7 +36,9 @@ RUN apt-get update \
             systemd=232-25+deb9u12 \
             iptables=1.6.0+snapshot20161117-6 \
             libip4tc0=1.6.0+snapshot20161117-6 \
-    && apt-mark hold systemd iptables \
+    && apt-get install --allow-downgrades -y curl \
+            libcurl3 libgnutls30 libhogweed4 libnettle6=3.3-1+b2 \
+    && apt-mark hold systemd iptables curl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
