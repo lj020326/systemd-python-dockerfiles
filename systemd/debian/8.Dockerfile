@@ -43,6 +43,7 @@ RUN echo "deb http://archive.debian.org/debian jessie-backports main contrib non
 RUN apt-get update \
     && apt-get install --allow-downgrades -y dbus \
             libapparmor1=2.9.0-3+exp2 \
+            systemd \
             udev=228-5 \
     && apt-mark hold libapparmor1 \
     && apt-get clean \
