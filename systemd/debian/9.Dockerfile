@@ -27,11 +27,13 @@ RUN echo "deb http://archive.debian.org/debian stretch main contrib non-free" > 
 ## E: Unable to correct problems, you have held broken packages.
 ##
 ## As a workaround to mixed versions causing this, we downgrade libsystemd packages to 232-25+deb9u12
+## and mark the systemd package to hold current version to prevent issue upon next `apt update`
 ##
 RUN apt-get update \
     && apt-get install --allow-downgrades -y dbus \
             libsystemd0=232-25+deb9u12 \
             systemd=232-25+deb9u12 \
+    && apt-mark hold systemd \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
