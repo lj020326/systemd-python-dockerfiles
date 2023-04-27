@@ -39,7 +39,9 @@ RUN apt-get update \
             libip4tc0=1.6.0+snapshot20161117-6 \
     && apt-get install --allow-downgrades -y curl \
             libcurl3 libgnutls30 libhogweed4 libnettle6=3.3-1+b2 \
-    && apt-mark hold systemd iptables curl \
+    && apt-get install --allow-downgrades -y \
+            zlib1g-dev=1:1.2.8.dfsg-5 zlib1g=1:1.2.8.dfsg-5 \
+    && apt-mark hold systemd iptables curl zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
