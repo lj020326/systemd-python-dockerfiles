@@ -13,7 +13,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
         sudo bash ca-certificates \
-        python python-pip \
+        python python-pip python-dev \
         python3-apt \
         && \
     apt-get clean && \
