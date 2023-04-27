@@ -1,5 +1,5 @@
-#FROM debian:stretch
-FROM debian:stretch-20220622
+FROM debian:stretch
+#FROM debian:stretch-20220622
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build="2023042601"
 
@@ -15,14 +15,14 @@ RUN echo "deb http://archive.debian.org/debian stretch main contrib non-free" > 
 #RUN sed -i '/stretch-updates/d' /etc/apt/sources.list \
 #    && sed -i '/stretch\/updates/d' /etc/apt/sources.list
 
-#RUN apt-get update \
-#    && apt-get install -y systemd systemd-sysv \
-#    && apt-get clean \
-#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 RUN apt-get update \
+    && apt-get install -y dbus systemd systemd-sysv \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+#RUN apt-get update \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #RUN cd /lib/systemd/system/sysinit.target.wants/ \
 #    && rm $(ls | grep -v systemd-tmpfiles-setup)
