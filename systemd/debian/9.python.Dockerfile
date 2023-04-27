@@ -13,7 +13,8 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
     apt-get upgrade && \
     apt-get install --no-install-recommends -y \
-        dbus systemd sudo bash ca-certificates \
+        dbus systemd \
+        sudo bash ca-certificates \
         python python-pip \
         && \
     apt-get clean && \

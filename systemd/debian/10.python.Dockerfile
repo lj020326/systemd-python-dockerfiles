@@ -12,7 +12,8 @@ ENV DEBIAN_FRONTEND noninteractive
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-        dbus systemd systemd-cron rsyslog iproute2 \
+        dbus systemd systemd-cron \
+        rsyslog iproute2 \
         sudo bash ca-certificates \
         python python-apt python-pip \
         build-essential python-dev \
