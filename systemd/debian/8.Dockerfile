@@ -24,7 +24,7 @@ RUN echo "deb http://archive.debian.org/debian jessie-backports main contrib non
 #    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN apt-get update \
-    && apt-get install -y systemd systemd-sysv \
+    && apt-get install -y systemd \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
