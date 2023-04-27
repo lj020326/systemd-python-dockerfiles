@@ -17,17 +17,28 @@ RUN echo "deb http://archive.debian.org/debian stretch main contrib non-free" > 
 #RUN sed -i '/stretch-updates/d' /etc/apt/sources.list \
 #    && sed -i '/stretch\/updates/d' /etc/apt/sources.list
 
-#RUN apt-get update \
-#    && apt-get install --allow-downgrades -y dbus \
-#            libsystemd0=232-25+deb9u12 \
-#            systemd=232-25+deb9u12 \
-#    && apt-get clean \
-#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
+################################
+##
+## Currently (4/27/2023) getting the following error when using debian:stretch
+##
+## The following packages have unmet dependencies:
+##  systemd : Depends: libsystemd0 (= 232-25+deb9u12) but 232-25+deb9u13 is to be installed
+##            Recommends: libpam-systemd but it is not going to be installed
+## E: Unable to correct problems, you have held broken packages.
+##
+## As a workaround to mixed versions causing this, we downgrade libsystemd packages to 232-25+deb9u12
+##
 RUN apt-get update \
-    && apt-get install -y dbus systemd systemd-sysv \
+    && apt-get install --allow-downgrades -y dbus \
+            libsystemd0=232-25+deb9u12 \
+            systemd=232-25+deb9u12 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+#RUN apt-get update \
+#    && apt-get install -y dbus systemd systemd-sysv \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN cd /lib/systemd/system/sysinit.target.wants/ \
     && rm $(ls | grep -v systemd-tmpfiles-setup)
