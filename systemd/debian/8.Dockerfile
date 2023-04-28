@@ -38,7 +38,7 @@ RUN echo "deb http://archive.debian.org/debian jessie-backports main contrib non
 ## and mark the systemd package to hold current version to prevent issue upon next `apt update`
 ##
 RUN apt-get update \
-    && apt-get install --allow-downgrades -y dbus \
+    && apt-get install -y dbus \
             libapparmor1=2.9.0-3+exp2 \
             systemd \
             udev=228-5 \
