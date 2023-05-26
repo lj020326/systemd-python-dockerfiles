@@ -54,6 +54,13 @@ $ MOLECULE_DISTRO=redhat8-systemd-python molecule login
 $ molecule destroy
 ```
 
+## Reference
+
+- https://github.com/docker-library/docker/blob/master/dockerd-entrypoint.sh
+- https://github.com/docker-library/docker/blob/master/docker-entrypoint.sh
+- https://github.com/docker-library/docker/blob/master/Dockerfile-dind-rootless.template
+- 
+
 ## Contact
 
 [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/leejjohnson/)
