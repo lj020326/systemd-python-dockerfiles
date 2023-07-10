@@ -8,12 +8,14 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
-## ref: https://stackoverflow.com/questions/52939411/build-error-failed-to-fetch-http-deb-debian-org-debian-dists-jessie-updates-m
-#RUN echo "deb http://archive.debian.org/debian jessie main" > /etc/apt/sources.list
-#RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" >> /etc/apt/sources.list
-RUN echo "deb http://archive.debian.org/debian jessie main contrib non-free" > /etc/apt/sources.list
-RUN echo "deb http://archive.debian.org/debian jessie-backports main contrib non-free" >> /etc/apt/sources.list
+### ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
+### ref: https://stackoverflow.com/questions/52939411/build-error-failed-to-fetch-http-deb-debian-org-debian-dists-jessie-updates-m
+##RUN echo "deb http://archive.debian.org/debian jessie main" > /etc/apt/sources.list
+##RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" >> /etc/apt/sources.list
+#RUN echo "deb http://archive.debian.org/debian jessie main contrib non-free" > /etc/apt/sources.list
+#RUN echo "deb http://archive.debian.org/debian jessie-backports main contrib non-free" >> /etc/apt/sources.list
+
+COPY ./repos/debian8.repo.ini /etc/apt/sources.list
 
 ## ref: https://stackoverflow.com/questions/52939411/build-error-failed-to-fetch-http-deb-debian-org-debian-dists-jessie-updates-m
 #RUN sed -i '/jessie-updates/d' /etc/apt/sources.list \
