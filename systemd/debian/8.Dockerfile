@@ -51,7 +51,6 @@ COPY ./repos/debian8.repo.ini /etc/apt/sources.list
 RUN apt-get update \
     && apt-get install -y dbus \
             systemd \
-            udev=228-5 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
