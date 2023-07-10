@@ -37,12 +37,19 @@ RUN echo "deb http://archive.debian.org/debian jessie-backports main contrib non
 ## As a workaround to mixed versions causing this, we downgrade libsystemd packages to 232-25+deb9u12
 ## and mark the systemd package to hold current version to prevent issue upon next `apt update`
 ##
+#RUN apt-get update \
+#    && apt-get install -y dbus \
+#            libapparmor1=2.9.0-3+exp2 \
+#            systemd \
+#            udev=228-5 \
+#    && apt-mark hold libapparmor1 \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 RUN apt-get update \
     && apt-get install -y dbus \
-            libapparmor1=2.9.0-3+exp2 \
             systemd \
             udev=228-5 \
-    && apt-mark hold libapparmor1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
