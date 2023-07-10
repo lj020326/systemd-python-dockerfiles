@@ -1,7 +1,7 @@
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/redhat8-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build="2023010401"
+LABEL build="2023071001"
 
 ENV container docker
 ENV LC_ALL C
@@ -10,12 +10,12 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN dnf --disableplugin subscription-manager update -y
 RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
 
-COPY ./redhat8-ubi.repo.ini /etc/yum.repos.d/ubi.repo
-COPY ./redhat8-epel.repo.ini /etc/yum.repos.d/epel.repo
+COPY ./repos/redhat8-ubi.repo.ini /etc/yum.repos.d/ubi.repo
+COPY ./repos/redhat8-epel.repo.ini /etc/yum.repos.d/epel.repo
 
-COPY ./centos8-linux-baseOS.repo.ini /etc/yum.repos.d/centos8-linux-baseOS.repo
-COPY ./centos8-linux-extras.repo.ini /etc/yum.repos.d/centos8-linux-extras.repo
-COPY ./centos8-linux-appstream.repo.ini /etc/yum.repos.d/centos8-linux-appstream.repo
+COPY ./repos/centos8-linux-baseOS.repo.ini /etc/yum.repos.d/centos8-linux-baseOS.repo
+COPY ./repos/centos8-linux-extras.repo.ini /etc/yum.repos.d/centos8-linux-extras.repo
+COPY ./repos/centos8-linux-appstream.repo.ini /etc/yum.repos.d/centos8-linux-appstream.repo
 
 #COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial

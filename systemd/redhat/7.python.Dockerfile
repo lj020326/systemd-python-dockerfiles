@@ -1,7 +1,7 @@
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/redhat7-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build="2023010401"
+LABEL build="2023071001"
 
 ENV container docker
 ENV LC_ALL C
@@ -16,8 +16,8 @@ RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.
 RUN yum repolist --disablerepo=* && \
     yum-config-manager --disable \* > /dev/null
 
-COPY ./centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
-COPY ./centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
+COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
+COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 
 ## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat

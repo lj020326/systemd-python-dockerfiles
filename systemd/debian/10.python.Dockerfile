@@ -1,7 +1,7 @@
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/debian10-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build="2023010401"
+LABEL build="2023071001"
 
 ENV container docker
 ENV LC_ALL C
