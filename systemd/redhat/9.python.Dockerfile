@@ -1,5 +1,5 @@
 ARG IMAGE_REGISTRY=lj020326
-FROM $IMAGE_REGISTRY/centos9-systemd:latest
+FROM $IMAGE_REGISTRY/redhat9-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build="2023071001"
 
@@ -7,24 +7,24 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-# ref: https://namespaceit.com/blog/failed-to-download-metadata-for-repo-appstream-cannot-prepare-internal-mirrorlist-no-urls-in-mirrorlist
-#RUN sed -i 's/^mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* &&\
-#    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
-#RUN sed -i 's/^mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* &&\
-#    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://mirror.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
+RUN dnf --disableplugin subscription-manager update -y
+RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
+
+COPY ./repos/redhat-ubi.repo.ini /etc/yum.repos.d/ubi.repo
+COPY ./repos/redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
 
 COPY ./repos/centos-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
 COPY ./repos/centos-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
 COPY ./repos/centos-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
 
-#COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-
-## ref: https://linuxconfig.org/redhat-8-epel-install-guide
-## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
-## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
-RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
-#RUN yum-config-manager --enable epel
+##COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+#RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+#
+### ref: https://linuxconfig.org/redhat-8-epel-install-guide
+### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
+### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
+#RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+##RUN yum-config-manager --enable epel
 
 RUN dnf upgrade -y
 

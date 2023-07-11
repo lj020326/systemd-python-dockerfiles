@@ -59,6 +59,27 @@ jobs:
                 linux/arm64
               tags: |-
                 lj020326/redhat8-systemd-python:latest
+
+          - distro: redhat9
+            systemd-distro:
+              name: systemd-redhat9
+              dockerfile: systemd/redhat/9.Dockerfile
+              context: systemd/redhat
+              platforms: |-
+                linux/amd64
+                linux/arm64
+              tags: |-
+                lj020326/redhat9-systemd:latest
+            systemd-python-distro:
+              name: systemd-redhat9-python
+              dockerfile: systemd/redhat/9.python.Dockerfile
+              context: systemd/redhat
+              platforms: |-
+                linux/amd64
+                linux/arm64
+              tags: |-
+                lj020326/redhat9-systemd-python:latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3

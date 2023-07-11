@@ -10,21 +10,20 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN dnf --disableplugin subscription-manager update -y
 RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
 
-COPY ./repos/redhat8-ubi.repo.ini /etc/yum.repos.d/ubi.repo
-COPY ./repos/redhat8-epel.repo.ini /etc/yum.repos.d/epel.repo
+COPY ./repos/redhat-ubi.repo.ini /etc/yum.repos.d/ubi.repo
+COPY ./repos/redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
 
-COPY ./repos/centos8-linux-baseOS.repo.ini /etc/yum.repos.d/centos8-linux-baseOS.repo
-COPY ./repos/centos8-linux-extras.repo.ini /etc/yum.repos.d/centos8-linux-extras.repo
-COPY ./repos/centos8-linux-appstream.repo.ini /etc/yum.repos.d/centos8-linux-appstream.repo
+COPY ./repos/centos-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
+COPY ./repos/centos-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
+COPY ./repos/centos-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
 
-#COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-
-## ref: https://linuxconfig.org/redhat-8-epel-install-guide
-## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
-## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
-RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
-#RUN yum-config-manager --enable epel
+#RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+#
+### ref: https://linuxconfig.org/redhat-8-epel-install-guide
+### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
+### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
+#RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+##RUN yum-config-manager --enable epel
 
 RUN dnf upgrade -y
 

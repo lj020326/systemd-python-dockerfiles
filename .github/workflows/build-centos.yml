@@ -62,6 +62,27 @@ jobs:
                 linux/arm64
               tags: |-
                 lj020326/centos8-systemd-python:latest
+
+          - distro: centos9
+            systemd-distro:
+              name: systemd-centos9
+              dockerfile: systemd/centos/9.Dockerfile
+              context: systemd/centos
+              platforms: |-
+                linux/amd64
+                linux/arm64
+              tags: |-
+                lj020326/centos9-systemd:latest
+            systemd-python-distro:
+              name: systemd-centos9-python
+              dockerfile: systemd/centos/9.python.Dockerfile
+              context: systemd/centos
+              platforms: |-
+                linux/amd64
+                linux/arm64
+              tags: |-
+                lj020326/centos9-systemd-python:latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3

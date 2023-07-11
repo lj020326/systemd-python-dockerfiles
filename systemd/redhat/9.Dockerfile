@@ -1,4 +1,6 @@
-FROM centos:9
+## ref: https://www.ansible.com/blog/developing-and-testing-ansible-roles-with-molecule-and-podman-part-1
+FROM registry.access.redhat.com/ubi9/ubi-init
+#FROM registry.access.redhat.com/ubi9/ubi
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build_date="2023-07-10"
 
