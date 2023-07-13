@@ -1,6 +1,3 @@
-###syntax=docker/dockerfile:1.3-labs
-###syntax=docker/dockerfile:1.5
-
 #########
 ## https://pythonspeed.com/articles/multi-stage-docker-python/
 
@@ -35,7 +32,6 @@ RUN yum groupinstall -y "Development Tools" && \
 ## ref: https://linuxopsys.com/topics/install-systemd
 ## ref: https://stackoverflow.com/questions/48098671/build-with-docker-and-privileged#57077772
 COPY ./install-systemd.sh /var/tmp/
-#RUN --security=insecure bash -x /var/tmp/install-systemd.sh
 RUN bash -x /var/tmp/install-systemd.sh
 
 # The machine-id should be generated when creating the container. This will be
