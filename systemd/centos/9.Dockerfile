@@ -16,6 +16,7 @@ RUN rm -f           \
 #VOLUME [ "/sys/fs/cgroup" ]
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 
-CMD ["/sbin/init"]
-#CMD ["/usr/sbin/init"]
+## ref: https://unix.stackexchange.com/questions/276340/linux-command-systemctl-status-is-not-working-inside-a-docker-container
+#CMD ["/sbin/init"]
+CMD ["/usr/sbin/init"]
 #CMD ["/usr/lib/systemd/systemd"]
