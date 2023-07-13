@@ -19,3 +19,11 @@ or if it doesn't work
 3. Remove the container
 
 `docker rm -f systemd`
+
+## Building images
+
+To build an image using centos9-systemd as an example:
+```shell
+$ cd centos/
+$ docker build -t centos9-systemd --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 9.Dockerfile .
+```

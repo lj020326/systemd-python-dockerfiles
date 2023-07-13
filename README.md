@@ -78,6 +78,14 @@ To override entrypoint and run bash instead:
 $ docker run -it --name centos9-systemd --entrypoint /bin/bash --privileged --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro media.johnson.int:5000/centos9-systemd
 ```
 
+## Building images
+
+To build an image using centos9-systemd as an example:
+```shell
+$ cd systemd/centos/
+$ docker build -t centos9-systemd --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 9.Dockerfile .
+```
+
 ## Reference
 
 - https://github.com/docker-library/docker/blob/master/dockerd-entrypoint.sh
