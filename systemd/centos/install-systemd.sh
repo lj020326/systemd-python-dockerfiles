@@ -21,7 +21,9 @@ TARBALL_FILE="v${RELEASE_VERSION}.tar.gz"
 curl -fsSL "${TARBALL_URL}" -o "/tmp/${TARBALL_FILE}"
 
 tar -xf "/tmp/${TARBALL_FILE}" --directory "/tmp/systemd-source"
-cd "/tmp/systemd-${RELEASE_VERSION}"
+
+#cd "/tmp/systemd-${RELEASE_VERSION}"
+cd "/tmp/systemd-source"
 
 ./configure
 
