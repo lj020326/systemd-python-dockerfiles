@@ -22,8 +22,8 @@ TARBALL_FILE="v${RELEASE_VERSION}.tar.gz"
 
 curl -fsSL "${TARBALL_URL}" -o "${TEMPDIR}/${TARBALL_FILE}"
 
-#tar -xf "${TEMPDIR}/${TARBALL_FILE}" --directory "${TEMPDIR}/systemd-source"
-tar -xf "${TEMPDIR}/${TARBALL_FILE}"
+#tar -xf "${TEMPDIR}/${TARBALL_FILE}" --directory "${TEMPDIR}/"
+tar -xf "${TEMPDIR}/${TARBALL_FILE}" -C "${TEMPDIR}/"
 
 SOURCE_DIR=$(find "${TEMPDIR}/" -maxdepth 1 -type d | grep systemd)
 
