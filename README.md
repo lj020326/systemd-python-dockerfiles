@@ -66,11 +66,11 @@ $ importsslcert media.johnson.int:5000
 $ docker login media.johnson.int:5000
 $ docker pull media.johnson.int:5000/centos9-systemd:latest
 ## Run the systemd container as a daemon
-$ docker run -d --name systemd-centos --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro media.johnson.int:5000/centos9-systemd`
-$ docker exec -it media.johnson.int:5000/centos9-systemd:latest bash
+$ docker run -d --name centos9-systemd --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro media.johnson.int:5000/centos9-systemd`
+$ docker exec -it centos9-systemd bash
 ## run the python enabled systemd container image
-$ docker run -d --name systemd-centos --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro media.johnson.int:5000/centos9-systemd-python`
-$ docker exec -it media.johnson.int:5000/centos9-systemd-python:latest bash
+$ docker run -d --name centos9-systemd-python --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro media.johnson.int:5000/centos9-systemd-python`
+$ docker exec -it centos9-systemd-python bash
 ```
 
 ## Reference
