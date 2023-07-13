@@ -73,6 +73,11 @@ $ docker run -d --name centos9-systemd-python --tmpfs /tmp --tmpfs /run --tmpfs 
 $ docker exec -it centos9-systemd-python bash
 ```
 
+To override entrypoint and run bash instead:
+```shell
+$ docker run -it --name centos9-systemd --entrypoint /bin/bash --privileged --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro media.johnson.int:5000/centos9-systemd
+```
+
 ## Reference
 
 - https://github.com/docker-library/docker/blob/master/dockerd-entrypoint.sh

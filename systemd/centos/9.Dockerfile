@@ -7,6 +7,12 @@ LABEL build_date="2023-07-10"
 
 ENV container docker
 
+## Install systemd
+## ref: https://linuxopsys.com/topics/install-systemd
+COPY ./install-systemd.sh /
+RUN chmod +x /install-systemd.sh
+RUN /install-systemd.sh
+
 # The machine-id should be generated when creating the container. This will be
 # done automatically if the file is not present, so let's delete it.
 RUN rm -f           \
