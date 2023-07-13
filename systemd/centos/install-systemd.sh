@@ -28,8 +28,8 @@ tar -xf "${TEMPDIR}/${TARBALL_FILE}" -C "${TEMPDIR}/"
 SOURCE_DIR=$(find "${TEMPDIR}/" -maxdepth 1 -type d | grep systemd)
 
 #cd "${TEMPDIR}/systemd-${RELEASE_VERSION}"
-cd "${SOURCE_DIR}"
+cd "${SOURCE_DIR}/"
 
-./configure
-
-make
+bash ./configure && \
+make && \
+make install
