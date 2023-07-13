@@ -1,4 +1,7 @@
-FROM centos:9
+#FROM centos:9
+
+## ref: https://www.server-world.info/en/note?os=CentOS_Stream_9&p=docker&f=1
+FROM quay.io/centos/centos:stream9
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build_date="2023-07-10"
 
