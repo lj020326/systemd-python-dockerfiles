@@ -54,6 +54,21 @@ $ MOLECULE_DISTRO=redhat8-systemd-python molecule login
 $ molecule destroy
 ```
 
+To log into pure public docker images:
+```shell
+docker exec -it lj020326/centos9-systemd:latest bash
+docker exec -it lj020326/centos9-systemd-python:latest bash
+```
+
+To log into pure private docker image:
+```shell
+$ importsslcert media.johnson.int:5000
+$ docker login media.johnson.int:5000
+$ docker pull media.johnson.int:5000/centos9-systemd:latest
+$ docker exec -it media.johnson.int:5000/centos9-systemd:latest bash
+$ docker exec -it media.johnson.int:5000/centos9-systemd-python:latest bash
+```
+
 ## Reference
 
 - https://github.com/docker-library/docker/blob/master/dockerd-entrypoint.sh
