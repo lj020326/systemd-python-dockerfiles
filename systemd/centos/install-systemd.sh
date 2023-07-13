@@ -1,5 +1,7 @@
 #!/bin/bash
 
+TEMPDIR=/var/tmp
+
 ## Install systemd
 ## ref: https://linuxopsys.com/topics/install-systemd
 
@@ -18,16 +20,16 @@ TARBALL_URL=$(curl -fsSL https://api.github.com/repos/systemd/systemd/releases/l
 RELEASE_VERSION=$(echo "$TARBALL_URL" | sed 's|.*\/v\([0-9]\+\)|\1|')
 TARBALL_FILE="v${RELEASE_VERSION}.tar.gz"
 
-curl -fsSL "${TARBALL_URL}" -o "/tmp/${TARBALL_FILE}"
+curl -fsSL "${TARBALL_URL}" -o "${TEMPDIR}/${TARBALL_FILE}"
 
-#tar -xf "/tmp/${TARBALL_FILE}" --directory "/tmp/systemd-source"
-tar -xf "/tmp/${TARBALL_FILE}"
+#tar -xf "${TEMPDIR}/${TARBALL_FILE}" --directory "${TEMPDIR}/systemd-source"
+tar -xf "${TEMPDIR}/${TARBALL_FILE}"
 
-SOURCE_DIR=$(find /tmp/ -name systemd* -type d)
+SOURCE_DIR=$(find "${TEMPDIR}/" -maxdepth 1 -type d | grep systemd)
 
-#cd "/tmp/systemd-${RELEASE_VERSION}"
+#cd "${TEMPDIR}/systemd-${RELEASE_VERSION}"
 cd "${SOURCE_DIR}"
 
 ./configure
 
-#make
+make

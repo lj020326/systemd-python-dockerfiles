@@ -9,9 +9,8 @@ ENV container docker
 
 ## Install systemd
 ## ref: https://linuxopsys.com/topics/install-systemd
-COPY ./install-systemd.sh /
-RUN chmod +x /install-systemd.sh
-RUN /install-systemd.sh
+COPY ./install-systemd.sh /var/tmp/
+RUN bash -x /var/tmp/install-systemd.sh
 
 # The machine-id should be generated when creating the container. This will be
 # done automatically if the file is not present, so let's delete it.
