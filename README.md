@@ -65,7 +65,11 @@ To log into pure private docker image:
 $ importsslcert media.johnson.int:5000
 $ docker login media.johnson.int:5000
 $ docker pull media.johnson.int:5000/centos9-systemd:latest
+## Run the systemd container as a daemon
+$ docker run -d --name systemd-centos --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro jrei/systemd-centos`
 $ docker exec -it media.johnson.int:5000/centos9-systemd:latest bash
+## run the python enabled systemd container image
+$ docker run -d --name systemd-centos --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro jrei/systemd-centos`
 $ docker exec -it media.johnson.int:5000/centos9-systemd-python:latest bash
 ```
 
