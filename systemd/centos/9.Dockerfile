@@ -15,7 +15,8 @@ RUN python3 -m venv /opt/venv
 # Make sure we use the virtualenv:
 ENV PATH="/opt/venv/bin:$PATH"
 
-RUN pip3 install meson ninja jinja2
+#RUN pip3 install meson ninja jinja2
+RUN pip3 install jinja2
 
 FROM quay.io/centos/centos:stream9 AS build-image
 COPY --from=compile-venv-image /opt/venv /opt/venv
