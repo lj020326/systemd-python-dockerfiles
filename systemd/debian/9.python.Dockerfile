@@ -13,9 +13,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
         sudo bash ca-certificates \
-        python-pip python-virtualenv \
-        python3 python3-pip python3-apt python3-dev \
-        python3-virtualenv python3-venv \
+        python3 \
         && \
     apt-get clean && \
     rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
