@@ -23,8 +23,6 @@ RUN rm -f           \
     /etc/machine-id \
     /var/lib/dbus/machine-id
 
-RUN dnf install -y centos-gpg-keys
-
 #VOLUME [ "/sys/fs/cgroup" ]
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 
