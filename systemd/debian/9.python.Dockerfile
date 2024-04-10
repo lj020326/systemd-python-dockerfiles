@@ -18,7 +18,9 @@ RUN apt-get update && \
     rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ## ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
-RUN apt-get -y install build-essential \
+RUN apt-get update -y && \
+    && apt-get upgrade -y \
+    && apt-get -y install build-essential \
         zlib1g-dev \
         libncurses5-dev \
         libgdbm-dev \
