@@ -28,14 +28,13 @@ RUN apt-get -y install build-essential \
         libffi-dev \
         libsqlite3-dev \
         libbz2-dev \
-        wget \
-    && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get purge -y imagemagick imagemagick-6-common
+        wget
 
 RUN cd /usr/src \
     && wget https://www.python.org/ftp/python/3.11.7/Python-3.11.7.tgz \
     && tar -xzf Python-3.11.7.tgz \
     && cd Python-3.11.7 \
+    && export DEBIAN_FRONTEND=noninteractive
     && ./configure --enable-optimizations \
     && make altinstall
 
