@@ -17,16 +17,34 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /usr/share/doc /usr/share/man /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-### ref: https://tecadmin.net/how-to-install-python-3-9-on-debian-9/
-#RUN apt-get install --no-install-recommends -y \
-#        build-essential libreadline-gplv2-dev libncursesw5-dev \
-#        libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
-
 ## ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
-RUN apt install software-properties-common -y
-RUN add-apt-repository "ppa:deadsnakes/ppa"
-RUN apt-get update -y
-RUN apt install python3.11 python3-pip -y
+RUN apt-get -y install build-essential \
+        zlib1g-dev \
+        libncurses5-dev \
+        libgdbm-dev \
+        libnss3-dev \
+        libssl-dev \
+        libreadline-dev \
+        libffi-dev \
+        libsqlite3-dev \
+        libbz2-dev \
+        wget
+
+RUN cd /usr/src \
+    && export DEBIAN_FRONTEND=noninteractive \
+    && wget https://www.python.org/ftp/python/3.11.0/Python-3.11.0.tgz \
+    && tar -xzf Python-3.11.0.tgz \
+    && cd Python-3.11.0 \
+    && ./configure --enable-optimizations \
+    && make altinstall
+
+RUN update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1
+
+### ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
+#RUN apt install software-properties-common -y
+#RUN add-apt-repository "ppa:deadsnakes/ppa"
+#RUN apt-get update -y
+#RUN apt install python3.11 python3-pip -y
 
 RUN systemctl set-default multi-user.target
 RUN systemctl mask dev-hugepages.mount sys-fs-fuse-connections.mount
