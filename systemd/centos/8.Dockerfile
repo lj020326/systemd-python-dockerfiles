@@ -1,13 +1,14 @@
 FROM centos:8
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build_date="2023-07-10"
+LABEL build_date="2024-04-10"
 
 ENV container docker
 
 ## ref: https://github.com/geerlingguy/docker-centos8-ansible/blob/master/Dockerfile
-RUN (cd /lib/systemd/system/sysinit.target.wants/; \
-for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-rm -f /lib/systemd/system/multi-user.target.wants/* \
+RUN cd /lib/systemd/system/sysinit.target.wants/; \
+    for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done
+
+RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /etc/systemd/system/*.wants/* \
     /lib/systemd/system/local-fs.target.wants/* \
     /lib/systemd/system/sockets.target.wants/*udev* \
@@ -24,6 +25,4 @@ RUN rm -f           \
 #VOLUME [ "/sys/fs/cgroup" ]
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 
-CMD ["/sbin/init"]
-#CMD ["/usr/sbin/init"]
-#CMD ["/usr/lib/systemd/systemd"]
+CMD ["/usr/sbin/init"]

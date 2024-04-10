@@ -1,6 +1,6 @@
 FROM centos:7
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build_date="2023-07-10"
+LABEL build_date="2024-04-10"
 
 ENV container docker
 
@@ -23,5 +23,4 @@ RUN rm -f           \
 
 VOLUME [ "/sys/fs/cgroup" ]
 
-CMD ["/sbin/init"]
-#CMD ["/usr/sbin/init"]
+CMD ["/usr/sbin/init"]
