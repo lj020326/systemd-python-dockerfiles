@@ -28,10 +28,11 @@ RUN apt-get -y install build-essential \
         libffi-dev \
         libsqlite3-dev \
         libbz2-dev \
-        wget
+        wget \
+    && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get purge -y imagemagick imagemagick-6-common
 
 RUN cd /usr/src \
-    && export DEBIAN_FRONTEND=noninteractive \
     && wget https://www.python.org/ftp/python/3.11.0/Python-3.11.0.tgz \
     && tar -xzf Python-3.11.0.tgz \
     && cd Python-3.11.0 \
