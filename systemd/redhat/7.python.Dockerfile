@@ -19,6 +19,9 @@ RUN yum repolist --disablerepo=* && \
 COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
 COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 
+##COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+
 ## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
