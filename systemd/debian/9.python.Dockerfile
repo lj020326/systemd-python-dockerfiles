@@ -33,9 +33,9 @@ RUN apt-get -y install build-essential \
     && apt-get purge -y imagemagick imagemagick-6-common
 
 RUN cd /usr/src \
-    && wget https://www.python.org/ftp/python/3.11.0/Python-3.11.0.tgz \
-    && tar -xzf Python-3.11.0.tgz \
-    && cd Python-3.11.0 \
+    && wget https://www.python.org/ftp/python/3.11.7/Python-3.11.7.tgz \
+    && tar -xzf Python-3.11.7.tgz \
+    && cd Python-3.11.7 \
     && ./configure --enable-optimizations \
     && make altinstall
 
