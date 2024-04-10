@@ -17,7 +17,6 @@ COPY ./repos/centos8-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.
 #COPY ./repos/centos8-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
 COPY ./repos/centos8-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
 
-#RUN dnf install -y centos-gpg-keys
 RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 
 ### ref: https://linuxconfig.org/redhat-8-epel-install-guide
@@ -27,6 +26,7 @@ RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg
 ##RUN yum-config-manager --enable epel
 
 RUN dnf upgrade -y
+#RUN dnf install -y centos-gpg-keys
 
 # Dependencies for Ansible
 ## MUST install devel libs for python-ldap to work
