@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-python info.py
+python python-info.py
 
 /sbin/init
