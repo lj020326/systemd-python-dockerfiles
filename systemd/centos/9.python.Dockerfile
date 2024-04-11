@@ -45,7 +45,8 @@ RUN pyenv global $PYTHON_VERSION
 RUN pyenv rehash
 
 ## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
-CMD ["/bin/bash", "-c", "python info.py; /sbin/init"]
+CMD python info.py; /sbin/init
+#CMD ["/bin/bash", "-c", "python info.py; /sbin/init"]
 
 #CMD ["/sbin/init"]
 ##CMD ["/usr/sbin/init"]
