@@ -58,6 +58,6 @@ RUN pyenv rehash
 ##CMD ["/usr/lib/systemd/systemd"]
 
 ## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss
-COPY startup-sbin-init.sh .
-CMD ["startup-sbin-init.sh"]
+COPY scripts .
+CMD ["scripts/startup-sbin-init.sh"]
 
