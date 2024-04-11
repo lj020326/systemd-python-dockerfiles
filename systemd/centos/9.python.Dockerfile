@@ -12,9 +12,7 @@ ENV LC_ALL=POSIX
 ENV TZ=UTC
 
 ENV HOME="/root"
-ENV PYTHON_VERSION=3.11.7
-ENV PYENV_ROOT="$HOME/.pyenv"
-ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
+ENV PYTHON_VERSION="3.11.7"
 
 #RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
@@ -40,6 +38,10 @@ RUN dnf makecache \
 ## pyenv
 WORKDIR $HOME
 RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
+
+ENV PYENV_ROOT="$HOME/.pyenv"
+ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
+
 RUN pyenv install $PYTHON_VERSION
 RUN pyenv global $PYTHON_VERSION
 RUN pyenv rehash
