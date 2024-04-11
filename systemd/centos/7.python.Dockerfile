@@ -52,4 +52,3 @@ RUN pyenv rehash
 COPY python-info.py .
 COPY start-sbin-init.sh .
 CMD ["startup-sbin-init.sh"]
-
