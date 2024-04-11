@@ -24,7 +24,7 @@ RUN yum install -y epel-release
 RUN yum update -y
 
 RUN yum makecache \
-    && yum install --nodocs -y sudo bash which git \
+    && yum install -y sudo bash which git \
     && yum install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel \
     && yum clean all
 
