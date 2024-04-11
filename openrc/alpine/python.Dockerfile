@@ -18,9 +18,7 @@ RUN if getent group ${GROUP_GID} >/dev/null; then \
     delgroup $(getent group ${GROUP_GID} | cut -d: -f1); fi
 
 RUN addgroup --system --gid ${GROUP_GID} ${GROUPNAME}
-
-RUN adduser --system --disabled-password --home /home/${USERNAME} \
-    --uid ${USER_UID} --ingroup ${GROUPNAME} ${GROUPNAME} \
+RUN adduser -h /home/${USERNAME} -u ${USER_UID} -DG ${GROUPNAME} ${GROUPNAME}
 
 #RUN adduser ${USERNAME} -u ${USER_UID} -DG ${GROUPNAME}
 #RUN su ${USERNAME} -c ${GROUPNAME}-keygen -an
