@@ -44,6 +44,9 @@ RUN pyenv install $PYTHON_VERSION
 RUN pyenv global $PYTHON_VERSION
 RUN pyenv rehash
 
-CMD ["/sbin/init"]
-#CMD ["/usr/sbin/init"]
-#CMD ["/usr/lib/systemd/systemd"]
+## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
+CMD ["/bin/bash", "-c", "python info.py; /sbin/init"]
+
+#CMD ["/sbin/init"]
+##CMD ["/usr/sbin/init"]
+##CMD ["/usr/lib/systemd/systemd"]
