@@ -39,12 +39,10 @@ RUN dnf makecache \
 ####################
 ## pyenv
 WORKDIR $HOME
-RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv \
-    && pyenv update \
-    && pyenv rehash
+RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
 RUN pyenv install $PYTHON_VERSION
 RUN pyenv global $PYTHON_VERSION
-
+RUN pyenv rehash
 
 CMD ["/sbin/init"]
 #CMD ["/usr/sbin/init"]
