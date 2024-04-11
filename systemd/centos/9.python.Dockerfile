@@ -43,7 +43,6 @@ RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
 ENV PYENV_ROOT="$HOME/.pyenv"
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
-RUN pyenv install $PYTHON_VERSION
 ## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
 ## ref: https://github.com/pyenv/pyenv/issues/2416
 RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
