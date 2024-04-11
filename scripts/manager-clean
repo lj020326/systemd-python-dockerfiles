@@ -1,0 +1,47 @@
+#! /bin/sh
+
+set -e
+here=$(readlink -f "$0" | xargs dirname)
+name=$(readlink -f "$0" | xargs basename)
+alias manager="sh ${here}/manager"
+
+
+# Check number of arguments.
+if [ $# -ne 0 ]; then
+    echo "E: The ${name} command takes no arguments"
+    exit 1
+fi
+
+# Perform cleaning based on the package manager.
+pkgman=$(manager info os-package-manager)
+case ${pkgman} in
+    apt-get)
+        ${pkgman} clean
+        ${pkgman} autoclean
+        rm -rf /var/cache/debconf/*-old
+        rm -rf /var/lib/apt/lists/*
+    ;;
+    yum)
+        ${pkgman} clean all
+        rm -rf /var/lib/__db*
+        rpm --rebuilddb
+    ;;
+    zypper)
+        ${pkgman} clean --all
+        rm -rf /var/cache/zypp/*
+    ;;
+esac
+
+# Remove logs and temp files.
+rm -rf /tmp/*
+rm -rf /var/tmp/*
+rm -rf /var/log/*
+
+# Remove docs if any.
+license_regex=".*/\(COPYING\|copyright\|LICEN[CS]E\|README\)*"
+find /usr/share/doc -type f -not -regex "${license_regex}" | xargs rm -rf
+find /usr/share/doc -type d | xargs rmdir -p 2>/dev/null | true
+rm -rf /usr/share/man/*
+
+# Remove locales.
+rm -rf /usr/share/locale/*

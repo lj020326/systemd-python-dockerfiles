@@ -1,0 +1,265 @@
+#! /bin/sh
+
+set -e
+here=$(readlink -f "$0" | xargs dirname)
+name=$(readlink -f "$0" | xargs basename)
+alias manager="sh ${here}/manager"
+
+
+_info_os_name() {
+    echo $(grep ^ID= /etc/os-release | cut -d= -f 2 | sed -r 's/^"|"$//g')
+}
+
+
+_info_os_version() {
+    echo $(grep ^VERSION_ID /etc/os-release | cut -d= -f 2 | sed -r 's/^"|"$//g')
+}
+
+
+_info_os_package_manager() {
+    case "$(_info_os_name)" in
+        ubuntu)
+            echo "apt-get"
+        ;;
+        centos)
+            echo "yum"
+        ;;
+        opensuse*|sles)
+            echo "zypper"
+        ;;
+        *)
+            echo "E: Unknown operating system '$(_info_os_name)'"
+            exit 1
+        ;;
+    esac
+}
+
+
+_info_hdf4() {
+    case "$(_info_os_name)" in
+        ubuntu)
+            echo "libhdf4-0 libhdf4-dev"
+        ;;
+        centos)
+            echo "hdf hdf-devel"
+        ;;
+        opensuse*|sles)
+            echo "libhdf4 hdf-devel hdf-devel-static"
+        ;;
+        *)
+            echo "E:Unknown operating system '$(_info_os_name)'"
+            exit 1
+        ;;
+    esac
+}
+
+
+_info_hdf5() {
+    case "$(_info_os_name)" in
+        ubuntu)
+            echo "libhdf5-103 libhdf5-dev"
+        ;;
+        centos)
+            echo "hdf5 hdf5-devel hdf5-static"
+        ;;
+        opensuse*|sles)
+            echo "libhdf5 hdf5-devel hdf5-devel-static"
+        ;;
+        *)
+            echo "E: Unknown operating system '$(_info_os_name)'"
+            exit 1
+        ;;
+    esac
+}
+
+
+_info_blas() {
+    case "$(_info_os_name)" in
+        ubuntu)
+            echo "libblas3 libblas-dev"
+        ;;
+        centos)
+            echo "blas blas-devel blas-static"
+        ;;
+        opensuse*|sles)
+            echo "libblas3 blas-devel blas-devel-static"
+        ;;
+        *)
+            echo "E: Unknown operating system '$(_info_os_name)'"
+            exit 1
+        ;;
+    esac
+}
+
+
+_info_lapack() {
+    case "$(_info_os_name)" in
+        ubuntu)
+            echo "liblapack3 liblapack-dev"
+        ;;
+        centos)
+            echo "lapack lapack-devel lapack-static"
+        ;;
+        opensuse*|sles)
+            echo "liblapack3 lapack-devel lapack-devel-static"
+        ;;
+        *)
+            echo "E: Unknown operating system '$(_info_os_name)'"
+            exit 1
+        ;;
+    esac
+}
+
+
+_info_netcdf4() {
+    case "$(_info_os_name)" in
+        ubuntu)
+            echo "libnetcdf15 libnetcdf-dev"
+        ;;
+        centos)
+            echo "netcdf netcdf-devel netcdf-static"
+        ;;
+        opensuse*|sles)
+            echo "libnetcdf18 netcdf-devel netcdf-devel-static"
+        ;;
+        *)
+            echo "E: Unknown operating system '$(_info_os_name)'"
+            exit 1
+        ;;
+    esac
+}
+
+
+_info_matplotlib_dev() {
+    case "$(_info_os_name)" in
+        ubuntu)
+            echo "libfreetype-dev libpng-dev"
+        ;;
+        centos)
+            echo "freetype-devel libpng-devel"
+        ;;
+        opensuse*|sles)
+            echo "freetype-devel libpng16-devel"
+        ;;
+        *)
+            echo "E: Unknown operating system '$(_info_os_name)'"
+            exit 1
+        ;;
+    esac
+}
+
+
+_info_openssl_root() {
+    version=1.1.1k
+    if [ ! -z "$1" ]; then
+        version="$1"
+    fi
+    regex="1\.(0\.2[a-u]?|1\.1[a-k]?)"
+    if [ -z $(echo "${version}" | grep -E "^${regex}$" || true) ]; then
+        echo "E: Invalid openssl version '$1'"
+        exit 1
+    fi
+    version_short=$(echo ${version} | sed -r 's|(([0-9]\.)+[0-9])[a-z]?|\1|g')
+    echo /opt/openssl-${version_short}
+}
+
+
+_info_gcc_full() {
+    case "$(_info_os_name)" in
+        ubuntu)
+            echo "gcc g++ gfortran"
+        ;;
+        centos)
+            echo "gcc gcc-c++ gcc-gfortran"
+        ;;
+        opensuse*|sles)
+            echo "gcc gcc-c++ gcc-fortran"
+        ;;
+        *)
+            echo "E: Unknown operating system '$(_info_os_name)'"
+            exit 1
+        ;;
+    esac
+}
+
+
+_info_pkg_config() {
+    case "$(_info_os_name)" in
+        ubuntu)
+            echo "pkg-config"
+        ;;
+        centos)
+            echo "pkgconfig"
+        ;;
+        opensuse*|sles)
+            echo "pkg-config"
+        ;;
+        *)
+            echo "E: Unknown operating system '$(_info_os_name)'"
+            exit 1
+        ;;
+    esac
+}
+
+
+_info_pyenv_dev() {
+    case "$(_info_os_name)" in
+        ubuntu)
+            echo "
+                build-essential llvm tk-dev libncursesw5-dev libreadline-dev  \
+                libsqlite3-dev libffi-dev xz-utils zlib1g-dev libbz2-dev      \
+                liblzma-dev
+            " | xargs
+        ;;
+        centos)
+            echo "
+                @development findutils llvm readline-devel sqlite-devel       \
+                libffi-devel xz-devel bzip2-devel zlib-devel
+            " | xargs
+        ;;
+        opensuse*|sles)
+            echo "
+                automake tk-devel ncurses-devel readline-devel                \
+                sqlite3-devel libffi-devel xz-devel libbz2-devel zlib-devel
+            " | xargs
+        ;;
+        *)
+            echo "E: Unknown operating system '$(_info_os_name)'"
+            exit 1
+        ;;
+    esac
+}
+
+
+_info_pyenv_profile() {
+    echo /etc/profile.d/01-set-pyenv.sh
+}
+
+
+_info_pyenv_root() {
+    echo /usr/local/share/pyenv
+}
+
+
+case "$1" in
+    blas|lapack|hdf4|hdf5|netcdf4|matplotlib-dev)
+        _info_$(echo $1 | tr - _)
+    ;;
+    gcc-full|pkg-config)
+        _info_$(echo $1 | tr - _)
+    ;;
+    openssl-root)
+        shift
+        _info_openssl_root $@
+    ;;
+    os-name|os-version|os-package-manager)
+        _info_$(echo $1 | tr - _)
+    ;;
+    pyenv-dev|pyenv-profile|pyenv-root)
+        _info_$(echo $1 | tr - _)
+    ;;
+    *)
+        echo "E: Unknown option '$1'"
+        exit 1
+    ;;
+esac
