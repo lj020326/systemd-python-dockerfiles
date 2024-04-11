@@ -1,11 +1,28 @@
 #########
+## https://pythonspeed.com/articles/multi-stage-docker-python/
+
 ## ref: https://www.server-world.info/en/note?os=CentOS_Stream_9&p=docker&f=1
 #FROM centos:9
-FROM quay.io/centos/centos:stream9
+FROM quay.io/centos/centos:stream9 AS compile-venv-image
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build_date="2024-04-10"
 
 ENV container docker
+ENV PIP_ROOT_USER_ACTION ignore
+
+## ref: https://pythonspeed.com/articles/multi-stage-docker-python/
+RUN python3 -m venv /opt/venv
+# Make sure we use the virtualenv:
+ENV PATH="/opt/venv/bin:$PATH"
+
+## meson is required for subsequent systemd install by install-systemd.sh appearing later in this docker build
+RUN pip3 install meson ninja jinja2
+
+FROM quay.io/centos/centos:stream9 AS build-image
+COPY --from=compile-venv-image /opt/venv /opt/venv
+
+# Make sure we use the virtualenv:
+ENV PATH="/opt/venv/bin:$PATH"
 
 ## Install systemd
 ## ref: https://linuxopsys.com/topics/install-systemd
