@@ -26,8 +26,20 @@ RUN yum update -y
 RUN yum makecache \
     && yum groupinstall -y "Development tools" \
     && yum install -y sudo bash which git \
-    && yum install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel \
+    && yum install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel \
+      openssl11 openssl11-libs openssl11-devel \
     && yum clean all
+
+## ref: https://linodelinux.com/how-to-install-openssl-1-1-1-tls-1-3-on-centos-7/
+#RUN cd /usr/src \
+#    && wget -q https://www.openssl.org/source/openssl-1.1.1w.tar.gz \
+#    && tar -xzf openssl-1.1.1w.tar.gz \
+#    && cd openssl-1.1*/ \
+#    && export DEBIAN_FRONTEND=noninteractive \
+#    && ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl \
+#    && make -j4 \
+#    && make install \
+#    && ldconfig
 
 ####################
 ## pyenv
@@ -39,7 +51,8 @@ ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
 ## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
 ## ref: https://github.com/pyenv/pyenv/issues/2416
-RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
+#RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
+RUN env CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
     pyenv install $PYTHON_VERSION
 RUN pyenv global $PYTHON_VERSION
 RUN pyenv rehash
