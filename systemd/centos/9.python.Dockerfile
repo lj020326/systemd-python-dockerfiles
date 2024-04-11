@@ -45,9 +45,14 @@ RUN pyenv global $PYTHON_VERSION
 RUN pyenv rehash
 
 ## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
-CMD python info.py; /sbin/init
+#CMD python info.py; /sbin/init
 #CMD ["/bin/bash", "-c", "python info.py; /sbin/init"]
 
 #CMD ["/sbin/init"]
 ##CMD ["/usr/sbin/init"]
 ##CMD ["/usr/lib/systemd/systemd"]
+
+## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss
+COPY startup-sbin-init.sh .
+CMD ["startup-sbin-init.sh"]
+
