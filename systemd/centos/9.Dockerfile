@@ -35,11 +35,27 @@ RUN yum groupinstall -y "Development Tools" && \
 COPY ./install-systemd.sh /var/tmp/
 RUN bash -x /var/tmp/install-systemd.sh
 
+RUN systemctl set-default multi-user.target
+
 # The machine-id should be generated when creating the container. This will be
 # done automatically if the file is not present, so let's delete it.
 RUN rm -f           \
     /etc/machine-id \
     /var/lib/dbus/machine-id
+
+# The host's cgroup filesystem need's to be mounted (read-only) in the
+# container. '/run', '/run/lock' and '/tmp' need to be tmpfs filesystems when
+# running the container without 'CAP_SYS_ADMIN'.
+#
+# NOTE: For running Debian stretch, 'CAP_SYS_ADMIN' still needs to be added, as
+#       stretch's version of systemd is not recent enough. Buster will run just
+#       fine without 'CAP_SYS_ADMIN'.
+#VOLUME [ "/sys/fs/cgroup" ]
+VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
+
+# A different stop signal is required, so systemd will initiate a shutdown when
+# running 'docker stop <container>'.
+STOPSIGNAL SIGRTMIN+3
 
 #VOLUME [ "/sys/fs/cgroup" ]
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
