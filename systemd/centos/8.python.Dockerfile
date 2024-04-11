@@ -32,7 +32,7 @@ RUN dnf upgrade -y
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
 RUN dnf makecache \
-    && dnf groupinstall "Development Tools" \
+    && dnf groupinstall -y "Development Tools" \
     && dnf install --nodocs -y sudo bash which git \
     && dnf install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel \
     && dnf clean all
