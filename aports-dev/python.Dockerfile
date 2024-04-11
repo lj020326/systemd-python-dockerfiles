@@ -25,12 +25,12 @@ RUN adduser -h /home/${USERNAME} -u ${USER_UID} -DG ${GROUPNAME} ${GROUPNAME}
 #RUN echo "${USERNAME}    ALL=(ALL) ALL" >> /etc/sudoers
 #RUN cat /home/${USERNAME}/.${GROUPNAME}/${GROUPNAME}.conf > /etc/${GROUPNAME}.conf
 
-USER ${USERNAME}
-
 COPY bash_profile /home/${USERNAME}/.bash_profile
 COPY bashrc /home/${USERNAME}/.bashrc
 
 COPY setup_pyenv.sh /home/${USERNAME}/setup_pyenv.sh
 RUN  chmod +x /home/${USERNAME}/setup_pyenv.sh && /home/${USERNAME}/setup_pyenv.sh
+
+USER ${USERNAME}
 
 ENTRYPOINT ["/sbin/init"]
