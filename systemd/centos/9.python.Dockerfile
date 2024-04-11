@@ -31,7 +31,7 @@ RUN dnf upgrade -y
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
 RUN dnf makecache \
-    && dnf install --nodocs -y sudo bash git \
+    && dnf install --nodocs -y sudo bash which git \
     && dnf install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel \
     && dnf clean all
 
@@ -51,16 +51,10 @@ RUN pyenv global $PYTHON_VERSION
 RUN pyenv rehash
 
 ## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
-#CMD python info.py; /sbin/init
-#CMD ["/bin/bash", "-c", "python info.py; /sbin/init"]
-
+## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss
 #CMD ["/sbin/init"]
 ##CMD ["/usr/sbin/init"]
 ##CMD ["/usr/lib/systemd/systemd"]
-
-## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss
-#COPY ./scripts/ scripts
-#CMD ["/scripts/startup-sbin-init.sh"]
 
 COPY python-info.py .
 COPY start-sbin-init.sh .
