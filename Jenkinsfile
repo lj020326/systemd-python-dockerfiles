@@ -20,6 +20,20 @@ pipeline:
     IMAGE_REGISTRY: media.johnson.int:5000
 
   buildImageList:
+    - buildImageLabel: openrc-alpine
+      buildDir: openrc/alpine
+      dockerFile: Dockerfile
+    - buildImageLabel: openrc-alpine-python
+      buildDir: openrc/alpine
+      dockerFile: python.Dockerfile
+
+    - buildImageLabel: aports-dev
+      buildDir: aports-dev
+      dockerFile: Dockerfile
+    - buildImageLabel: aports-dev-python
+      buildDir: aports-dev
+      dockerFile: python.Dockerfile
+
     - buildImageLabel: centos7-systemd
       buildDir: systemd/centos
       dockerFile: 7.Dockerfile
