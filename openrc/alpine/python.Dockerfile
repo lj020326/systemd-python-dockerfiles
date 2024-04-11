@@ -1,4 +1,6 @@
 FROM alpine:latest
+LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+LABEL build="2024041001"
 
 ENV PYTHONUNBUFFERED=1
 
