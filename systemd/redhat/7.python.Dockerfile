@@ -40,10 +40,13 @@ RUN yum update -y
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## MUST install devel libs for python-ldap to work
+RUN yum install -y epel-release
+RUN yum update -y
+
 RUN yum makecache \
-    && yum groupinstall -y "Development tools" \
+    && yum groupinstall --skip-broken -y "Development tools" \
     && yum install -y sudo bash which git \
-    && yum install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
+    && yum install --skip-broken -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
       openssl11 openssl-devel openssl11-devel openssl11-lib \
     && yum clean all
 

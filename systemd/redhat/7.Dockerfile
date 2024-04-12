@@ -1,4 +1,5 @@
-FROM registry.access.redhat.com/rhel7:latest
+FROM registry.access.redhat.com/ubi7/ubi-init
+#FROM registry.access.redhat.com/rhel7:latest
 #FROM richxsl/rhel7
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build_date="2024-04-10"
