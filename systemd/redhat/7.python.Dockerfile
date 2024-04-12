@@ -14,28 +14,28 @@ ENV TZ=UTC
 ENV HOME="/root"
 ENV PYTHON_VERSION="3.11.7"
 
-## ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
-## ref: https://stackoverflow.com/questions/11696113/yum-on-centos-stuck-at-loaded-plugins-fastestmirror
-## ref: https://github.com/RHsyseng/container-rhel-examples/blob/master/starter/Dockerfile
-## ref: https://pnyiu.github.io/2017/11/17/Docker-on-RHEL-7-4-Apache-HTTPD-and-Tomcat/
-RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
-
-RUN yum repolist --disablerepo=* && \
-    yum-config-manager --disable \* > /dev/null
-
-COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
-COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
-
-##COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-
-## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
-## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
-RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+RUN yum-config-manager --enable ubi-7
 RUN yum update -y
 
-### ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
-#RUN yum -y install bash python
+### ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
+### ref: https://stackoverflow.com/questions/11696113/yum-on-centos-stuck-at-loaded-plugins-fastestmirror
+### ref: https://github.com/RHsyseng/container-rhel-examples/blob/master/starter/Dockerfile
+### ref: https://pnyiu.github.io/2017/11/17/Docker-on-RHEL-7-4-Apache-HTTPD-and-Tomcat/
+#RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
+#
+#RUN yum repolist --disablerepo=* && \
+#    yum-config-manager --disable \* > /dev/null
+#
+##COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
+##COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
+##
+####COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+##RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+#
+### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
+### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
+#RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+#RUN yum update -y
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
@@ -44,7 +44,7 @@ RUN yum install -y epel-release
 RUN yum update -y
 
 RUN yum makecache \
-    && yum groupinstall --skip-broken -y "Development tools" \
+    && yum groupinstall -y "Development tools" \
     && yum install -y sudo bash which git \
     && yum install --skip-broken -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
       openssl11 openssl-devel openssl11-devel openssl11-lib \
