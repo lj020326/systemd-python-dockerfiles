@@ -51,6 +51,7 @@ ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
 ## ref: https://github.com/pyenv/pyenv/issues/2416#issuecomment-1219484906
 ## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
+## ref: https://stackoverflow.com/questions/57743230/userwarning-could-not-import-the-lzma-module-your-installed-python-is-incomple#57773679
 ## ref: https://github.com/pyenv/pyenv/issues/2416
 #RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
 #RUN env CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
