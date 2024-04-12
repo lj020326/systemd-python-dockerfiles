@@ -26,7 +26,7 @@ RUN yum update -y
 RUN yum makecache \
     && yum groupinstall -y "Development tools" \
     && yum install -y sudo bash which git \
-    && yum install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel \
+    && yum install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
       openssl11 openssl-devel openssl11-devel openssl11-lib \
     && yum clean all
 
