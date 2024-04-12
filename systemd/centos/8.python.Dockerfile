@@ -32,9 +32,9 @@ RUN dnf upgrade -y
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
 RUN dnf makecache \
-    && dnf groupinstall -y "Development Tools" \
+    && dnf groupinstall --nobest -y "Development Tools" \
     && dnf install --nodocs -y sudo bash which git \
-    && dnf install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel \
+    && dnf install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
     && dnf clean all
 
 ####################
@@ -45,10 +45,14 @@ RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
 ENV PYENV_ROOT="$HOME/.pyenv"
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
+## ref: https://github.com/pyenv/pyenv/issues/2416#issuecomment-1219484906
 ## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
+## ref: https://stackoverflow.com/questions/57743230/userwarning-could-not-import-the-lzma-module-your-installed-python-is-incomple#57773679
 ## ref: https://github.com/pyenv/pyenv/issues/2416
-RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
-    pyenv install $PYTHON_VERSION
+#RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
+#RUN env CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
+#RUN CPPFLAGS=$(pkg-config --cflags openssl) LDFLAGS=$(pkg-config --libs openssl) \
+RUN pyenv install $PYTHON_VERSION
 RUN pyenv global $PYTHON_VERSION
 RUN pyenv rehash
 
