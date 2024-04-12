@@ -33,7 +33,7 @@ RUN dnf upgrade -y
 RUN dnf makecache \
     && dnf groupinstall --nobest -y "Development Tools" \
     && dnf install --nodocs -y sudo bash which git \
-    && dnf install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
+    && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
     && dnf clean all
 
 ####################
@@ -69,4 +69,3 @@ RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
 COPY python-info.py .
 COPY start-sbin-init.sh .
 CMD ["startup-sbin-init.sh"]
-

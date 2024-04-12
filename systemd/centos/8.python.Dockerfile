@@ -34,15 +34,19 @@ RUN dnf upgrade -y
 RUN dnf makecache \
     && dnf groupinstall --nobest -y "Development Tools" \
     && dnf install --nodocs -y sudo bash which git \
-    && dnf install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
+    && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
     && dnf clean all
 
 ####################
 ## pyenv
-WORKDIR $HOME
-RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
+#WORKDIR $HOME
+#RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
+#ENV PYENV_ROOT="$HOME/.pyenv"
 
-ENV PYENV_ROOT="$HOME/.pyenv"
+WORKDIR /
+RUN git clone --depth=1 https://github.com/pyenv/pyenv.git /pyenv
+
+ENV PYENV_ROOT="/pyenv"
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
 ## ref: https://github.com/pyenv/pyenv/issues/2416#issuecomment-1219484906
@@ -53,8 +57,9 @@ ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 #RUN env CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
 #RUN CPPFLAGS=$(pkg-config --cflags openssl) LDFLAGS=$(pkg-config --libs openssl) \
 RUN pyenv install $PYTHON_VERSION
-RUN pyenv global $PYTHON_VERSION
-RUN pyenv rehash
+#RUN pyenv global $PYTHON_VERSION
+#RUN pyenv rehash
+RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
 
 ## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
 ## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss
@@ -65,4 +70,3 @@ RUN pyenv rehash
 COPY python-info.py .
 COPY start-sbin-init.sh .
 CMD ["startup-sbin-init.sh"]
-
