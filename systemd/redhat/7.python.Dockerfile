@@ -48,7 +48,7 @@ RUN yum update -y
 #    && yum groupinstall -y "Development tools" \
 
 RUN yum makecache \
-    && yum install -y gcc sudo bash which git \
+    && yum install -y gcc make sudo bash which git \
     && yum install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel xz-devel openssl-devel \
     && yum clean all
 
