@@ -20,17 +20,22 @@ ENV PYTHON_VERSION="3.11.7"
 ## ref: https://pnyiu.github.io/2017/11/17/Docker-on-RHEL-7-4-Apache-HTTPD-and-Tomcat/
 RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
 
-RUN yum repolist --disablerepo=* && \
-    yum-config-manager --disable \* > /dev/null
+#RUN yum repolist --disablerepo=* && \
+#    yum-config-manager --disable \* > /dev/null
 
-COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
+#COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
 #COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 RUN yum update -y
 
 ## yum repolist all
 ##RUN yum-config-manager --enable ubi-7
 #RUN yum-config-manager --enable ubi-7 ubi-7-server-devtools-rpms*
-##RUN yum-config-manager --enable ubi-7 ubi-7-server-extras-rpms ubi-7-server-devtools-rpms
+RUN yum-config-manager --enable ubi-7  \
+    ubi-7-rhah \
+    ubi-7-server-extras-rpms  \
+    ubi-7-server-devtools-rpms  \
+    ubi-7-server-optional-rpms \
+    ubi-server-rhscl-7-rpms
 ##RUN yum-config-manager --disable ubi-7-server-extras-rpms*
 #RUN yum update -y
 
@@ -44,8 +49,7 @@ RUN yum update -y
 ### MUST install devel libs for python-ldap to work
 ##RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
 RUN yum makecache \
-    && yum install -y gcc make sudo bash which
-#    && yum install -y gcc make sudo bash which git
+    && yum install -y gcc make sudo bash which git
 
 RUN yum install -y readline-devel bzip2 bzip2-devel \
         zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel
