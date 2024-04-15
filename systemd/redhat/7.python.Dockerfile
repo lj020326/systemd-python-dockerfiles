@@ -15,6 +15,7 @@ ENV HOME="/root"
 ENV PYTHON_VERSION="3.11.7"
 
 ## yum repolist all
+#RUN yum-config-manager --enable ubi-7
 RUN yum-config-manager --enable ubi-7 ubi-7-server-extras-rpms ubi-7-server-devtools-rpms
 RUN yum update -y
 
@@ -53,6 +54,11 @@ RUN yum makecache \
         zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
         openssl11 openssl-devel openssl11-devel openssl11-lib \
     && yum clean all
+
+RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+RUN yum update -y
+
+RUN yum install -y openssl11 openssl-devel openssl11-devel openssl11-lib
 
 ## ref: https://linodelinux.com/how-to-install-openssl-1-1-1-tls-1-3-on-centos-7/
 #RUN cd /usr/src \
