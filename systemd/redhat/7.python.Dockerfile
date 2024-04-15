@@ -30,14 +30,14 @@ RUN yum update -y
 ## yum repolist all
 ##RUN yum-config-manager --enable ubi-7
 #RUN yum-config-manager --enable ubi-7 ubi-7-server-devtools-rpms*
+#RUN yum-config-manager --enable ubi-7 ubi-7-server-extras-rpms
 RUN yum-config-manager --enable ubi-7  \
     ubi-7-rhah \
-    ubi-7-server-extras-rpms  \
     ubi-7-server-devtools-rpms  \
     ubi-7-server-optional-rpms \
     ubi-server-rhscl-7-rpms
 ##RUN yum-config-manager --disable ubi-7-server-extras-rpms*
-#RUN yum update -y
+RUN yum update -y
 
 ## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
