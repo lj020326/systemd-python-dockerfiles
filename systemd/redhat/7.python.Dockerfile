@@ -44,7 +44,7 @@ RUN yum update -y
 ### MUST install devel libs for python-ldap to work
 ##RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
 RUN yum makecache \
-    && yum install --skip-broken -y gcc make sudo bash which git
+    && yum install -y gcc make sudo bash which git
 
 RUN yum install -y readline-devel bzip2 bzip2-devel \
         zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel
