@@ -44,10 +44,8 @@ RUN yum update -y
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## MUST install devel libs for python-ldap to work
 #RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
-RUN yum install -y \
-    sudo \
-    which \
-    bash
+RUN yum makecache \
+    && yum install -y gcc make sudo bash which git
 
 RUN yum install -y \
     python \
