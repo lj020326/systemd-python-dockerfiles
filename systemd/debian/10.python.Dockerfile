@@ -39,7 +39,7 @@ RUN apt-get update -y \
 RUN apt-get install -y libncursesw5-dev xz-utils tk-dev
 
 ## MUST install devel libs for python-ldap to work
-RUN apt-get install -y libldap2-dev libsasl2-dev slapd ldap-utils
+#RUN apt-get install -y libldap2-dev libsasl2-dev slapd ldap-utils
 
 #RUN cd /usr/src \
 #    && wget -q https://www.python.org/ftp/python/3.11.7/Python-3.11.7.tgz \
