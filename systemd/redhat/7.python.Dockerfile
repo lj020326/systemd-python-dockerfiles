@@ -49,7 +49,7 @@ RUN yum update -y
 
 RUN yum makecache \
     && yum install -y gcc make sudo bash which git \
-    && yum install -y readline-devel bzip2 bzip2-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
+    && yum install -y readline-devel bzip2 bzip2-devel zlib-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
        openssl11 openssl-devel openssl11-devel openssl11-lib \
     && yum clean all
 
