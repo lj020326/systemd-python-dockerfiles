@@ -14,20 +14,21 @@ ENV TZ=UTC
 ENV HOME="/root"
 ENV PYTHON_VERSION="3.11.7"
 
-## yum repolist all
-#RUN yum-config-manager --enable ubi-7
-RUN yum-config-manager --enable ubi-7 ubi-7-server-extras-rpms ubi-7-server-devtools-rpms
-RUN yum update -y
-
 ## ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
 ## ref: https://stackoverflow.com/questions/11696113/yum-on-centos-stuck-at-loaded-plugins-fastestmirror
 ## ref: https://github.com/RHsyseng/container-rhel-examples/blob/master/starter/Dockerfile
 ## ref: https://pnyiu.github.io/2017/11/17/Docker-on-RHEL-7-4-Apache-HTTPD-and-Tomcat/
 RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
 
-#RUN yum repolist --disablerepo=* && \
-#    yum-config-manager --disable \* > /dev/null
-#
+RUN yum repolist --disablerepo=* && \
+    yum-config-manager --disable \* > /dev/null
+
+## yum repolist all
+RUN yum-config-manager --enable ubi-7
+#RUN yum-config-manager --enable ubi-7 ubi-7-server-extras-rpms ubi-7-server-devtools-rpms
+#RUN yum-config-manager --disable ubi-7-server-extras-rpms*
+RUN yum update -y
+
 ##COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
 ##COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 ##
