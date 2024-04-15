@@ -18,12 +18,26 @@ ENV PYTHON_VERSION="3.11.7"
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
 RUN apt-get update -y
 #RUN apt-get install --no-install-recommends -y apt-utils sudo bash ca-certificates curl wget git tox
-RUN apt-get install -y apt-utils sudo bash ca-certificates curl wget git
+RUN apt-get install -y apt-utils \
+    build-essential \
+    sudo bash ca-certificates \
+    curl wget git
+
+## ref: https://linodelinux.com/how-to-install-openssl-1-1-1-tls-1-3-on-centos-7/
+RUN cd /usr/src \
+    && wget -q https://www.openssl.org/source/openssl-1.1.1w.tar.gz \
+    && tar -xzf openssl-1.1.1w.tar.gz \
+    && cd openssl-1.1*/ \
+    && export DEBIAN_FRONTEND=noninteractive \
+    && ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl \
+    && make -j4 \
+    && make install \
+    && ldconfig
 
 ## ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
 RUN apt-get update -y \
     && apt-get upgrade -y \
-    && apt-get -y install build-essential \
+    && apt-get -y install \
         libbz2-dev \
         libffi-dev \
         libgdbm-dev \
