@@ -49,15 +49,17 @@ RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.
 #    && yum groupinstall -y "Development tools" \
 
 RUN yum makecache \
-    && yum install -y gcc make sudo bash which git \
-    && yum install -y python3 python3-pip python3-libselinux python3-devel \
-    && yum install -y readline-devel bzip2 bzip2-devel \
-        zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
-        openssl11 openssl-devel openssl11-devel openssl11-lib \
-    && yum clean all
+    && yum install -y gcc make sudo bash which git
 
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 RUN yum update -y
+
+RUN yum install -y python3 python3-pip python3-libselinux python3-devel
+
+RUN yum install -y readline-devel bzip2 bzip2-devel \
+        zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
+        openssl11 openssl-devel openssl11-devel openssl11-lib \
+    && yum clean all
 
 RUN yum install -y openssl11 openssl-devel openssl11-devel openssl11-lib
 
