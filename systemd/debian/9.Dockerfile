@@ -3,7 +3,7 @@ FROM debian:stretch
 #FROM debian:stretch-20220125
 #FROM debian:stretch-20210721
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build="2023042601"
+LABEL build="2024041001"
 
 ENV container docker
 ENV LC_ALL C

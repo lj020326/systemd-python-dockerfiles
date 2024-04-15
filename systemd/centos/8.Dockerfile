@@ -1,6 +1,6 @@
 FROM centos:8
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build_date="2024-04-10"
+LABEL build="2024041001"
 
 ENV container docker
 

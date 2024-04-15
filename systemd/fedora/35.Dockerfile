@@ -1,6 +1,6 @@
 FROM fedora:35
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build_date="2023-07-10"
+LABEL build="2024041001"
 
 ENV container docker
 

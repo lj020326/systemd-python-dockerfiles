@@ -5,7 +5,7 @@
 #FROM centos:9
 FROM quay.io/centos/centos:stream9 AS compile-venv-image
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build_date="2024-04-10"
+LABEL build="2024041001"
 
 ENV container docker
 ENV PIP_ROOT_USER_ACTION ignore

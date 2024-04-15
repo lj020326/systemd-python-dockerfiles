@@ -1,7 +1,7 @@
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/fedora36-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build="2023071001"
+LABEL build="2024041001"
 
 ENV container docker
 ENV LC_ALL C

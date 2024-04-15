@@ -1,5 +1,6 @@
 FROM ubuntu:22.04
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+LABEL build="2024041001"
 
 ENV container docker
 ENV LC_ALL C

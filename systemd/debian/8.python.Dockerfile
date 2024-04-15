@@ -1,7 +1,7 @@
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/debian8-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build="2023071001"
+LABEL build="2024041001"
 
 # Set environment variables.
 ENV container=docker
@@ -14,20 +14,47 @@ ENV TZ=UTC
 ENV HOME="/root"
 ENV PYTHON_VERSION="3.11.7"
 
-## Dependencies for Ansible
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
-##RUN set -eux; docker-install systemd python python-apt python-pip
-#RUN set -eux; docker-install python python-apt python-pip
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y apt-utils sudo bash ca-certificates curl wget git tox
 
-RUN apt-get update -y
+## ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
+RUN apt-get update -y \
+    && apt-get upgrade -y \
+    && apt-get -y install build-essential \
+        libbz2-dev \
+        libffi-dev \
+        libgdbm-dev \
+        liblzma-dev \
+        libncurses5-dev \
+        libnss3-dev \
+        libreadline-dev \
+        libsqlite3-dev \
+        libssl-dev \
+        zlib1g-dev
 
-RUN apt-get install -y make build-essential sudo bash git
+    ## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
+RUN apt-get install -y libncursesw5-dev xz-utils tk-dev
 
-## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
-RUN apt-get install -y libssl-dev zlib1g-dev libbz2-dev libbz2-dev libffi-dev liblzma-dev \
-    libreadline-dev libsqlite3-dev libncurses5-dev libncursesw5-dev \
-    xz-utils tk-dev
+## MUST install devel libs for python-ldap to work
+RUN apt-get install -y libldap2-dev libsasl2-dev slapd ldap-utils
+
+#RUN cd /usr/src \
+#    && wget -q https://www.python.org/ftp/python/3.11.7/Python-3.11.7.tgz \
+#    && tar -xzf Python-3.11.7.tgz \
+#    && cd Python-3.11.7 \
+#    && export DEBIAN_FRONTEND=noninteractive \
+#    && ./configure --enable-optimizations \
+#    && make altinstall
+#
+#RUN update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1
+#
+### ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
+#RUN apt install software-properties-common -y
+#RUN add-apt-repository "ppa:deadsnakes/ppa"
+#RUN apt-get update -y
+#RUN apt install python3.11 python3-pip -y
 
 ####################
 ## pyenv

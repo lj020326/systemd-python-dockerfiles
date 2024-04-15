@@ -2,7 +2,7 @@
 FROM registry.access.redhat.com/ubi9/ubi-init
 #FROM registry.access.redhat.com/ubi9/ubi
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build_date="2024-04-10"
+LABEL build="2024041001"
 
 ENV container docker
 

@@ -2,6 +2,7 @@
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/ubuntu2204-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+LABEL build="2024041001"
 
 ENV container docker
 ENV LC_ALL C
