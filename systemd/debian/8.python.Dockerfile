@@ -16,8 +16,9 @@ ENV PYTHON_VERSION="3.11.7"
 
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y apt-utils sudo bash ca-certificates curl wget git tox
+RUN apt-get update -y
+#RUN apt-get install --no-install-recommends -y apt-utils sudo bash ca-certificates curl wget git tox
+RUN apt-get install -y apt-utils sudo bash ca-certificates curl wget git
 
 ## ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
 RUN apt-get update -y \
@@ -34,8 +35,8 @@ RUN apt-get update -y \
         libssl-dev \
         zlib1g-dev
 
-    ## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
-RUN apt-get install -y libncursesw5-dev xz-utils tk-dev
+## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
+#RUN apt-get install -y libncursesw5-dev xz-utils tk-dev
 
 ## MUST install devel libs for python-ldap to work
 #RUN apt-get install -y libldap2-dev libsasl2-dev slapd ldap-utils
