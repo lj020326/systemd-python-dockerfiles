@@ -81,6 +81,9 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /lib/systemd/system/plymouth* \
     /lib/systemd/system/systemd-update-utmp*
 
+RUN systemctl set-default multi-user.target
+RUN systemctl mask dev-hugepages.mount sys-fs-fuse-connections.mount
+
 # The machine-id should be generated when creating the container. This will be
 # done automatically if the file is not present, so let's delete it.
 RUN rm -f           \

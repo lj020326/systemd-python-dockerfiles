@@ -3,9 +3,16 @@ FROM $IMAGE_REGISTRY/debian8-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build="2023071001"
 
-ENV container docker
-ENV LC_ALL C
-ENV DEBIAN_FRONTEND noninteractive
+# Set environment variables.
+ENV container=docker
+ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=POSIX
+ENV LANGUAGE=POSIX
+ENV LC_ALL=POSIX
+ENV TZ=UTC
+
+ENV HOME="/root"
+ENV PYTHON_VERSION="3.11.7"
 
 ## Dependencies for Ansible
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
@@ -13,29 +20,47 @@ ENV DEBIAN_FRONTEND noninteractive
 ##RUN set -eux; docker-install systemd python python-apt python-pip
 #RUN set -eux; docker-install python python-apt python-pip
 
-RUN apt-get update -y && apt-get install -y python python-apt python-pip
+RUN apt-get update -y
 
-RUN systemctl set-default multi-user.target
-RUN systemctl mask dev-hugepages.mount sys-fs-fuse-connections.mount
+RUN apt-get install -y make build-essential sudo bash which git
 
-# The machine-id should be generated when creating the container. This will be
-# done automatically if the file is not present, so let's delete it.
-RUN rm -f           \
-    /etc/machine-id \
-    /var/lib/dbus/machine-id
+## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
+RUN apt-get install -y libssl-dev zlib1g-dev libbz2-dev libbz2-dev libffi-dev liblzma-dev \
+    libreadline-dev libsqlite3-dev libncurses5-dev libncursesw5-dev \
+    xz-utils tk-dev
 
-# The host's cgroup filesystem need's to be mounted (read-only) in the
-# container. '/run', '/run/lock' and '/tmp' need to be tmpfs filesystems when
-# running the container without 'CAP_SYS_ADMIN'.
-#
-# NOTE: For running Debian stretch, 'CAP_SYS_ADMIN' still needs to be added, as
-#       stretch's version of systemd is not recent enough. Buster will run just
-#       fine without 'CAP_SYS_ADMIN'.
-VOLUME ["/sys/fs/cgroup", "/tmp", "/run", "/run/lock"]
+####################
+## pyenv
+#WORKDIR $HOME
+#RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
+#ENV PYENV_ROOT="$HOME/.pyenv"
 
-# A different stop signal is required, so systemd will initiate a shutdown when
-# running 'docker stop <container>'.
-STOPSIGNAL SIGRTMIN+3
+WORKDIR /
+RUN git clone --depth=1 https://github.com/pyenv/pyenv.git /pyenv
 
-CMD ["/sbin/init", "--log-target=journal"]
-#CMD ["/lib/systemd/systemd"]
+ENV PYENV_ROOT="/pyenv"
+ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
+
+## ref: https://github.com/pyenv/pyenv/issues/2416#issuecomment-1219484906
+## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
+## ref: https://stackoverflow.com/questions/57743230/userwarning-could-not-import-the-lzma-module-your-installed-python-is-incomple#57773679
+## ref: https://github.com/pyenv/pyenv/issues/2416
+#RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
+#RUN env CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
+#RUN CPPFLAGS=$(pkg-config --cflags openssl) LDFLAGS=$(pkg-config --libs openssl) \
+RUN pyenv install $PYTHON_VERSION
+#RUN pyenv global $PYTHON_VERSION
+#RUN pyenv rehash
+RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
+
+## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
+## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss
+#CMD ["/sbin/init"]
+##CMD ["/usr/sbin/init"]
+##CMD ["/usr/lib/systemd/systemd"]
+#CMD ["/sbin/init", "--log-target=journal"]
+##CMD ["/lib/systemd/systemd"]
+
+COPY python-info.py .
+COPY start-sbin-init.sh .
+CMD ["startup-sbin-init.sh"]
