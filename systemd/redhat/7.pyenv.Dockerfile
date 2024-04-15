@@ -55,14 +55,16 @@ RUN yum makecache \
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 RUN yum update -y
 
-RUN yum install -y python3 python3-pip python3-libselinux python3-devel
+#RUN yum install -y python3 python3-pip python3-libselinux python3-devel
 
+#RUN yum install -y readline-devel bzip2 bzip2-devel \
+#        zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
+#        openssl11 openssl-devel openssl11-devel openssl11-lib \
 RUN yum install -y readline-devel bzip2 bzip2-devel \
-        zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
-        openssl11 openssl-devel openssl11-devel openssl11-lib \
-    && yum clean all
+        zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel
 
-RUN yum install -y openssl11 openssl-devel openssl11-devel openssl11-lib
+#RUN yum install -y openssl11 openssl-devel openssl11-devel openssl11-lib
+RUN yum install -y openssl11 openssl-devel openssl11-devel
 
 ## ref: https://linodelinux.com/how-to-install-openssl-1-1-1-tls-1-3-on-centos-7/
 #RUN cd /usr/src \
