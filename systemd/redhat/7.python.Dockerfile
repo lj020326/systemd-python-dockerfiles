@@ -15,7 +15,7 @@ ENV HOME="/root"
 ENV PYTHON_VERSION="3.11.7"
 
 ## yum repolist all
-RUN yum-config-manager --enable ubi-7 ubi-7-server-extras-rpms
+RUN yum-config-manager --enable ubi-7 ubi-7-server-extras-rpms ubi-7-server-devtools-rpms
 RUN yum update -y
 
 ## ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
@@ -24,9 +24,9 @@ RUN yum update -y
 ## ref: https://pnyiu.github.io/2017/11/17/Docker-on-RHEL-7-4-Apache-HTTPD-and-Tomcat/
 RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
 
-RUN yum repolist --disablerepo=* && \
-    yum-config-manager --disable \* > /dev/null
-
+#RUN yum repolist --disablerepo=* && \
+#    yum-config-manager --disable \* > /dev/null
+#
 ##COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
 ##COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 ##
@@ -35,8 +35,8 @@ RUN yum repolist --disablerepo=* && \
 #
 ### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
-RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
-RUN yum update -y
+#RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+#RUN yum update -y
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
@@ -49,8 +49,9 @@ RUN yum update -y
 
 RUN yum makecache \
     && yum install -y gcc make sudo bash which git \
-    && yum install -y readline-devel bzip2 bzip2-devel zlib-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
-       openssl11 openssl-devel openssl11-devel openssl11-lib \
+    && yum install -y readline-devel bzip2 bzip2-devel \
+        zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
+        openssl11 openssl-devel openssl11-devel openssl11-lib \
     && yum clean all
 
 ## ref: https://linodelinux.com/how-to-install-openssl-1-1-1-tls-1-3-on-centos-7/
