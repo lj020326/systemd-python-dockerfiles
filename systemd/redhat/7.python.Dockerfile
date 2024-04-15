@@ -38,16 +38,13 @@ RUN yum update -y
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 RUN yum update -y
 
-### ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
-#RUN yum -y install bash python
-
 ### MUST install devel libs for python-ldap to work
 ### ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ### MUST install devel libs for python-ldap to work
 ##RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
-#RUN yum makecache \
-#    && yum install -y gcc make sudo bash which git
-#
+RUN yum makecache \
+    && yum install -y gcc make sudo bash which git
+
 #RUN yum install -y readline-devel bzip2 bzip2-devel \
 #        zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel
 #
