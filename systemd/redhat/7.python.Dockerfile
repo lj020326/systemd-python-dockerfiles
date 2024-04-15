@@ -49,7 +49,8 @@ RUN yum update -y
 
 RUN yum makecache \
     && yum install -y gcc make sudo bash which git \
-    && yum install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel xz-devel openssl-devel \
+    && yum install -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel xz-devel \
+       openssl11 openssl-devel openssl11-devel openssl11-lib \
     && yum clean all
 
 ## ref: https://linodelinux.com/how-to-install-openssl-1-1-1-tls-1-3-on-centos-7/
