@@ -26,6 +26,12 @@ RUN yum repolist --disablerepo=* && \
 #COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
 #COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 
+## yum repolist all
+RUN yum-config-manager --enable ubi-7
+#RUN yum-config-manager --enable ubi-7 ubi-7-server-extras-rpms ubi-7-server-devtools-rpms
+#RUN yum-config-manager --disable ubi-7-server-extras-rpms*
+RUN yum update -y
+
 ## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
