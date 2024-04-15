@@ -24,7 +24,7 @@ RUN yum repolist --disablerepo=* && \
     yum-config-manager --disable \* > /dev/null
 
 COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
-COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
+#COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 RUN yum update -y
 
 ## yum repolist all
@@ -44,7 +44,7 @@ RUN yum update -y
 ### MUST install devel libs for python-ldap to work
 ##RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
 RUN yum makecache \
-    && yum install -y gcc make sudo bash which git
+    && yum install --skip-broken -y gcc make sudo bash which git
 
 RUN yum install -y readline-devel bzip2 bzip2-devel \
         zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel
@@ -56,7 +56,7 @@ WORKDIR /
 RUN git clone --depth=1 https://github.com/pyenv/pyenv.git /pyenv
 
 ENV PYENV_ROOT="/pyenv"
-ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
+ ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
 ## ref: https://github.com/pyenv/pyenv/issues/2416#issuecomment-1219484906
 ## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
