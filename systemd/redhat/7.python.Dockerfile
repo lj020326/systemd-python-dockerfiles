@@ -15,7 +15,7 @@ ENV HOME="/root"
 ENV PYTHON_VERSION="3.11.7"
 
 ## yum repolist all
-RUN yum-config-manager --enable ubi-7
+RUN yum-config-manager --enable ubi-7 ubi-7-server-extras-rpms
 RUN yum update -y
 
 ### ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
@@ -35,8 +35,8 @@ RUN yum update -y
 #
 ### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
-#RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
-#RUN yum update -y
+RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+RUN yum update -y
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
