@@ -22,7 +22,7 @@ ENV PYTHON_VERSION="3.11.7"
 
 RUN apt-get update -y
 
-RUN apt-get install -y make build-essential sudo bash which git
+RUN apt-get install -y make build-essential sudo bash git
 
 ## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
 RUN apt-get install -y libssl-dev zlib1g-dev libbz2-dev libbz2-dev libffi-dev liblzma-dev \
