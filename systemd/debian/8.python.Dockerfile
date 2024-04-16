@@ -86,11 +86,15 @@ ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 ## ref: https://github.com/pyenv/pyenv/issues/2416#issuecomment-1219484906
 ## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
 ## ref: https://stackoverflow.com/questions/57743230/userwarning-could-not-import-the-lzma-module-your-installed-python-is-incomple#57773679
+## ref: https://superuser.com/questions/1346141/how-to-link-python-to-the-manually-compiled-openssl-rather-than-the-systems-one
 ## ref: https://github.com/pyenv/pyenv/issues/2416
 #RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
 #RUN env CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
 #RUN CPPFLAGS=$(pkg-config --cflags openssl) LDFLAGS=$(pkg-config --libs openssl) \
-RUN pyenv install $PYTHON_VERSION
+RUN CPPFLAGS="-I/usr/local/openssl/include -I/usr/local/openssl/include/openssl" \
+    LDFLAGS="-L/usr/local/openssl/lib -L/usr/local/openssl/lib64" \
+    pyenv install $PYTHON_VERSION
+#RUN pyenv install $PYTHON_VERSION
 #RUN pyenv global $PYTHON_VERSION
 #RUN pyenv rehash
 RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
