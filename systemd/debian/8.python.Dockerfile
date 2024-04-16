@@ -91,8 +91,8 @@ ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 #RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
 #RUN env CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
 #RUN CPPFLAGS=$(pkg-config --cflags openssl) LDFLAGS=$(pkg-config --libs openssl) \
-RUN CPPFLAGS="-I/usr/local/openssl/include -I/usr/local/openssl/include/openssl" \
-    LDFLAGS="-L/usr/local/openssl/lib -L/usr/local/openssl/lib64" \
+RUN CPPFLAGS="-I/usr/local/openssl/include/openssl" \
+    LDFLAGS="-L/usr/lib/openssl -L/usr/local/openssl/lib" \
     pyenv install $PYTHON_VERSION
 #RUN pyenv install $PYTHON_VERSION
 #RUN pyenv global $PYTHON_VERSION

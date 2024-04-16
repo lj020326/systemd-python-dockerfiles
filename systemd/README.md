@@ -39,14 +39,22 @@ When one of the Dockerfile build command fails, look for the **id of the precedi
 $ docker run --rm -it <id_last_working_layer> bash -il
 ```
 
+#### `on` flag
 
+If you want to start a debug session when a build fails, you can use
+`--on=error` to start a debug session when the build fails.
+
+```console
+$ docker buildx debug --on=error build .
+$ docker buildx debug --on=error build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
+```
 
 UPDATE
 Intermediate container hashes are not supported as of Docker version 20.10. 
 To view intermediate container hashes:
 
 ```shell
-ljohnson@Lees-MBP:[debian](master)$ DOCKER_BUILDKIT=0 docker build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
+$ DOCKER_BUILDKIT=0 docker build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
 DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
             BuildKit is currently disabled; enable it by removing the DOCKER_BUILDKIT=0
             environment-variable.
@@ -94,8 +102,8 @@ Installing collected packages: setuptools, pip
 Successfully installed pip-23.2.1 setuptools-65.5.0
 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
 The command '/bin/sh -c CPPFLAGS="-I/usr/local/openssl/include -I/usr/local/openssl/include/openssl"     LDFLAGS="-L/usr/local/openssl/lib -L/usr/local/openssl/lib64"     pyenv install $PYTHON_VERSION' returned a non-zero code: 1
-ljohnson@Lees-MBP:[debian](master)$ 
-ljohnson@Lees-MBP:[debian](master)$ docker run --rm -it b1c595d36fc4 bash -il
+$ 
+$ docker run --rm -it b1c595d36fc4 bash -il
 
 ```
 
