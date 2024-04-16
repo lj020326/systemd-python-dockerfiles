@@ -46,8 +46,8 @@ RUN apt-get update -y \
         libnss3-dev \
         libreadline-dev \
         libsqlite3-dev \
+        libssl-dev \
         zlib1g-dev
-#        libssl-dev \
 
 ## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
 #RUN apt-get install -y libncursesw5-dev xz-utils tk-dev
