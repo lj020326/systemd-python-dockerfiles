@@ -17,13 +17,18 @@ ENV PYTHON_VERSION="3.11.7"
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y apt-utils sudo bash ca-certificates curl wget git tox
+## ref: https://www.how2shout.com/linux/install-python-3-x-or-2-7-on-debian-11-bullseye-linux/
+RUN apt-get update -y
+#RUN apt-get install --no-install-recommends -y apt-utils sudo bash ca-certificates curl wget git tox
+RUN apt-get install -y apt-utils \
+    build-essential \
+    sudo bash ca-certificates \
+    curl wget git
 
 ## ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
 RUN apt-get update -y \
     && apt-get upgrade -y \
-    && apt-get -y install build-essential \
+    && apt-get -y install \
         libbz2-dev \
         libffi-dev \
         libgdbm-dev \
@@ -35,22 +40,39 @@ RUN apt-get update -y \
         libssl-dev \
         zlib1g-dev
 
-    ## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
-RUN apt-get install -y libncursesw5-dev xz-utils tk-dev
+## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
+## ref: https://jameskiefer.com/posts/installing-python-3.7-on-debian-8/
+RUN apt-get install -y checkinstall \
+    libreadline-gplv2-dev libncursesw5-dev  xz-utils tk-dev libgdbm-dev libc6-dev libbz2-dev
+
 
 ## MUST install devel libs for python-ldap to work
 #RUN apt-get install -y libldap2-dev libsasl2-dev slapd ldap-utils
 
+### ref: https://linodelinux.com/how-to-install-openssl-1-1-1-tls-1-3-on-centos-7/
+##RUN cd /usr/src \
+##    && wget -q https://www.openssl.org/source/openssl-1.1.1w.tar.gz \
+##    && tar -xzf openssl-1.1.1w.tar.gz \
+##    && cd openssl-1.1*/ \
+##    && ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl \
+##    && make -j4 \
+##    && make install \
+##    && ldconfig
+#
 #RUN cd /usr/src \
-#    && wget -q https://www.python.org/ftp/python/3.11.7/Python-3.11.7.tgz \
-#    && tar -xzf Python-3.11.7.tgz \
-#    && cd Python-3.11.7 \
-#    && export DEBIAN_FRONTEND=noninteractive \
-#    && ./configure --enable-optimizations \
-#    && make altinstall
+#    && wget -q https://www.openssl.org/source/openssl-1.1.1w.tar.gz \
+#    && tar -xzf openssl-1.1.1w.tar.gz \
+#    && cd openssl-1.1*/ \
+#    && ./config shared --prefix=/usr/local \
+#    && make install \
+#    && ldconfig
 #
-#RUN update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1
+#ENV LD_LIBRARY_PATH="$HOME/usr/local/lib:$LD_LIBRARY_PATH"
 #
+### ref: https://stackoverflow.com/questions/72133316/libssl-so-1-1-cannot-open-shared-object-file-no-such-file-or-directory
+#RUN ln -s /usr/local/lib/libssl.so.1.1  /usr/lib/libssl.so.1.1 \
+#    && ln -s /usr/local/lib/libcrypto.so.1.1 /usr/lib/libcrypto.so.1.1
+
 ### ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
 #RUN apt install software-properties-common -y
 #RUN add-apt-repository "ppa:deadsnakes/ppa"
@@ -72,10 +94,18 @@ ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 ## ref: https://github.com/pyenv/pyenv/issues/2416#issuecomment-1219484906
 ## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
 ## ref: https://stackoverflow.com/questions/57743230/userwarning-could-not-import-the-lzma-module-your-installed-python-is-incomple#57773679
+## ref: https://superuser.com/questions/1346141/how-to-link-python-to-the-manually-compiled-openssl-rather-than-the-systems-one
 ## ref: https://github.com/pyenv/pyenv/issues/2416
 #RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
 #RUN env CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
 #RUN CPPFLAGS=$(pkg-config --cflags openssl) LDFLAGS=$(pkg-config --libs openssl) \
+#RUN CPPFLAGS="-I/usr/local/openssl/include/openssl" \
+#    LDFLAGS="-L/usr/lib/openssl -L/usr/local/openssl/lib" \
+#    PYTHON_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/openssl" \
+#    pyenv install $PYTHON_VERSION
+#RUN CPPFLAGS="-I/usr/local/include/openssl" \
+#    LDFLAGS="-L/usr/local/lib" \
+#    pyenv install $PYTHON_VERSION
 RUN pyenv install $PYTHON_VERSION
 #RUN pyenv global $PYTHON_VERSION
 #RUN pyenv rehash

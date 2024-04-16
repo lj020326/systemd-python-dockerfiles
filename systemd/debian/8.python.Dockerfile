@@ -16,6 +16,7 @@ ENV PYTHON_VERSION="3.11.7"
 
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
+## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
 RUN apt-get update -y
 #RUN apt-get install --no-install-recommends -y apt-utils sudo bash ca-certificates curl wget git tox
 RUN apt-get install -y apt-utils \
@@ -38,12 +39,11 @@ RUN apt-get update -y \
         libssl-dev \
         zlib1g-dev
 
+## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
 ## ref: https://jameskiefer.com/posts/installing-python-3.7-on-debian-8/
 RUN apt-get install -y checkinstall \
-    libreadline-gplv2-dev libncursesw5-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
+    libreadline-gplv2-dev libncursesw5-dev  xz-utils tk-dev libgdbm-dev libc6-dev libbz2-dev
 
-## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
-#RUN apt-get install -y libncursesw5-dev xz-utils tk-dev
 
 ## MUST install devel libs for python-ldap to work
 #RUN apt-get install -y libldap2-dev libsasl2-dev slapd ldap-utils

@@ -4,6 +4,11 @@ LABEL build="2024041001"
 
 ENV container docker
 
+RUN yum -y update \
+    && yum -y install systemd \
+    && yum clean all
+
+## ref: https://github.com/geerlingguy/docker-centos8-ansible/blob/master/Dockerfile
 RUN cd /lib/systemd/system/sysinit.target.wants/; \
     for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done
 
