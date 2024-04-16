@@ -68,6 +68,8 @@ RUN cd /usr/src \
     && ldconfig
 
 ENV LD_LIBRARY_PATH="$HOME/usr/local/lib:$LD_LIBRARY_PATH"
+
+## ref: https://stackoverflow.com/questions/72133316/libssl-so-1-1-cannot-open-shared-object-file-no-such-file-or-directory
 RUN ln -s /usr/local/lib/libssl.so.1.1  /usr/lib/libssl.so.1.1 \
     && ln -s /usr/local/lib/libcrypto.so.1.1 /usr/lib/libcrypto.so.1.1
 
