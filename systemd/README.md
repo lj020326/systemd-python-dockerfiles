@@ -39,9 +39,11 @@ When one of the Dockerfile build command fails, look for the **id of the precedi
 $ docker run --rm -it <id_last_working_layer> bash -il
 ```
 
+
+
 UPDATE
 Intermediate container hashes are not supported as of Docker version 20.10. 
-To view intermediate container hashes, add the env var:
+To view intermediate container hashes:
 
 ```shell
 ljohnson@Lees-MBP:[debian](master)$ DOCKER_BUILDKIT=0 docker build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
