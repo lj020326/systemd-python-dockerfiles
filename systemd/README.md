@@ -39,8 +39,17 @@ When one of the Dockerfile build command fails, look for the **id of the precedi
 $ docker run --rm -it <id_last_working_layer> bash -il
 ```
 
+UPDATE
+Intermediate container hashes are not supported as of Docker version 20.10. 
+
 Once in the container:
 
 -   try the command that failed, and reproduce the issue
 -   then fix the command and test it
 -   finally update your Dockerfile with the fixed command
+
+## Reference
+
+- https://stackoverflow.com/questions/26220957/how-can-i-inspect-the-file-system-of-a-failed-docker-build
+- https://stackoverflow.com/a/66770818/8900478
+- 
