@@ -40,8 +40,7 @@ RUN apt-get update -y \
 
 ## ref: https://jameskiefer.com/posts/installing-python-3.7-on-debian-8/
 RUN apt-get install -y checkinstall \
-    libreadline-gplv2-dev libncursesw5-dev libsqlite3-dev \
-    tk-dev libgdbm-dev libc6-dev libbz2-dev
+    libreadline-gplv2-dev libncursesw5-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
 
 ## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
 #RUN apt-get install -y libncursesw5-dev xz-utils tk-dev
