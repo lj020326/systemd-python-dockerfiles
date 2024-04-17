@@ -9,6 +9,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ## ref: https://stackoverflow.com/questions/68802802/repository-http-security-debian-org-debian-security-buster-updates-inrelease
 #RUN apt-get --allow-releaseinfo-change-suite update \
 RUN apt-get update \
+    && apt-get install -y apt-utils \
     && apt-get install -y dbus systemd systemd-sysv systemd-cron rsyslog iproute2 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -37,7 +38,8 @@ RUN rm -f           \
     /etc/machine-id \
     /var/lib/dbus/machine-id
 
-VOLUME [ "/sys/fs/cgroup" ]
+#VOLUME [ "/sys/fs/cgroup" ]
+VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 
 CMD ["/sbin/init"]
 #CMD ["/lib/systemd/systemd"]
