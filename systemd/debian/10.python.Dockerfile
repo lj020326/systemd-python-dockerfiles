@@ -47,6 +47,8 @@ RUN apt-get update -y \
         tk-dev
 
 ## MUST install devel libs for python-ldap to work
+## ref: https://github.com/bdellegrazie/docker-ubuntu-systemd/blob/master/Dockerfile
+## ref: https://stackoverflow.com/questions/4768446/i-cant-install-python-ldap
 #RUN apt-get install -y libldap2-dev libsasl2-dev slapd ldap-utils
 
 ## ref: https://linodelinux.com/how-to-install-openssl-1-1-1-tls-1-3-on-centos-7/
