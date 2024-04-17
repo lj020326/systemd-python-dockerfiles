@@ -16,16 +16,8 @@ ENV PYTHON_VERSION="3.11.7"
 
 #RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-#COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-RUN curl -fsSL https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-
-## ref: https://linuxconfig.org/redhat-8-epel-install-guide
-## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
-## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
-RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
-#RUN yum-config-manager --enable epel
-
-RUN dnf upgrade -y
+### ref: https://stackoverflow.com/questions/56908604/trying-to-install-epel-release-on-fedora-30-no-match-for-argument-epel-relea
+#RUN dnf -y install passenger
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
