@@ -27,7 +27,8 @@ ENV PATH="/opt/venv/bin:$PATH"
 ## Install systemd
 ## ref: https://linuxopsys.com/topics/install-systemd
 RUN yum groupinstall -y "Development Tools" && \
-  yum install -y libcap-devel gperf glib2-devel python3-pip jq
+  yum install -y libcap-devel gperf glib2-devel jq
+#  yum install -y libcap-devel gperf glib2-devel python3-pip jq
 
 ## Install systemd
 ## ref: https://linuxopsys.com/topics/install-systemd
