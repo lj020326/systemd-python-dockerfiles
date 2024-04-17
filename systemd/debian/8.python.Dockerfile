@@ -17,6 +17,7 @@ ENV PYTHON_VERSION="3.11.7"
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
 ## ref: https://unix.stackexchange.com/questions/508724/failed-to-fetch-jessie-backports-repository
 ## ref: https://github.com/bdellegrazie/docker-debian-systemd/blob/master/Dockerfile
+## ref: https://www.how2shout.com/linux/install-python-3-x-or-2-7-on-debian-11-bullseye-linux/
 RUN apt-get update -y
 #RUN apt-get install --no-install-recommends -y apt-utils sudo bash ca-certificates curl wget git tox
 RUN apt-get install -y apt-utils \
@@ -25,25 +26,26 @@ RUN apt-get install -y apt-utils \
     curl wget git
 
 ## ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
+## ref: https://stackoverflow.com/questions/63314253/how-to-install-python3-8-using-checkinstall-on-debian-10
 RUN apt-get update -y \
     && apt-get upgrade -y \
     && apt-get -y install \
         libbz2-dev \
+        libbz2-dev \
+        libc6-dev \
         libffi-dev \
         libgdbm-dev \
         liblzma-dev \
         libncurses5-dev \
+        libncursesw5-dev \
         libnss3-dev \
         libreadline-dev \
         libsqlite3-dev \
         libssl-dev \
-        zlib1g-dev
-
-## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
-## ref: https://jameskiefer.com/posts/installing-python-3.7-on-debian-8/
-RUN apt-get install -y checkinstall \
-    libreadline-gplv2-dev libncursesw5-dev  xz-utils tk-dev libgdbm-dev libc6-dev libbz2-dev
-
+        zlib1g-dev \
+        libreadline-gplv2-dev \
+        xz-utils \
+        tk-dev
 
 ## MUST install devel libs for python-ldap to work
 #RUN apt-get install -y libldap2-dev libsasl2-dev slapd ldap-utils
@@ -105,6 +107,7 @@ ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 #RUN CPPFLAGS="-I/usr/local/include/openssl" \
 #    LDFLAGS="-L/usr/local/lib" \
 #    pyenv install $PYTHON_VERSION
+#RUN PYTHON_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/ssl" pyenv install $PYTHON_VERSION
 RUN pyenv install $PYTHON_VERSION
 #RUN pyenv global $PYTHON_VERSION
 #RUN pyenv rehash

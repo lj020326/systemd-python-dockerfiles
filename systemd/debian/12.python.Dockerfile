@@ -26,38 +26,39 @@ RUN apt-get install -y apt-utils \
     curl wget git
 
 ## ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
+## ref: https://stackoverflow.com/questions/63314253/how-to-install-python3-8-using-checkinstall-on-debian-10
 RUN apt-get update -y \
     && apt-get upgrade -y \
     && apt-get -y install \
         libbz2-dev \
+        libbz2-dev \
+        libc6-dev \
         libffi-dev \
         libgdbm-dev \
         liblzma-dev \
         libncurses5-dev \
+        libncursesw5-dev \
         libnss3-dev \
         libreadline-dev \
         libsqlite3-dev \
         libssl-dev \
-        zlib1g-dev
-
-## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
-## ref: https://jameskiefer.com/posts/installing-python-3.7-on-debian-8/
-RUN apt-get install -y checkinstall \
-    libreadline-gplv2-dev libncursesw5-dev  xz-utils tk-dev libgdbm-dev libc6-dev libbz2-dev
-
+        zlib1g-dev \
+        libreadline-gplv2-dev \
+        xz-utils \
+        tk-dev
 
 ## MUST install devel libs for python-ldap to work
 #RUN apt-get install -y libldap2-dev libsasl2-dev slapd ldap-utils
 
-### ref: https://linodelinux.com/how-to-install-openssl-1-1-1-tls-1-3-on-centos-7/
-##RUN cd /usr/src \
-##    && wget -q https://www.openssl.org/source/openssl-1.1.1w.tar.gz \
-##    && tar -xzf openssl-1.1.1w.tar.gz \
-##    && cd openssl-1.1*/ \
-##    && ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl \
-##    && make -j4 \
-##    && make install \
-##    && ldconfig
+## ref: https://linodelinux.com/how-to-install-openssl-1-1-1-tls-1-3-on-centos-7/
+#RUN cd /usr/src \
+#    && wget -q https://www.openssl.org/source/openssl-1.1.1w.tar.gz \
+#    && tar -xzf openssl-1.1.1w.tar.gz \
+#    && cd openssl-1.1*/ \
+#    && ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl \
+#    && make -j4 \
+#    && make install \
+#    && ldconfig
 #
 #RUN cd /usr/src \
 #    && wget -q https://www.openssl.org/source/openssl-1.1.1w.tar.gz \
@@ -106,6 +107,7 @@ ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 #RUN CPPFLAGS="-I/usr/local/include/openssl" \
 #    LDFLAGS="-L/usr/local/lib" \
 #    pyenv install $PYTHON_VERSION
+#RUN PYTHON_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/ssl" pyenv install $PYTHON_VERSION
 RUN pyenv install $PYTHON_VERSION
 #RUN pyenv global $PYTHON_VERSION
 #RUN pyenv rehash
