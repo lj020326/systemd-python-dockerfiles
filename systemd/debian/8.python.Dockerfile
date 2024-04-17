@@ -43,7 +43,6 @@ RUN apt-get update -y \
         libsqlite3-dev \
         libssl-dev \
         zlib1g-dev \
-        libreadline-gplv2-dev \
         xz-utils \
         tk-dev
 
