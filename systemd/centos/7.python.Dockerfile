@@ -55,6 +55,11 @@ RUN git clone --depth=1 https://github.com/pyenv/pyenv.git /pyenv
 
 ENV PYENV_ROOT="/pyenv"
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
+## ref: https://github.com/pyenv/pyenv/issues/281
+## ref: https://discuss.python.org/t/build-python3-11-5-with-static-openssl-and-libffi-on-centos7/37485/5
+## ref: https://serverfault.com/questions/973470/in-centos-what-does-the-line-ld-library-path-usr-local-lib-usr-local-lib64-do
+ENV LD_LIBRARY_PATH=/usr/lib:/usr/lib64
+ENV PKG_CONFIG_PATH=/usr/lib64/pkgconfig
 
 ## ref: https://github.com/pyenv/pyenv/issues/2416#issuecomment-1219484906
 ## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
