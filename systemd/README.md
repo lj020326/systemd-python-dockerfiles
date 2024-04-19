@@ -31,11 +31,24 @@ $ cd ../debian
 $ docker build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
 ```
 
+### Running bash in image
+
+To run bash in newly built image:
+
+```shell
+## if testing the locally built image
+$ docker run --rm -it centos8-systemd bash -il
+## if testing the image pushed to the registry
+$ docker run --rm -it media.johnson.int:5000/centos8-systemd bash -il
+```
+
 ### Debugging failed build
 
 When one of the Dockerfile build command fails, look for the **id of the preceding layer** and run a shell in a container created from that id:
 
 ```shell
+$ docker run --rm -it centos8-systemd bash -il
+$ docker run --rm -it centos8-systemd bash -il
 $ docker run --rm -it <id_last_working_layer> bash -il
 ```
 
