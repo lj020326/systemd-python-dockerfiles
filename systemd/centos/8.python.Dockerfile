@@ -11,10 +11,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 #ENV LC_ALL=POSIX
 
 ## ref: https://www.cyberciti.biz/faq/failed-to-set-locale-defaulting-to-c-warning-message-on-centoslinux/
-ENV LANG=en_US.UTF-8
-ENV LANGUAGE=en_US.UTF-8
+#ENV LANG=en_US.UTF-8
+#ENV LANGUAGE=en_US.UTF-8
+#ENV LC_CTYPE=en_US.UTF-8
+ENV LANG=C.UTF-8
+ENV LANGUAGE=C.UTF-8
 ENV LC_COLLATE=C
-ENV LC_CTYPE=en_US.UTF-8
+ENV LC_CTYPE=C.UTF-8
 
 ENV TZ=UTC
 
