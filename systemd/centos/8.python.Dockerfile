@@ -22,6 +22,7 @@ ENV HOME="/root"
 ENV PYTHON_VERSION="3.11.7"
 
 #set-locale LANG=en_US.UTF-8
+set-locale LANG=C.UTF-8
 
 #COPY ./repos/centos8-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
 #COPY ./repos/centos8-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
