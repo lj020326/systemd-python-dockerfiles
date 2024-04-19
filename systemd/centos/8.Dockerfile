@@ -4,16 +4,24 @@ LABEL build="2024041001"
 
 ENV container docker
 
-##COPY ./repos/centos8-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
-##COPY ./repos/centos8-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
-##COPY ./repos/centos8-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
-#COPY ./repos/centos-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
-#COPY ./repos/centos-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
-#COPY ./repos/centos-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
+#COPY ./repos/centos8-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
+#COPY ./repos/centos8-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
+#COPY ./repos/centos8-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
+COPY ./repos/centos-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
+COPY ./repos/centos-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
+COPY ./repos/centos-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
 
-#RUN dnf -y update \
-#    && dnf -y install systemd \
-#    && dnf clean all
+#RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+#
+### ref: https://linuxconfig.org/redhat-8-epel-install-guide
+### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
+### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
+#RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+##RUN yum-config-manager --enable epel
+
+RUN dnf -y update \
+    && dnf -y install systemd \
+    && dnf clean all
 
 ## ref: https://github.com/geerlingguy/docker-centos8-ansible/blob/master/Dockerfile
 RUN cd /lib/systemd/system/sysinit.target.wants/; \
