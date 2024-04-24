@@ -21,7 +21,7 @@ COPY ./repos/centos-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppSt
 
 RUN dnf -y update \
     && dnf -y install systemd
-#    && dnf clean all
+#RUN dnf clean all
 
 ## ref: https://github.com/geerlingguy/docker-centos8-ansible/blob/master/Dockerfile
 RUN cd /lib/systemd/system/sysinit.target.wants/; \
