@@ -32,7 +32,7 @@ RUN dnf upgrade -y
 #RUN dnf makecache \
 #    && dnf groupinstall --nobest -y "Development Tools" \
 RUN dnf makecache \
-    && dnf gcc make \
+    && dnf install -y gcc make \
     && dnf install --nodocs -y sudo bash which git \
     && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
     && dnf clean all
