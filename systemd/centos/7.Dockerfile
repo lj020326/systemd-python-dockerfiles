@@ -4,9 +4,8 @@ LABEL build="2024041001"
 
 ENV container docker
 
-#RUN yum -y update \
-#    && yum -y install systemd \
-#    && yum clean all
+RUN yum -y update \
+    && yum -y install systemd
 
 ## ref: https://github.com/geerlingguy/docker-centos8-ansible/blob/master/Dockerfile
 RUN cd /lib/systemd/system/sysinit.target.wants/; \
