@@ -1,3 +1,4 @@
+## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ARG BUILD_ID=devel
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/redhat9-systemd:latest
@@ -32,12 +33,12 @@ COPY ./repos/redhat-ubi.repo.ini /etc/yum.repos.d/ubi.repo
 COPY ./repos/redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
 
 COPY ./repos/centos-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
-#COPY ./repos/centos-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
 COPY ./repos/centos-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
+#COPY ./repos/centos-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
 
 ##COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-#
+
 ### ref: https://linuxconfig.org/redhat-8-epel-install-guide
 ### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
@@ -49,10 +50,8 @@ RUN dnf upgrade -y
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
-#RUN dnf makecache \
-#    && dnf groupinstall --nobest -y "Development Tools" \
 RUN dnf makecache \
-    && dnf install -y gcc make \
+    && dnf groupinstall -y "Development Tools" \
     && dnf install --nodocs -y sudo bash which git \
     && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
     && dnf clean all
