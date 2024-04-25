@@ -1,3 +1,5 @@
+## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
+ARG BUILD_ID=devel
 #########
 ## https://pythonspeed.com/articles/multi-stage-docker-python/
 
@@ -5,7 +7,7 @@
 #FROM centos:9
 FROM quay.io/centos/centos:stream9 AS compile-venv-image
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build="2024041001"
+LABEL build=$BUILD_ID
 
 ENV container docker
 ENV PIP_ROOT_USER_ACTION ignore

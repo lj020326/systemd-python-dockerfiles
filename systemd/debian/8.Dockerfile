@@ -1,8 +1,9 @@
+ARG BUILD_ID=devel
 ## ref: https://stackoverflow.com/questions/74531081/debian-8-jessie-archive-debian-org-gpg-error-keyexpired-since-2022-11-19-what-n
 #FROM debian:jessie
 FROM debian/eol:jessie
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build="2024041001"
+LABEL build=$BUILD_ID
 
 ENV container docker
 ENV LC_ALL C
@@ -78,8 +79,20 @@ RUN rm -f           \
     /etc/machine-id \
     /var/lib/dbus/machine-id
 
+# The host's cgroup filesystem need's to be mounted (read-only) in the
+# container. '/run', '/run/lock' and '/tmp' need to be tmpfs filesystems when
+# running the container without 'CAP_SYS_ADMIN'.
+#
+# NOTE: For running Debian stretch, 'CAP_SYS_ADMIN' still needs to be added, as
+#       stretch's version of systemd is not recent enough. Buster will run just
+#       fine without 'CAP_SYS_ADMIN'.
 #VOLUME [ "/sys/fs/cgroup" ]
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 
+# A different stop signal is required, so systemd will initiate a shutdown when
+# running 'docker stop <container>'.
+STOPSIGNAL SIGRTMIN+3
+
+## ref: https://unix.stackexchange.com/questions/276340/linux-command-systemctl-status-is-not-working-inside-a-docker-container
 CMD ["/sbin/init"]
 #CMD ["/lib/systemd/systemd"]

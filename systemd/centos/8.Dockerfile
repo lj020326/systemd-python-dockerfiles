@@ -1,3 +1,4 @@
+## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ARG BUILD_ID=devel
 FROM centos:8
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
