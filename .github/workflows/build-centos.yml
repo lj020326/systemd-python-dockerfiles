@@ -114,7 +114,7 @@ jobs:
           file: ${{ matrix.systemd-distro.dockerfile }}
           platforms: ${{ matrix.systemd-distro.platforms }}
           build-args: |
-            BUILD_ID: ${{ steps.date.outputs.date }}-{{ github.run_number }}
+            BUILD_ID: ${{ steps.date.outputs.date }}.${{ github.run_number }}
           push: true
           tags: ${{ matrix.systemd-distro.tags }}
           labels: |
@@ -130,7 +130,7 @@ jobs:
           platforms: ${{ matrix.systemd-python-distro.platforms }}
           build-args: |
             IMAGE_REGISTRY=${{ github.repository_owner }}
-            BUILD_ID: ${{ steps.date.outputs.date }}-{{ github.run_number }}
+            BUILD_ID: ${{ steps.date.outputs.date }}.${{ github.run_number }}
           push: true
           tags: ${{ matrix.systemd-python-distro.tags }}
           labels: |
