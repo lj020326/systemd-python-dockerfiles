@@ -1,6 +1,7 @@
+ARG BUILD_ID=devel
 FROM centos:8
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-LABEL build="2024041001"
+LABEL build=$BUILD_ID
 
 ENV container docker
 
