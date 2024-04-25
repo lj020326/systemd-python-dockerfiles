@@ -21,6 +21,7 @@ String configYmlStr="""
 pipeline:
   alwaysEmailList: ljohnson@dettonville.org
   logLevel: DEBUG
+  buildId = "${buildId}"
 
   buildArgs:
     IMAGE_REGISTRY: media.johnson.int:5000
