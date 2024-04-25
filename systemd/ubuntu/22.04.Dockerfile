@@ -8,6 +8,9 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
+## ref: https://askubuntu.com/questions/875213/apt-get-to-retry-downloading#1107071
+RUN echo 'Acquire::Retries "3";' > /etc/apt/apt.conf.d/80-retries
+
 RUN apt-get update \
     && apt-get install -y apt-utils \
     && apt-get install -y dbus systemd systemd-sysv systemd-cron rsyslog iproute2 \
