@@ -10,6 +10,12 @@ import com.dettonville.api.pipeline.utils.JsonUtils
 Logger.init(this, LogLevel.INFO)
 Logger log = new Logger(this)
 
+// ref: https://stackoverflow.com/questions/40261710/getting-current-timestamp-in-inline-pipeline-script-using-pipeline-plugin-of-hud
+Date now = new Date()
+String buildDate = now.format("yyyyMMdd", TimeZone.getTimeZone('UTC'))
+String buildId = "${buildDate}-${BUILD_NUMBER}"
+log.info("buildId=${buildId}")
+
 String configYmlStr="""
 ---
 pipeline:
@@ -18,6 +24,7 @@ pipeline:
 
   buildArgs:
     IMAGE_REGISTRY: media.johnson.int:5000
+    BUILD_ID: "${buildId}"
 
   buildImageList:
     - buildImageLabel: openrc-alpine
