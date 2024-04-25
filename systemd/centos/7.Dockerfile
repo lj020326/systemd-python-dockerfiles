@@ -4,6 +4,8 @@ LABEL build="2024041001"
 
 ENV container docker
 
+COPY ./repos/centos7-linux-base.repo.ini /etc/yum.repos.d/CentOS-Base.repo
+
 RUN yum -y update \
     && yum -y install systemd
 #RUN yum clean all
