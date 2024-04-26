@@ -34,10 +34,8 @@ ENV PYTHON_VERSION="3.11.7"
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
-#RUN dnf makecache \
-#    && dnf groupinstall --nobest -y "Development Tools" \
 RUN dnf makecache \
-    && dnf install -y gcc make \
+    && dnf groupinstall -y "Development Tools" \
     && dnf install --nodocs -y sudo bash which git \
     && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
     && dnf clean all
