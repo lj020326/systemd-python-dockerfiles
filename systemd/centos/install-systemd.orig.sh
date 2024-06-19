@@ -30,6 +30,6 @@ SOURCE_DIR=$(find "${TEMPDIR}/" -maxdepth 1 -type d | grep systemd)
 #cd "${TEMPDIR}/systemd-${RELEASE_VERSION}"
 cd "${SOURCE_DIR}/"
 
-meson setup build/ && \
-ninja -C build && \
-meson install -C build/ --no-rebuild
+bash ./configure && \
+make && \
+make install
