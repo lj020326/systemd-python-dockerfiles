@@ -60,8 +60,14 @@ RUN dnf makecache \
     && dnf install -y gcc make \
     && dnf install --nodocs -y sudo bash which git \
     && dnf install --nodocs -y bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel zlib-devel xz-devel \
-    && dnf install -y https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/readline-devel-8.1-4.el9.x86_64.rpm \
     && dnf clean all
+
+#RUN dnf install -y https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/readline-devel-8.1-4.el9.x86_64.rpm
+RUN dnf install -y https://mirror.stream.centos.org/9-stream/AppStream/$(rpm -E '%{_arch}')/os/Packages/readline-devel-8.1-4.el9.$(rpm -E '%{_arch}').rpm
+
+## ref: https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/building_running_and_managing_containers/assembly_adding-software-to-a-ubi-container_building-running-and-managing-containers#proc_adding-software-in-a-standard-ubi-container_assembly_adding-software-to-a-ubi-container
+#RUN yum install --disablerepo=* --enablerepo=ubi-9-appstream-rpms --enablerepo=ubi-9-baseos-rpms bzip2
+#RUN yum install --enablerepo=ubi-9-appstream-rpms readline-devel
 
 ### ref: https://github.com/devfile/developer-images/blob/main/base/ubi9/Dockerfile
 ## Removed because of vulnerabilities: git-lfs
