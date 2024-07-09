@@ -6,7 +6,7 @@ FROM registry.access.redhat.com/ubi7/ubi-init
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build=$BUILD_ID
 
-ENV container docker
+ENV container=docker
 
 RUN cd /lib/systemd/system/sysinit.target.wants/; \
     for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done

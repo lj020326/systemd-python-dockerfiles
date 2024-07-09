@@ -4,7 +4,7 @@ FROM fedora:35
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build=$BUILD_ID
 
-ENV container docker
+ENV container=docker
 
 RUN dnf -y update \
     && dnf -y install systemd \

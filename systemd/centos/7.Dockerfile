@@ -4,7 +4,7 @@ FROM centos:7
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build=$BUILD_ID
 
-ENV container docker
+ENV container=docker
 
 COPY ./repos/centos7-linux-base.repo.ini /etc/yum.repos.d/CentOS-Base.repo
 

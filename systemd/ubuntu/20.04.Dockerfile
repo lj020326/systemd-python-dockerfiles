@@ -4,9 +4,9 @@ FROM ubuntu:20.04
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build=$BUILD_ID
 
-ENV container docker
-ENV LC_ALL C
-ENV DEBIAN_FRONTEND noninteractive
+ENV container=docker
+ENV LC_ALL=C
+ENV DEBIAN_FRONTEND=noninteractive
 
 ## ref: https://askubuntu.com/questions/875213/apt-get-to-retry-downloading#1107071
 RUN echo 'Acquire::Retries "3";' > /etc/apt/apt.conf.d/80-retries

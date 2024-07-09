@@ -1,4 +1,6 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
+## ref: https://github.com/devfile/developer-images/blob/main/base/ubi9/Dockerfile
+## ref: https://access.redhat.com/articles/4238681
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/redhat9-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
@@ -29,12 +31,12 @@ ENV PYTHON_VERSION="3.11.7"
 RUN dnf --disableplugin subscription-manager update -y
 RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
 
-COPY ./repos/redhat-ubi.repo.ini /etc/yum.repos.d/ubi.repo
-COPY ./repos/redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
+#COPY ./repos/redhat-ubi.repo.ini /etc/yum.repos.d/ubi.repo
+#COPY ./repos/redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
 
-COPY ./repos/centos-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
-COPY ./repos/centos-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
-#COPY ./repos/centos-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
+#COPY ./repos/centos-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
+#COPY ./repos/centos-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
+##COPY ./repos/centos-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
 
 ##COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
@@ -46,16 +48,25 @@ RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg
 #RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 ##RUN yum-config-manager --enable epel
 
-RUN dnf upgrade -y
+#RUN dnf upgrade -y
+RUN dnf update -y
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
+#RUN dnf makecache \
+#    && dnf groupinstall -y "Development Tools" \
 RUN dnf makecache \
-    && dnf groupinstall -y "Development Tools" \
+    && dnf install -y gcc make \
     && dnf install --nodocs -y sudo bash which git \
-    && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
+    && dnf install --nodocs -y bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel zlib-devel xz-devel \
+    && dnf install -y https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/readline-devel-8.1-4.el9.x86_64.rpm \
     && dnf clean all
+
+### ref: https://github.com/devfile/developer-images/blob/main/base/ubi9/Dockerfile
+## Removed because of vulnerabilities: git-lfs
+#RUN dnf install -y diffutils git iproute jq less lsof man nano procps \
+#    perl-Digest-SHA net-tools openssh-clients rsync socat sudo time vim wget zip
 
 ####################
 ## pyenv

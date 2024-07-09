@@ -24,6 +24,7 @@ or if it doesn't work
 
 To build image:
 ```shell
+$ docker build -t redhat9-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f systemd/redhat/9.python.Dockerfile systemd/redhat/
 $ docker build -t redhat9-systemd-python \
   --build-arg IMAGE_REGISTRY=media.johnson.int:5000 \
   -f systemd/redhat/9.python.Dockerfile \
@@ -50,6 +51,95 @@ $ docker build -t centos9-systemd-python --build-arg IMAGE_REGISTRY=media.johnso
 $ cd ../debian
 $ docker build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
 ```
+
+### If getting TLS cert validation error for custom registry
+
+BuildX for multiplatform builds runs in an own docker container and you will have to take extra steps 
+to add trust to registries with self-signed certificates.
+
+If getting TLS cert validation error using custom registry / cacerts when attempting to build using buildx container:
+
+#### Option 1: configure buildx options to trust custom registry ca cert
+
+1.  Create a buildkitd.toml and configure your private CA certificate:
+
+```ini
+[registry."your.dockerimagehost.example"]
+  ca=["/home/downloads/mycacert.pem"]
+```
+
+2.  create a docker builder
+
+```shell
+docker buildx create --use --config buildkitd.toml
+```
+
+3.  then your build command should work
+
+#### Option 2: add cert to buildx container (not recommended)
+
+The following steps use the tool [update-ca-certificates](https://manpages.ubuntu.com/manpages/xenial/man8/update-ca-certificates.8.html) to get it done.
+
+1.  Access the buildx container by opening a shell:
+    
+    ```
+    docker exec -it buildx_buildkit_mybuilder0 /bin/sh
+    ```
+    
+2.  Go to the trusted certificates folder
+    
+    ```
+    cd /usr/local/share/ca-certificates/
+    ```
+    
+3.  Copy the registry’s certificate from the source location the container e.g. by scp:
+    
+    ```
+    scp &lt;username&gt;@&lt;sourceIP&gt;:/path/to/certificate/of/registry.crt \
+        ./&lt;registrynameandport&gt;.crt
+    ```
+    
+4.  Update the containers trusted CA list now by calling
+    
+    ```
+    update-ca-certificates
+    ```
+    
+    You can ignore the following warning, you might get
+    
+    > WARNING: ca-certificates.crt does not contain exactly one certificate or CRL: skipping
+    
+5.  Restart the builder container for the changes to take effect.
+    
+
+`docker build buildx` should work just fine now.
+
+If unsure, you can verify if the process was successful by controlling the content of `/etc/ssl/certs` inside the buildx container. It should now contain an entry named `ca-cert-<registrynameandport>.pem` and it should also be listed in the `ca-certificates.crt` file.
+
+A marginally more robust work-around, but still not pretty (no error checking etc):
+
+```shell
+BUILDER=$(sudo docker ps | grep buildkitd | cut -f1 -d' ')  
+sudo docker cp YOUR-CA.crt $BUILDER:/usr/local/share/ca-certificates/  
+sudo docker exec $BUILDER update-ca-certificates  
+sudo docker restart $BUILDER
+
+```
+
+#### Option 3: Create custom buildkit container definition with custom ca cert added/trusted
+
+Instead of mangling an existing builder container. driver-opt has a image option (for docker-container driver).
+
+Have a 2 line Dockerfile that adds internal CAs to moby/buildkit and use that image when creating the builder.
+
+To modify buildx builder image use `buildx create --driver-opt image=yourimage`
+
+
+References:
+- https://github.com/docker/buildx/tree/master/docs/reference
+- https://github.com/docker/buildx/issues/80
+- https://stackoverflow.com/questions/72894189/docker-buildx-build-failing-when-referring-repo-with-tls-certificate-signed-wi
+- https://github.com/docker/buildx/blob/master/docs/guides/custom-registry-config.md
 
 ### Running bash in image
 

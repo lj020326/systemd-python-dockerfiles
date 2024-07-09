@@ -9,8 +9,8 @@ FROM quay.io/centos/centos:stream9 AS compile-venv-image
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build=$BUILD_ID
 
-ENV container docker
-ENV PIP_ROOT_USER_ACTION ignore
+ENV container=docker
+ENV PIP_ROOT_USER_ACTION=ignore
 
 ## ref: https://pythonspeed.com/articles/multi-stage-docker-python/
 RUN python3 -m venv /opt/venv

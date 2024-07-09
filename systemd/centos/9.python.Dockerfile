@@ -1,7 +1,7 @@
-ARG BUILD_ID=devel
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/centos9-systemd:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 # Set environment variables.
@@ -36,7 +36,15 @@ RUN curl -fsSL https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/r
 RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 #RUN yum-config-manager --enable epel
 
-RUN dnf upgrade -y
+### ref: https://linuxconfig.org/redhat-8-epel-install-guide
+### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
+### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
+#RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+#RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+##RUN yum-config-manager --enable epel
+
+#RUN dnf upgrade -y
+RUN dnf update -y
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
@@ -46,7 +54,7 @@ RUN dnf upgrade -y
 RUN dnf makecache \
     && dnf install -y gcc make \
     && dnf install --nodocs -y sudo bash which git \
-    && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
+    && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel zlib-devel xz-devel \
     && dnf clean all
 
 ####################
