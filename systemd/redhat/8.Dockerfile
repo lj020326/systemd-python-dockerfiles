@@ -1,9 +1,11 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
-ARG BUILD_ID=devel
 ## ref: https://www.ansible.com/blog/developing-and-testing-ansible-roles-with-molecule-and-podman-part-1
 FROM registry.access.redhat.com/ubi8/ubi-init
 #FROM registry.access.redhat.com/ubi8/ubi
+
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+
+ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 ENV container=docker

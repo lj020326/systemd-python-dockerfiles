@@ -3,7 +3,9 @@
 ## ref: https://access.redhat.com/articles/4238681
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/redhat9-systemd:latest
+
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 

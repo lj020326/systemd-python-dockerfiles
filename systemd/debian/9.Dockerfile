@@ -1,9 +1,11 @@
-ARG BUILD_ID=devel
 FROM debian:stretch
 #FROM debian:stretch-20220622
 #FROM debian:stretch-20220125
 #FROM debian:stretch-20210721
+
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+
+ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 ENV container=docker

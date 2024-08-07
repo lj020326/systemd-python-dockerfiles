@@ -1,7 +1,9 @@
-ARG BUILD_ID=devel
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/redhat7-systemd:latest
+
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+
+ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 # Set environment variables.

@@ -1,6 +1,8 @@
-ARG BUILD_ID=devel
 FROM debian:bookworm
+
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+
+ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 ENV container=docker

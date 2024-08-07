@@ -1,9 +1,11 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
-ARG BUILD_ID=devel
 FROM registry.access.redhat.com/ubi7/ubi-init
 #FROM registry.access.redhat.com/rhel7:latest
 #FROM richxsl/rhel7
+
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+
+ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 ENV container=docker

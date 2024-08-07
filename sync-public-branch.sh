@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-GIT_DEFAULT_BRANCH=master
+GIT_DEFAULT_BRANCH=main
 GIT_PUBLIC_BRANCH=public
 
 ## ref: https://intoli.com/blog/exit-on-errors-in-bash-scripts/
