@@ -224,7 +224,7 @@ function sync_public_branch() {
   echo "TO_REMOVE=${TO_REMOVE}"
   CLEANUP_CMD="rm -fr ${TO_REMOVE}"
   echo "${CLEANUP_CMD}"
-  eval ${CLEANUP_CMD}
+  eval "${CLEANUP_CMD}"
 
   echo "Show changes before push:"
   git status
