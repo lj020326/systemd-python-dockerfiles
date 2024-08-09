@@ -1,6 +1,6 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
-ARG BUILD_ID=devel
 FROM centos:7
+ARG BUILD_ID=devel
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 LABEL build=$BUILD_ID
 

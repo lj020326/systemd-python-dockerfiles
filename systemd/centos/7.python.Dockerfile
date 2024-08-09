@@ -1,38 +1,50 @@
-ARG BUILD_ID=devel
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/centos7-systemd:latest
+
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+
+ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 # Set environment variables.
 ENV container=docker
-ENV DEBIAN_FRONTEND=noninteractive
-#ENV LANG=POSIX
-#ENV LANGUAGE=POSIX
-#ENV LC_ALL=POSIX
-
 ## ref: https://www.cyberciti.biz/faq/failed-to-set-locale-defaulting-to-c-warning-message-on-centoslinux/
-#ENV LANG=en_US.UTF-8
-#ENV LANGUAGE=en_US.UTF-8
-#ENV LC_CTYPE=en_US.UTF-8
-ENV LANG=C.UTF-8
-ENV LANGUAGE=C.UTF-8
+#ENV LANG=C.UTF-8
+#ENV LANGUAGE=C.UTF-8
+#ENV LC_COLLATE=C
+#ENV LC_CTYPE=C.UTF-8
+
+# ref: http://superuser.com/questions/331242/ddg#721223
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
 ENV LC_COLLATE=C
-ENV LC_CTYPE=C.UTF-8
+ENV LC_CTYPE=en_US.UTF-8
 
 ENV TZ=UTC
 
 ENV HOME="/root"
 ENV PYTHON_VERSION="3.11.7"
 
+COPY ./repos/centos7-linux-base.repo.ini /etc/yum.repos.d/CentOS-Base.repo
 #COPY ./repos/centos-os.repo.ini /etc/yum.repos.d/centos-os.repo
 #COPY ./repos/centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
+
+COPY ./repos/epel7.repo.ini /etc/yum.repos.d/epel.repo
+
+#RUN curl https://vault.centos.org/RPM-GPG-KEY-CentOS-$(rpm -E '%{rhel}') \
+#    -o /etc/pki/rpm-gpg/RPM-GPG-CentOS-$(rpm -E '%{rhel}')
+
+RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}') \
+    -o /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}')
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## MUST install devel libs for python-ldap to work
-RUN yum install -y epel-release
 RUN yum update -y
+
+## yum repolist all
+
+RUN yum install -y epel-release
 
 RUN yum makecache \
     && yum groupinstall -y "Development tools" \
@@ -41,7 +53,7 @@ RUN yum makecache \
 RUN yum install -y readline-devel bzip2 bzip2-devel \
         zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel
 
-#RUN yum install -y openssl11 openssl-devel openssl11-devel openssl11-lib
+#RUN yum install -y openssl11 openssl-devel openssl11-devel openssl11-libs
 RUN yum install -y openssl11 openssl-devel openssl11-devel
 
 ## ref: https://linodelinux.com/how-to-install-openssl-1-1-1-tls-1-3-on-centos-7/
@@ -78,9 +90,10 @@ ENV PKG_CONFIG_PATH=/usr/lib64/pkgconfig
 ## ref: https://github.com/pyenv/pyenv/issues/2416
 #RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
 #RUN env CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
-#RUN CPPFLAGS=$(pkg-config --cflags openssl11) LDFLAGS=$(pkg-config --libs openssl11) \
-RUN CPPFLAGS="-I/usr/include/openssl11" LDFLAGS="-L/usr/lib64/openssl11 -lssl -lcrypto" \
+RUN CPPFLAGS=$(pkg-config --cflags openssl11) LDFLAGS=$(pkg-config --libs openssl11) \
     pyenv install $PYTHON_VERSION
+#RUN CPPFLAGS="-I/usr/include/openssl11" LDFLAGS="-L/usr/lib64/openssl11 -lssl -lcrypto" \
+#    pyenv install $PYTHON_VERSION
 #RUN pyenv install $PYTHON_VERSION
 #RUN pyenv global $PYTHON_VERSION
 #RUN pyenv rehash

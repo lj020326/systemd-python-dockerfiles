@@ -176,6 +176,8 @@ If you want to start a debug session when a build fails, you can use
 
 ```console
 $ export BUILDX_EXPERIMENTAL=1
+## to view intermediate hashes
+$ export DOCKER_BUILDKIT=0
 $ docker buildx debug --on=error build .
 $ docker buildx debug --on=error build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
 ```
