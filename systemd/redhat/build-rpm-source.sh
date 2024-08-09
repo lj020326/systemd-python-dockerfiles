@@ -68,7 +68,11 @@ function setLogLevel() {
 
 }
 
-
+## ref: https://unix.stackexchange.com/questions/50642/download-all-dependencies-with-yumdownloader-even-if-already-installed
+## ref: https://stackoverflow.com/questions/635869/can-yum-tell-me-which-of-my-repositories-provide-a-particular-package
+## ref: https://www.cyberciti.biz/faq/yum-download-source-packages-from-rhn/
+## ref: https://www.thegeekstuff.com/2015/02/rpm-build-package-example/
+## ref: https://blog.packagecloud.io/working-with-source-rpms/
 function download_and_build_package_source() {
   local LOG_PREFIX="download_and_build_package_source():"
   local REPO_PACKAGE_NAME=$1

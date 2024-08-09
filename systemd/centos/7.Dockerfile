@@ -6,10 +6,14 @@ LABEL build=$BUILD_ID
 
 ENV container=docker
 
+COPY ./repos/centos7.yum.conf /etc/yum.conf
 COPY ./repos/centos7-linux-base.repo.ini /etc/yum.repos.d/CentOS-Base.repo
 
-RUN yum -y update \
-    && yum -y install systemd
+RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}') \
+    -o /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}')
+
+RUN yum -y update
+RUN yum -y install systemd
 #RUN yum clean all
 
 ## ref: https://github.com/geerlingguy/docker-centos8-ansible/blob/master/Dockerfile

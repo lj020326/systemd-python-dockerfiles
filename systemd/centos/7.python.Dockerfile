@@ -25,6 +25,7 @@ ENV TZ=UTC
 ENV HOME="/root"
 ENV PYTHON_VERSION="3.11.7"
 
+COPY ./repos/centos7.yum.conf /etc/yum.conf
 COPY ./repos/centos7-linux-base.repo.ini /etc/yum.repos.d/CentOS-Base.repo
 #COPY ./repos/centos-os.repo.ini /etc/yum.repos.d/centos-os.repo
 #COPY ./repos/centos-extras.repo.ini /etc/yum.repos.d/centos-extras.repo

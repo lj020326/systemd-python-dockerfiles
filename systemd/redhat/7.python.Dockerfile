@@ -108,6 +108,7 @@ ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 ## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
 ## ref: https://stackoverflow.com/questions/57743230/userwarning-could-not-import-the-lzma-module-your-installed-python-is-incomple#57773679
 ## ref: https://github.com/pyenv/pyenv/issues/2416
+## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
 #RUN CPPFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib -lssl -lcrypto" \
 #    pyenv install $PYTHON_VERSION
 #RUN CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
