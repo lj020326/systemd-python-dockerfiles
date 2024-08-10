@@ -67,7 +67,7 @@ jobs:
               context: systemd/debian
               platforms: |-
                 linux/amd64
-                linux/arm64
+#                linux/arm64
 #                linux/arm/v7
               tags: |-
                 lj020326/debian9-systemd-python:latest
