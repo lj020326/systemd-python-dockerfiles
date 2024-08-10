@@ -34,8 +34,8 @@ RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.
 COPY ./repos/redhat-ubi.repo.ini /etc/yum.repos.d/ubi.repo
 COPY ./repos/redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
 
-COPY ./repos/centos8-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
-COPY ./repos/centos8-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
+#COPY ./repos/centos8-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
+#COPY ./repos/centos8-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
 #COPY ./repos/centos8-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
 
 ##COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
@@ -55,10 +55,19 @@ RUN dnf upgrade -y
 #RUN dnf makecache \
 #    && dnf groupinstall --nobest -y "Development Tools" \
 RUN dnf makecache \
+    && dnf install -y yum-utils \
     && dnf install -y gcc make \
     && dnf install --nodocs -y sudo bash which git \
-    && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
+    && dnf install --nodocs -y bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
     && dnf clean all
+
+## rpm build/installs require "source" repo enabled
+RUN yum-config-manager --enable ubi-baseos-source ubi-appstream-source
+RUN yum install -y rpm-build
+
+## download readline bzip2 source rpms to install *-devel.rpm packages required for python build
+COPY build-rpm-source.sh .
+RUN bash build-rpm-source.sh readline
 
 ####################
 ## pyenv

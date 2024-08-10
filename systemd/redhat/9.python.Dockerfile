@@ -59,13 +59,19 @@ RUN dnf update -y
 #RUN dnf makecache \
 #    && dnf groupinstall -y "Development Tools" \
 RUN dnf makecache \
+    && dnf install -y yum-utils \
     && dnf install -y gcc make \
     && dnf install --nodocs -y sudo bash which git \
     && dnf install --nodocs -y bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel zlib-devel xz-devel \
     && dnf clean all
 
-#RUN dnf install -y https://mirror.stream.centos.org/9-stream/AppStream/x86_64/os/Packages/readline-devel-8.1-4.el9.x86_64.rpm
-RUN dnf install -y https://mirror.stream.centos.org/9-stream/AppStream/$(rpm -E '%{_arch}')/os/Packages/readline-devel-8.1-4.el9.$(rpm -E '%{_arch}').rpm
+## rpm build/installs require "source" repo enabled
+RUN yum-config-manager --enable ubi-9-baseos-source ubi-9-appstream-source
+RUN yum install -y rpm-build
+
+## download readline bzip2 source rpms to install *-devel.rpm packages required for python build
+COPY build-rpm-source.sh .
+RUN bash build-rpm-source.sh readline
 
 ## ref: https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/building_running_and_managing_containers/assembly_adding-software-to-a-ubi-container_building-running-and-managing-containers#proc_adding-software-in-a-standard-ubi-container_assembly_adding-software-to-a-ubi-container
 #RUN yum install --disablerepo=* --enablerepo=ubi-9-appstream-rpms --enablerepo=ubi-9-baseos-rpms bzip2
