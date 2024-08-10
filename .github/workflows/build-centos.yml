@@ -40,7 +40,7 @@ jobs:
               platforms: |-
                 linux/amd64
                 linux/arm/v7
-                linux/arm64
+#                linux/arm64
               tags: |-
                 lj020326/centos7-systemd:latest
             systemd-python-distro:
@@ -50,7 +50,7 @@ jobs:
               platforms: |-
                 linux/amd64
                 linux/arm/v7
-                linux/arm64
+#                linux/arm64
               tags: |-
                 lj020326/centos7-systemd-python:latest
 
