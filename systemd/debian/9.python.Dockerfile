@@ -9,10 +9,6 @@ LABEL build=$BUILD_ID
 # Set environment variables.
 ENV container=docker
 ENV DEBIAN_FRONTEND=noninteractive
-#ENV LANG=POSIX
-#ENV LANGUAGE=POSIX
-#ENV LC_ALL=POSIX
-
 ## ref: https://www.cyberciti.biz/faq/failed-to-set-locale-defaulting-to-c-warning-message-on-centoslinux/
 #ENV LANG=en_US.UTF-8
 #ENV LANGUAGE=en_US.UTF-8
