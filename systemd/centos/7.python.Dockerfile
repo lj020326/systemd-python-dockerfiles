@@ -3,6 +3,7 @@ FROM $IMAGE_REGISTRY/centos7-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
+ARG PYTHON_VERSION="3.11.9"
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
@@ -23,7 +24,6 @@ ENV LC_CTYPE=en_US.UTF-8
 ENV TZ=UTC
 
 ENV HOME="/root"
-ENV PYTHON_VERSION="3.11.7"
 
 COPY ./repos/centos7.yum.conf /etc/yum.conf
 COPY ./repos/centos7-linux-base.repo.ini /etc/yum.repos.d/CentOS-Base.repo
@@ -32,11 +32,14 @@ COPY ./repos/centos7-linux-base.repo.ini /etc/yum.repos.d/CentOS-Base.repo
 
 COPY ./repos/epel7.repo.ini /etc/yum.repos.d/epel.repo
 
+RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}') \
+    -o /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}')
+
 #RUN curl https://vault.centos.org/RPM-GPG-KEY-CentOS-$(rpm -E '%{rhel}') \
 #    -o /etc/pki/rpm-gpg/RPM-GPG-CentOS-$(rpm -E '%{rhel}')
 
-RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}') \
-    -o /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}')
+#RUN curl https://vault.centos.org/RPM-GPG-KEY-CentOS-$(rpm -E '%{rhel}') \
+#    -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7

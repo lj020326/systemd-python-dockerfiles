@@ -3,15 +3,12 @@ FROM $IMAGE_REGISTRY/redhat7-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
+ARG PYTHON_VERSION="3.11.9"
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 # Set environment variables.
 ENV container=docker
-#ENV LANG=POSIX
-#ENV LANGUAGE=POSIX
-#ENV LC_ALL=POSIX
-
 ## ref: https://www.cyberciti.biz/faq/failed-to-set-locale-defaulting-to-c-warning-message-on-centoslinux/
 #ENV LANG=C.UTF-8
 #ENV LANGUAGE=C.UTF-8
@@ -27,7 +24,6 @@ ENV LC_CTYPE=en_US.UTF-8
 ENV TZ=UTC
 
 ENV HOME="/root"
-ENV PYTHON_VERSION="3.11.7"
 
 ## ref: https://serverfault.com/questions/764900/how-to-remove-this-warning-this-system-is-not-registered-to-red-hat-subscriptio
 ## ref: https://stackoverflow.com/questions/11696113/yum-on-centos-stuck-at-loaded-plugins-fastestmirror
@@ -38,9 +34,6 @@ RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.
 #RUN yum repolist --disablerepo=* && \
 #    yum-config-manager --disable \* > /dev/null
 
-#COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
-#COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
-
 #COPY ./repos/redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
 COPY ./repos/epel7.repo.ini /etc/yum.repos.d/epel.repo
 
@@ -49,8 +42,6 @@ RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel
 
 #RUN curl https://vault.centos.org/RPM-GPG-KEY-CentOS-$(rpm -E '%{rhel}') \
 #    -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-
-RUN yum update -y
 
 ## yum repolist all
 ##RUN yum-config-manager --enable ubi-7
