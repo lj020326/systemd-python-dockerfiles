@@ -38,8 +38,8 @@ RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel
 #RUN curl https://vault.centos.org/RPM-GPG-KEY-CentOS-$(rpm -E '%{rhel}') \
 #    -o /etc/pki/rpm-gpg/RPM-GPG-CentOS-$(rpm -E '%{rhel}')
 
-#RUN curl https://vault.centos.org/RPM-GPG-KEY-CentOS-$(rpm -E '%{rhel}') \
-#    -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+RUN curl https://vault.centos.org/RPM-GPG-KEY-CentOS-$(rpm -E '%{rhel}') \
+    -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
@@ -54,6 +54,7 @@ RUN yum makecache \
     && yum groupinstall -y "Development tools" \
     && yum install -y sudo bash which git
 
+## yum list [reponame]
 RUN yum install -y readline-devel bzip2 bzip2-devel \
         zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel
 

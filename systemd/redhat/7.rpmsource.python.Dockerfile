@@ -34,18 +34,14 @@ RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.
 #RUN yum repolist --disablerepo=* && \
 #    yum-config-manager --disable \* > /dev/null
 
-#COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
-## ref: https://stackoverflow.com/questions/65878769/cannot-install-docker-in-a-rhel-server
-COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
+##COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
+#COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
 
 ##COPY ./repos/redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
-#COPY ./repos/epel7.repo.ini /etc/yum.repos.d/epel.repo
+COPY ./repos/epel7.repo.ini /etc/yum.repos.d/epel.repo
 
 RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}') \
     -o /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}')
-
-#RUN curl https://vault.centos.org/RPM-GPG-KEY-CentOS-$(rpm -E '%{rhel}') \
-#    -o /etc/pki/rpm-gpg/RPM-GPG-CentOS-$(rpm -E '%{rhel}')
 
 RUN curl https://vault.centos.org/RPM-GPG-KEY-CentOS-$(rpm -E '%{rhel}') \
     -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
@@ -75,16 +71,8 @@ RUN yum makecache \
     && yum install -y gcc make sudo bash which git wget
 
 ## yum list [reponame]
-RUN yum install -y \
-    bzip2-devel \
-    krb5-devel \
-    libffi-devel \
-    ncurses-devel \
-    openssl-devel \
-    readline-devel \
-    sqlite-devel \
-    xz-devel \
-    zlib-devel
+RUN yum install -y readline-devel bzip2 bzip2-devel \
+        zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel
 
 ## install readline-devel from source
 ## ref: https://www.thegeekstuff.com/2015/02/rpm-build-package-example/
@@ -95,12 +83,15 @@ RUN yum install -y \
 RUN yum-config-manager --enable ubi-7-server-source-rpms
 RUN yum install -y rpm-build
 
-### download readline bzip2 source rpms to install *-devel.rpm packages required for python build
-#COPY build-rpm-source.sh .
-#RUN bash build-rpm-source.sh readline bzip2
+## download readline bzip2 source rpms to install *-devel.rpm packages required for python build
+COPY build-rpm-source.sh .
+RUN bash build-rpm-source.sh readline bzip2
 
 #RUN yum install -y openssl11 openssl-devel openssl11-devel openssl11-libs
 RUN yum install -y openssl11 openssl-devel openssl11-devel
+
+## install readline-devel
+#RUN yum install -y https://rpmfind.net/linux/centos/7.9.2009/os/x86_64/Packages/readline-devel-6.2-11.el7.x86_64.rpm
 
 WORKDIR /
 RUN git clone --depth=1 https://github.com/pyenv/pyenv.git /pyenv
