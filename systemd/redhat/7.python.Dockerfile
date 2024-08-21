@@ -34,10 +34,10 @@ RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.
 #RUN yum repolist --disablerepo=* && \
 #    yum-config-manager --disable \* > /dev/null
 
-#COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
 ## ref: https://stackoverflow.com/questions/65878769/cannot-install-docker-in-a-rhel-server
+COPY ./repos/centos7-os.repo.ini /etc/yum.repos.d/centos-os.repo
 COPY ./repos/centos7-extras.repo.ini /etc/yum.repos.d/centos-extras.repo
-COPY ./repos/centos7-updates.repo.ini /etc/yum.repos.d/centos-os.repo
+COPY ./repos/centos7-updates.repo.ini /etc/yum.repos.d/centos-updates.repo
 
 ##COPY ./repos/redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
 #COPY ./repos/epel7.repo.ini /etc/yum.repos.d/epel.repo
