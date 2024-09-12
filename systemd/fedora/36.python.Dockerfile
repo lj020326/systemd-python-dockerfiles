@@ -4,7 +4,9 @@ FROM $IMAGE_REGISTRY/fedora36-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
-ARG PYTHON_VERSION="3.11.9"
+#ARG PYTHON_VERSION="3.11.9"
+ARG PYTHON_VERSION="3.12.3"
+
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 

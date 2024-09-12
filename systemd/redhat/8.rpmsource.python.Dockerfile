@@ -1,6 +1,6 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ARG IMAGE_REGISTRY=lj020326
-FROM $IMAGE_REGISTRY/fedora-systemd:latest
+FROM $IMAGE_REGISTRY/redhat8-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
@@ -12,6 +12,9 @@ LABEL build=$BUILD_ID
 
 # Set environment variables.
 ENV container=docker
+#ENV LANG=POSIX
+#ENV LANGUAGE=POSIX
+#ENV LC_ALL=POSIX
 
 ## ref: https://www.cyberciti.biz/faq/failed-to-set-locale-defaulting-to-c-warning-message-on-centoslinux/
 ENV LANG=C.UTF-8
@@ -23,19 +26,62 @@ ENV TZ=UTC
 
 ENV HOME="/root"
 
-#RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN dnf --disableplugin subscription-manager update -y
+RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
 
-### ref: https://stackoverflow.com/questions/56908604/trying-to-install-epel-release-on-fedora-30-no-match-for-argument-epel-relea
-#RUN dnf -y install passenger
+COPY ./repos/redhat-ubi.repo.ini /etc/yum.repos.d/ubi.repo
+COPY ./repos/redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
+
+RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}') \
+    -o /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}')
+
+##COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official \
+    -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+
+### ref: https://linuxconfig.org/redhat-8-epel-install-guide
+### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
+### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
+#RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+#RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+##RUN yum-config-manager --enable epel
+
+RUN dnf upgrade -y
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
+#RUN dnf makecache \
+#    && dnf groupinstall --nobest -y "Development Tools" \
 RUN dnf makecache \
-    && dnf groupinstall -y "Development Tools" \
+    && dnf install -y yum-utils \
+    && dnf install -y gcc make \
     && dnf install --nodocs -y sudo bash which git \
-    && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
+    && dnf install --nodocs -y bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
     && dnf clean all
+
+## rpm build/installs require "source" repo enabled
+RUN yum-config-manager --enable ubi-baseos-source ubi-appstream-source
+RUN yum install -y rpm-build
+
+## download readline bzip2 source rpms to install *-devel.rpm packages required for python build
+COPY build-rpm-source.sh .
+## reqquired for building firewalld
+RUN yum install -y \
+    autoconf  \
+    automake \
+    desktop-file-utils \
+    docbook-style-xsl \
+    ebtables \
+    gettext \
+    glib2-devel \
+    intltool \
+    ipset \
+    iptables \
+    libxslt \
+    python3-devel
+
+RUN bash build-rpm-source.sh readline firewalld
 
 ####################
 ## pyenv

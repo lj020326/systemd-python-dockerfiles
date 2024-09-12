@@ -1,7 +1,8 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
-ARG BUILD_ID=devel
 FROM ubuntu:22.04
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+
+ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 ENV container=docker

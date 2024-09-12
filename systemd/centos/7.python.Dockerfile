@@ -1,14 +1,18 @@
+## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/centos7-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
-ARG PYTHON_VERSION="3.11.9"
+#ARG PYTHON_VERSION="3.11.9"
+ARG PYTHON_VERSION="3.12.3"
+
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 # Set environment variables.
 ENV container=docker
+
 ## ref: https://www.cyberciti.biz/faq/failed-to-set-locale-defaulting-to-c-warning-message-on-centoslinux/
 #ENV LANG=C.UTF-8
 #ENV LANGUAGE=C.UTF-8
@@ -55,22 +59,18 @@ RUN yum makecache \
     && yum install -y sudo bash which git
 
 ## yum list [reponame]
-RUN yum install -y readline-devel bzip2 bzip2-devel \
-        zlib-devel krb5-devel libffi-devel ncurses-devel sqlite-devel xz-devel
+RUN yum install -y  \
+    bzip2-devel \
+    krb5-devel \
+    libffi-devel \
+    ncurses-devel \
+    readline-devel \
+    sqlite-devel \
+    xz-devel \
+    zlib-devel
 
 #RUN yum install -y openssl11 openssl-devel openssl11-devel openssl11-libs
 RUN yum install -y openssl11 openssl-devel openssl11-devel
-
-## ref: https://linodelinux.com/how-to-install-openssl-1-1-1-tls-1-3-on-centos-7/
-#RUN cd /usr/src \
-#    && wget -q https://www.openssl.org/source/openssl-1.1.1w.tar.gz \
-#    && tar -xzf openssl-1.1.1w.tar.gz \
-#    && cd openssl-1.1*/ \
-#    && export DEBIAN_FRONTEND=noninteractive \
-#    && ./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl \
-#    && make -j4 \
-#    && make install \
-#    && ldconfig
 
 ####################
 ## pyenv
@@ -83,6 +83,7 @@ RUN git clone --depth=1 https://github.com/pyenv/pyenv.git /pyenv
 
 ENV PYENV_ROOT="/pyenv"
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
+
 ## ref: https://github.com/pyenv/pyenv/issues/281
 ## ref: https://discuss.python.org/t/build-python3-11-5-with-static-openssl-and-libffi-on-centos7/37485/5
 ## ref: https://serverfault.com/questions/973470/in-centos-what-does-the-line-ld-library-path-usr-local-lib-usr-local-lib64-do
@@ -103,6 +104,9 @@ RUN CPPFLAGS=$(pkg-config --cflags openssl11) LDFLAGS=$(pkg-config --libs openss
 #RUN pyenv global $PYTHON_VERSION
 #RUN pyenv rehash
 RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
+
+## ref: https://www.baeldung.com/ops/dockerfile-path-environment-variable
+RUN echo "export PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> ~/.bashrc
 
 ## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
 ## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss

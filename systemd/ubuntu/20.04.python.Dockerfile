@@ -4,7 +4,9 @@ FROM $IMAGE_REGISTRY/ubuntu2004-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
-ARG PYTHON_VERSION="3.11.9"
+#ARG PYTHON_VERSION="3.11.9"
+ARG PYTHON_VERSION="3.12.3"
+
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
@@ -124,6 +126,9 @@ RUN pyenv install $PYTHON_VERSION
 #RUN pyenv global $PYTHON_VERSION
 #RUN pyenv rehash
 RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
+
+## ref: https://www.baeldung.com/ops/dockerfile-path-environment-variable
+RUN echo "export PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> ~/.bashrc
 
 ## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
 ## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss

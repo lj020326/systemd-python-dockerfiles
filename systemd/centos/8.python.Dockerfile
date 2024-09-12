@@ -1,9 +1,12 @@
+## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ARG IMAGE_REGISTRY=lj020326
 FROM $IMAGE_REGISTRY/centos8-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
-ARG PYTHON_VERSION="3.11.9"
+#ARG PYTHON_VERSION="3.11.9"
+ARG PYTHON_VERSION="3.12.3"
+
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
@@ -30,9 +33,26 @@ RUN dnf upgrade -y
 RUN dnf makecache \
     && dnf install -y yum-utils \
     && dnf install -y gcc make \
-    && dnf install --nodocs -y sudo bash which git \
-    && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
-    && dnf clean all
+    && dnf install -y python3 \
+    && dnf install --nodocs -y sudo bash which git
+
+RUN dnf install --nodocs -y \
+    bzip2-devel \
+    libffi-devel \
+    ncurses-devel \
+    openssl-devel \
+    readline-devel \
+    sqlite-devel \
+    xz-devel \
+    zlib-devel
+
+RUN dnf clean all
+
+## ref: https://www.baeldung.com/ops/dockerfile-path-environment-variable
+RUN echo "export PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> ~/.bashrc
+
+RUN echo "alias ll='ls -Fla'" >> ~/.bashrc
+RUN echo "alias la='ls -alrt'" >> ~/.bashrc
 
 ####################
 ## pyenv

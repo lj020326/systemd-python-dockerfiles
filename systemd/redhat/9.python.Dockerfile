@@ -6,15 +6,14 @@ FROM $IMAGE_REGISTRY/redhat9-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
-ARG PYTHON_VERSION="3.11.9"
+#ARG PYTHON_VERSION="3.11.9"
+ARG PYTHON_VERSION="3.12.3"
+
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 # Set environment variables.
 ENV container=docker
-#ENV LANG=POSIX
-#ENV LANGUAGE=POSIX
-#ENV LC_ALL=POSIX
 
 ## ref: https://www.cyberciti.biz/faq/failed-to-set-locale-defaulting-to-c-warning-message-on-centoslinux/
 ENV LANG=C.UTF-8
@@ -36,7 +35,8 @@ RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel
     -o /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}')
 
 ##COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official \
+    -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 
 ### ref: https://linuxconfig.org/redhat-8-epel-install-guide
 ### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
@@ -56,9 +56,18 @@ RUN dnf update -y
 RUN dnf makecache \
     && dnf install -y yum-utils \
     && dnf install -y gcc make \
-    && dnf install --nodocs -y sudo bash which git \
-    && dnf install --nodocs -y bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel zlib-devel xz-devel \
-    && dnf clean all
+    && dnf install --nodocs -y sudo bash which git
+
+RUN dnf install --nodocs -y \
+    bzip2-devel \
+    libffi-devel \
+    ncurses-devel \
+    openssl-devel \
+    sqlite-devel \
+    xz-devel \
+    zlib-devel
+
+RUN dnf clean all
 
 ## rpm build/installs require "source" repo enabled
 RUN yum-config-manager --enable ubi-9-baseos-source ubi-9-appstream-source
@@ -101,6 +110,9 @@ RUN pyenv install $PYTHON_VERSION
 #RUN pyenv global $PYTHON_VERSION
 #RUN pyenv rehash
 RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
+
+## ref: https://www.baeldung.com/ops/dockerfile-path-environment-variable
+RUN echo "export PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> ~/.bashrc
 
 ## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
 ## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss
