@@ -56,10 +56,21 @@ RUN yum install -y epel-release
 
 RUN yum makecache \
     && yum groupinstall -y "Development tools" \
-    && yum install -y sudo bash which git
+    && yum install -y \
+      sudo \
+      bash \
+      which \
+      git \
+      wget
+
+RUN yum install -y \
+    python3 \
+    python3-pip \
+    python3-libselinux \
+    python3-virtualenv
 
 ## yum list [reponame]
-RUN yum install -y  \
+RUN yum install -y \
     bzip2-devel \
     krb5-devel \
     libffi-devel \

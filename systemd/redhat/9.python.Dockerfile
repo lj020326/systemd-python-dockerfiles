@@ -56,7 +56,13 @@ RUN dnf update -y
 RUN dnf makecache \
     && dnf install -y yum-utils \
     && dnf install -y gcc make \
-    && dnf install --nodocs -y sudo bash which git
+    && dnf install -y python3 \
+    && dnf install --nodocs -y \
+      sudo \
+      bash \
+      which \
+      git \
+      wget
 
 RUN dnf install --nodocs -y \
     bzip2-devel \

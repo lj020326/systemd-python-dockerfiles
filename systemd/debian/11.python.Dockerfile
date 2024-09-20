@@ -38,6 +38,14 @@ RUN apt-get install -y apt-utils \
     sudo bash ca-certificates \
     curl wget git
 
+RUN apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-apt \
+    python3-dev \
+    python3-virtualenv \
+    python3-venv
+
 ## ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
 ## ref: https://stackoverflow.com/questions/63314253/how-to-install-python3-8-using-checkinstall-on-debian-10
 RUN apt-get update -y \

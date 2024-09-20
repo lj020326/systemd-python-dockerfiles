@@ -34,6 +34,7 @@ ENV HOME="/root"
 RUN dnf makecache \
     && dnf groupinstall -y "Development Tools" \
     && dnf install --nodocs -y sudo bash which git \
+    && dnf install -y python3 \
     && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
     && dnf clean all
 

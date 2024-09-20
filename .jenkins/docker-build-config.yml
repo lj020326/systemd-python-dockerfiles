@@ -2,143 +2,170 @@
 pipeline:
   alwaysEmailList: ljohnson@dettonville.org
   logLevel: DEBUG
+  runInParallel: true
 
   buildArgs:
     IMAGE_REGISTRY: media.johnson.int:5000
 
-  buildImageList:
-    - buildImageLabel: openrc-alpine
+  buildImageGroups:
+    alpine:
       buildDir: openrc/alpine
-      dockerFile: Dockerfile
-    - buildImageLabel: openrc-alpine-python
-      buildDir: openrc/alpine
-      dockerFile: python.Dockerfile
+      buildImageList:
+        - buildImageLabel: openrc-alpine
+          dockerFile: Dockerfile
+        - buildImageLabel: openrc-alpine-python
+          dockerFile: python.Dockerfile
 
-    - buildImageLabel: aports-dev
+    aports:
       buildDir: aports-dev
-      dockerFile: Dockerfile
-    - buildImageLabel: aports-dev-python
-      buildDir: aports-dev
-      dockerFile: python.Dockerfile
+      buildImageList:
+        - buildImageLabel: aports-dev
+          dockerFile: Dockerfile
+        - buildImageLabel: aports-dev-python
+          dockerFile: python.Dockerfile
 
-    - buildImageLabel: centos7-systemd
+    centos7:
       buildDir: systemd/centos
-      dockerFile: 7.Dockerfile
-    - buildImageLabel: centos8-systemd
+      buildImageList:
+        - buildImageLabel: centos7-systemd
+          dockerFile: 7.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: centos7-systemd-python
+          dockerFile: 7.python.Dockerfile
+    centos8:
       buildDir: systemd/centos
-      dockerFile: 8.Dockerfile
-    - buildImageLabel: centos9-systemd
+      buildImageList:
+        - buildImageLabel: centos8-systemd
+          dockerFile: 8.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: centos8-systemd-python
+          dockerFile: 8.python.Dockerfile
+    centos9:
       buildDir: systemd/centos
-      dockerFile: 9.Dockerfile
+      buildImageList:
+        - buildImageLabel: centos9-systemd
+          dockerFile: 9.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: centos9-systemd-python
+          dockerFile: 9.python.Dockerfile
 
-    - buildImageLabel: redhat7-systemd
+    redhat7:
       buildDir: systemd/redhat
-      dockerFile: 7.Dockerfile
-    - buildImageLabel: redhat8-systemd
+      buildImageList:
+        - buildImageLabel: redhat7-systemd
+          dockerFile: 7.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: redhat7-systemd-python
+          dockerFile: 7.python.Dockerfile
+    redhat8:
       buildDir: systemd/redhat
-      dockerFile: 8.Dockerfile
-    - buildImageLabel: redhat9-systemd
+      buildImageList:
+        - buildImageLabel: redhat8-systemd
+          dockerFile: 8.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: redhat8-systemd-python
+          dockerFile: 8.python.Dockerfile
+    redhat9:
       buildDir: systemd/redhat
-      dockerFile: 9.Dockerfile
+      buildImageList:
+        - buildImageLabel: redhat9-systemd
+          dockerFile: 9.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: redhat9-systemd-python
+          dockerFile: 9.python.Dockerfile
 
-#    - buildImageLabel: fedora35-systemd
-#      buildDir: systemd/fedora
-#      dockerFile: 35.Dockerfile
-#    - buildImageLabel: fedora36-systemd
-#      buildDir: systemd/fedora
-#      dockerFile: 36.Dockerfile
-    - buildImageLabel: fedora-systemd
+    fedora:
       buildDir: systemd/fedora
-      dockerFile: latest.Dockerfile
+      buildImageList:
+#        - buildImageLabel: fedora35-systemd
+#          dockerFile: 35.Dockerfile
+#        - buildImageLabel: fedora36-systemd
+#          dockerFile: 36.Dockerfile
+        - buildImageLabel: fedora-systemd
+          dockerFile: latest.Dockerfile
+        ## systemd images with python installed
+#        - buildImageLabel: fedora35-systemd-python
+#          dockerFile: 35.python.Dockerfile
+#        - buildImageLabel: fedora8-systemd-python
+#          dockerFile: 36.python.Dockerfile
+        - buildImageLabel: fedora-systemd-python
+          dockerFile: latest.python.Dockerfile
 
-    - buildImageLabel: debian8-systemd
+    debian8:
       buildDir: systemd/debian
-      dockerFile: 8.Dockerfile
-    - buildImageLabel: debian9-systemd
+      buildImageList:
+        - buildImageLabel: debian8-systemd
+          dockerFile: 8.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: debian8-systemd-python
+          dockerFile: 8.python.Dockerfile
+    debian9:
       buildDir: systemd/debian
-      dockerFile: 9.Dockerfile
-    - buildImageLabel: debian10-systemd
+      buildImageList:
+        - buildImageLabel: debian9-systemd
+          dockerFile: 9.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: debian9-systemd-python
+          dockerFile: 9.python.Dockerfile
+    debian10:
       buildDir: systemd/debian
-      dockerFile: 10.Dockerfile
-    - buildImageLabel: debian11-systemd
+      buildImageList:
+        - buildImageLabel: debian10-systemd
+          dockerFile: 10.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: debian10-systemd-python
+          dockerFile: 10.python.Dockerfile
+    debian11:
       buildDir: systemd/debian
-      dockerFile: 11.Dockerfile
-    - buildImageLabel: debian12-systemd
+      buildImageList:
+        - buildImageLabel: debian11-systemd
+          dockerFile: 11.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: debian11-systemd-python
+          dockerFile: 11.python.Dockerfile
+    debian12:
       buildDir: systemd/debian
-      dockerFile: 12.Dockerfile
-    - buildImageLabel: debian-sid-systemd
+      buildImageList:
+        - buildImageLabel: debian12-systemd
+          dockerFile: 12.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: debian12-systemd-python
+          dockerFile: 12.python.Dockerfile
+    debian-sid:
       buildDir: systemd/debian
-      dockerFile: sid.Dockerfile
+      buildImageList:
+        - buildImageLabel: debian-sid-systemd
+          dockerFile: sid.Dockerfile
 
-    - buildImageLabel: ubuntu1804-systemd
+    ubuntu18:
       buildDir: systemd/ubuntu
-      dockerFile: 18.04.Dockerfile
-    - buildImageLabel: ubuntu2004-systemd
+      buildImageList:
+        - buildImageLabel: ubuntu1804-systemd
+          dockerFile: 18.04.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: ubuntu1804-systemd-python
+          dockerFile: 18.04.Dockerfile
+    ubuntu20:
       buildDir: systemd/ubuntu
-      dockerFile: 20.04.Dockerfile
-    - buildImageLabel: ubuntu2204-systemd
+      buildImageList:
+        - buildImageLabel: ubuntu2004-systemd
+          dockerFile: 20.04.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: ubuntu2004-systemd-python
+          dockerFile: 20.04.python.Dockerfile
+    ubuntu22:
       buildDir: systemd/ubuntu
-      dockerFile: 22.04.Dockerfile
-    - buildImageLabel: ubuntu2404-systemd
+      buildImageList:
+        - buildImageLabel: ubuntu2204-systemd
+          dockerFile: 22.04.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: ubuntu2204-systemd-python
+          dockerFile: 22.04.python.Dockerfile
+    ubuntu24:
       buildDir: systemd/ubuntu
-      dockerFile: 24.04.Dockerfile
-
-    ## systemd images with python installed
-    - buildImageLabel: centos7-systemd-python
-      buildDir: systemd/centos
-      dockerFile: 7.python.Dockerfile
-    - buildImageLabel: centos8-systemd-python
-      buildDir: systemd/centos
-      dockerFile: 8.python.Dockerfile
-    - buildImageLabel: centos9-systemd-python
-      buildDir: systemd/centos
-      dockerFile: 9.python.Dockerfile
-
-    - buildImageLabel: redhat7-systemd-python
-      buildDir: systemd/redhat
-      dockerFile: 7.python.Dockerfile
-    - buildImageLabel: redhat8-systemd-python
-      buildDir: systemd/redhat
-      dockerFile: 8.python.Dockerfile
-    - buildImageLabel: redhat9-systemd-python
-      buildDir: systemd/redhat
-      dockerFile: 9.python.Dockerfile
-
-#    - buildImageLabel: fedora35-systemd-python
-#      buildDir: systemd/fedora
-#      dockerFile: 35.python.Dockerfile
-#    - buildImageLabel: fedora8-systemd-python
-#      buildDir: systemd/fedora
-#      dockerFile: 36.python.Dockerfile
-    - buildImageLabel: fedora-systemd-python
-      buildDir: systemd/fedora
-      dockerFile: latest.python.Dockerfile
-
-    - buildImageLabel: debian8-systemd-python
-      buildDir: systemd/debian
-      dockerFile: 8.python.Dockerfile
-    - buildImageLabel: debian9-systemd-python
-      buildDir: systemd/debian
-      dockerFile: 9.python.Dockerfile
-    - buildImageLabel: debian10-systemd-python
-      buildDir: systemd/debian
-      dockerFile: 10.python.Dockerfile
-    - buildImageLabel: debian11-systemd-python
-      buildDir: systemd/debian
-      dockerFile: 11.python.Dockerfile
-    - buildImageLabel: debian12-systemd-python
-      buildDir: systemd/debian
-      dockerFile: 12.python.Dockerfile
-
-    - buildImageLabel: ubuntu1804-systemd-python
-      buildDir: systemd/ubuntu
-      dockerFile: 18.04.Dockerfile
-    - buildImageLabel: ubuntu2004-systemd-python
-      buildDir: systemd/ubuntu
-      dockerFile: 20.04.python.Dockerfile
-    - buildImageLabel: ubuntu2204-systemd-python
-      buildDir: systemd/ubuntu
-      dockerFile: 22.04.python.Dockerfile
-    - buildImageLabel: ubuntu2404-systemd-python
-      buildDir: systemd/ubuntu
-      dockerFile: 24.04.python.Dockerfile
+      buildImageList:
+        - buildImageLabel: ubuntu2404-systemd
+          dockerFile: 24.04.Dockerfile
+        ## systemd images with python installed
+        - buildImageLabel: ubuntu2404-systemd-python
+          dockerFile: 24.04.python.Dockerfile

@@ -77,7 +77,21 @@ RUN yum install -y epel-release
 ### ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ##RUN yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all
 RUN yum makecache \
-    && yum install -y gcc make sudo bash which git wget
+    && yum install -y \
+      gcc \
+      make \
+      sudo \
+      bash \
+      which \
+      git \
+      wget
+
+RUN yum install -y \
+    python3 \
+    python3-pip \
+    python3-libselinux \
+    python3-virtualenv \
+    python3-devel
 
 ## yum list [reponame]
 RUN yum install -y \

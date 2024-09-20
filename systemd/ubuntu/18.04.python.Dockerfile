@@ -33,16 +33,26 @@ ENV HOME="/root"
 ## ref: https://www.how2shout.com/linux/install-python-3-x-or-2-7-on-debian-11-bullseye-linux/
 RUN apt-get update -y
 #RUN apt-get install --no-install-recommends -y apt-utils sudo bash ca-certificates curl wget git tox
-RUN apt-get install -y apt-utils \
-    build-essential \
-    sudo bash ca-certificates \
-    curl wget git
+RUN apt-get install -y apt-utils
+RUN apt-get install -y \
+    && apt-get install -y \
+        build-essential \
+        sudo \
+        bash \
+        ca-certificates \
+        curl \
+        wget \
+        git
 
 ## ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
 ## ref: https://stackoverflow.com/questions/63314253/how-to-install-python3-8-using-checkinstall-on-debian-10
 RUN apt-get update -y \
     && apt-get upgrade -y \
-    && apt-get -y install \
+    && apt-get install -y \
+        python3 \
+        python3-venv \
+        python3-pip \
+    && apt-get install -y \
         libbz2-dev \
         libbz2-dev \
         libc6-dev \
