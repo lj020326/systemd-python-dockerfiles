@@ -118,46 +118,8 @@ RUN yum install -y rpm-build
 #COPY build-rpm-source.sh .
 #RUN bash build-rpm-source.sh readline bzip2
 
-#RUN yum install -y openssl11 openssl-devel openssl11-devel openssl11-libs
-RUN yum install -y openssl11 openssl-devel openssl11-devel
-
-####################
-## pyenv
-#WORKDIR $HOME
-#RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
-#ENV PYENV_ROOT="$HOME/.pyenv"
-
-WORKDIR /
-RUN git clone --depth=1 https://github.com/pyenv/pyenv.git /pyenv
-
-ENV PYENV_ROOT="/pyenv"
-ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
-
-## ref: https://github.com/pyenv/pyenv/issues/2416#issuecomment-1219484906
-## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
-## ref: https://stackoverflow.com/questions/57743230/userwarning-could-not-import-the-lzma-module-your-installed-python-is-incomple#57773679
-## ref: https://superuser.com/questions/1346141/how-to-link-python-to-the-manually-compiled-openssl-rather-than-the-systems-one
-## ref: https://github.com/pyenv/pyenv/issues/2416
-## ref: https://stackoverflow.com/questions/60775172/pyenvs-python-is-missing-bzip2-module
-#RUN CPPFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib -lssl -lcrypto" \
-#    pyenv install $PYTHON_VERSION
-#RUN CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
-#RUN CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
-#RUN CFLAGS="$CFLAGS $(pkg-config --cflags openssl11)" \
-#    CPPFLAGS="$CPPLAGS $(pkg-config --cflags openssl11)" \
-#    LDFLAGS="$LDFLAGS $(pkg-config --libs openssl11)" \
-#    pyenv install $PYTHON_VERSION
-RUN CPPFLAGS=$(pkg-config --cflags openssl11) LDFLAGS=$(pkg-config --libs openssl11) \
-    pyenv install $PYTHON_VERSION
-#RUN CPPFLAGS="-I/usr/include/openssl11" LDFLAGS="-L/usr/lib64/openssl11 -lssl -lcrypto" \
-#    pyenv install $PYTHON_VERSION
-#RUN pyenv install $PYTHON_VERSION
-#RUN pyenv global $PYTHON_VERSION
-#RUN pyenv rehash
-RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
-
-## ref: https://www.baeldung.com/ops/dockerfile-path-environment-variable
-RUN echo "export PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> ~/.bashrc
+#RUN yum install -y openssl11 openssl11-devel openssl11-libs
+RUN yum install -y openssl11 openssl11-devel
 
 ## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
 ## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss

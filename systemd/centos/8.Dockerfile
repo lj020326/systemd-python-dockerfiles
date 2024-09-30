@@ -44,6 +44,9 @@ RUN rm -f           \
     /etc/machine-id \
     /var/lib/dbus/machine-id
 
+RUN echo "alias ll='ls -Fla'" >> ~/.bashrc
+RUN echo "alias la='ls -alrt'" >> ~/.bashrc
+
 # The host's cgroup filesystem need's to be mounted (read-only) in the
 # container. '/run', '/run/lock' and '/tmp' need to be tmpfs filesystems when
 # running the container without 'CAP_SYS_ADMIN'.
