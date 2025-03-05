@@ -94,6 +94,26 @@ jobs:
               tags: |-
                 lj020326/centos9-systemd-python:latest
 
+          - distro: centos10
+            systemd-distro:
+              name: systemd-centos10
+              dockerfile: systemd/centos/10.Dockerfile
+              context: systemd/centos
+              platforms: |-
+                linux/amd64
+                linux/arm64
+              tags: |-
+                lj020326/centos10-systemd:latest
+            systemd-python-distro:
+              name: systemd-centos10-python
+              dockerfile: systemd/centos/10.python.Dockerfile
+              context: systemd/centos
+              platforms: |-
+                linux/amd64
+                linux/arm64
+              tags: |-
+                lj020326/centos10-systemd-python:latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3

@@ -4,7 +4,7 @@
 [![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-fedora.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-fedora.yml)
 [![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-ubuntu.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-ubuntu.yml)
 [![Docker images build](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-debian.yml/badge.svg)](https://github.com/lj020326/systemd-python-dockerfiles/actions/workflows/build-debian.yml)
-[![License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 
 # systemd-python docker images
 
@@ -14,9 +14,11 @@ The systemd-python enabled docker images defined here can be found on [dockerhub
 
 [![GitHub issues](https://img.shields.io/github/issues/lj020326/systemd-python-dockerfiles.svg?style=flat)](https://github.com/lj020326/systemd-python-dockerfiles/issues)
 [![GitHub stars](https://img.shields.io/github/stars/lj020326/systemd-python-dockerfiles.svg?style=flat)](https://github.com/lj020326/systemd-python-dockerfiles/stargazers)
-[![Docker Pulls - centos7-systemd-python](https://img.shields.io/docker/pulls/lj020326/centos7-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/centos7-systemd-python/)
 [![Docker Pulls - centos8-systemd-python](https://img.shields.io/docker/pulls/lj020326/centos8-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/centos8-systemd-python/)
+[![Docker Pulls - centos8-systemd-python](https://img.shields.io/docker/pulls/lj020326/centos9-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/centos9-systemd-python/)
+[![Docker Pulls - centos8-systemd-python](https://img.shields.io/docker/pulls/lj020326/centos10-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/centos10-systemd-python/)
 [![Docker Pulls - redhat8-systemd-python](https://img.shields.io/docker/pulls/lj020326/redhat8-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/redhat8-systemd-python/)
+[![Docker Pulls - redhat9-systemd-python](https://img.shields.io/docker/pulls/lj020326/redhat9-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/redhat9-systemd-python/)
 [![Docker Pulls - ubuntu2204-systemd-python](https://img.shields.io/docker/pulls/lj020326/ubuntu2204-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/ubuntu2204-systemd-python/)
 [![Docker Pulls - debian12-systemd-python](https://img.shields.io/docker/pulls/lj020326/debian12-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/debian12-systemd-python/)
 

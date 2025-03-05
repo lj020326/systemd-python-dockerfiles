@@ -14,16 +14,10 @@ LABEL build=$BUILD_ID
 ENV container=docker
 
 ## ref: https://www.cyberciti.biz/faq/failed-to-set-locale-defaulting-to-c-warning-message-on-centoslinux/
-#ENV LANG=C.UTF-8
-#ENV LANGUAGE=C.UTF-8
-#ENV LC_COLLATE=C
-#ENV LC_CTYPE=C.UTF-8
-
-# ref: http://superuser.com/questions/331242/ddg#721223
-ENV LANG=en_US.UTF-8
-ENV LANGUAGE=en_US.UTF-8
+ENV LANG=C.UTF-8
+ENV LANGUAGE=C.UTF-8
 ENV LC_COLLATE=C
-ENV LC_CTYPE=en_US.UTF-8
+ENV LC_CTYPE=C.UTF-8
 
 ENV TZ=UTC
 
@@ -37,21 +31,22 @@ ENV HOME="/root"
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
-
-RUN yum makecache \
-    && yum groupinstall -y "Development tools" \
-    && yum install -y \
+#RUN dnf makecache \
+#    && dnf groupinstall --nobest -y "Development Tools" \
+RUN dnf makecache \
+    && dnf install -y yum-utils \
+    && dnf install -y gcc make \
+    && dnf install --nodocs -y \
       sudo \
       bash \
       which \
       git \
       wget
 
-RUN yum install -y \
+RUN dnf install -y \
     python3 \
     python3-pip \
-    python3-libselinux \
-    python3-virtualenv
+    python3-libselinux
 
 RUN dnf install --nodocs -y \
     readline-devel \
@@ -64,6 +59,8 @@ RUN dnf install --nodocs -y \
     sqlite-devel \
     xz-devel \
     zlib-devel
+
+RUN dnf clean all
 
 ## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
 ## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss
