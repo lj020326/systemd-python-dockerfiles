@@ -145,14 +145,20 @@ $ docker run --rm -it <id_last_working_layer> bash -il
 To start the debugger, first, ensure that `BUILDX_EXPERIMENTAL=1` is set in
 your environment.
 
-```console
+```shell
 $ export BUILDX_EXPERIMENTAL=1
+```
+
+To view intermediate container hashes:
+
+```shell
+$ export DOCKER_BUILDKIT=0
 ```
 
 If you want to start a debug session when a build fails, you can use
 `--on=error` to start a debug session when the build fails.
 
-```console
+```shell
 $ export BUILDX_EXPERIMENTAL=1
 $ docker buildx debug --on=error build .
 $ docker buildx debug --on=error build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
