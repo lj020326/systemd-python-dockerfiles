@@ -5,6 +5,6 @@
 import platform
 import os
 
-print platform.platform()
-print platform.python_version()
-print os.getuid()
+print("platform.platform()=%s" % platform.platform())
+print("platform.python_version()=%s" % platform.python_version())
+print("os.getuid()=%s" % os.getuid())

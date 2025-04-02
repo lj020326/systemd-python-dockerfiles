@@ -13,6 +13,15 @@ state of the build environment at any point.
 
 ## Starting the debugger
 
+Intermediate container hashes are not supported as of Docker version 20.10. 
+To view intermediate container hashes:
+
+```shell
+$ export DOCKER_BUILDKIT=0
+$ docker build -t centos9-systemd-python -f systemd/centos/9.python.Dockerfile .
+$ docker run --rm -it <id_last_working_layer> /bin/sh -il
+```
+
 To start the debugger, first, ensure that `BUILDX_EXPERIMENTAL=1` is set in
 your environment.
 

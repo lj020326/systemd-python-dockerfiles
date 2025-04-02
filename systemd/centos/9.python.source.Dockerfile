@@ -1,6 +1,6 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ARG IMAGE_REGISTRY=lj020326
-FROM $IMAGE_REGISTRY/fedora-systemd:latest
+FROM $IMAGE_REGISTRY/centos9-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
@@ -25,8 +25,24 @@ ENV HOME="/root"
 
 #RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-### ref: https://stackoverflow.com/questions/56908604/trying-to-install-epel-release-on-fedora-30-no-match-for-argument-epel-relea
-#RUN dnf -y install passenger
+#COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+RUN curl -fsSL https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+
+## ref: https://linuxconfig.org/redhat-8-epel-install-guide
+## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
+## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+#RUN yum-config-manager --enable epel
+
+### ref: https://linuxconfig.org/redhat-8-epel-install-guide
+### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
+### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
+#RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+#RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+##RUN yum-config-manager --enable epel
+
+#RUN dnf upgrade -y
+RUN dnf update -y
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
@@ -36,6 +52,7 @@ ENV HOME="/root"
 RUN dnf makecache \
     && dnf install -y yum-utils \
     && dnf install -y gcc make \
+    && dnf install -y python3 \
     && dnf install --nodocs -y \
       sudo \
       bash \
@@ -43,15 +60,8 @@ RUN dnf makecache \
       git \
       wget
 
-RUN dnf install -y \
-    python3 \
-    python3-pip \
-    python3-libselinux
-
 RUN dnf install --nodocs -y \
-    readline-devel \
     bzip2-devel \
-    krb5-devel \
     libffi-devel \
     ncurses-devel \
     openssl-devel \
@@ -61,6 +71,12 @@ RUN dnf install --nodocs -y \
     zlib-devel
 
 RUN dnf clean all
+
+####################
+## pyenv
+#WORKDIR $HOME
+#RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
+#ENV PYENV_ROOT="$HOME/.pyenv"
 
 WORKDIR /
 RUN git clone --depth=1 https://github.com/pyenv/pyenv.git /pyenv
@@ -80,6 +96,14 @@ RUN pyenv install $PYTHON_VERSION
 #RUN pyenv global $PYTHON_VERSION
 #RUN pyenv rehash
 RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
+
+## ref: https://www.baeldung.com/ops/dockerfile-path-environment-variable
+#RUN echo "export PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> ~/.bashrc
+ENV PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}"
+RUN echo "export PATH=$PATH" >> /etc/profile
+
+RUN echo "alias ll='ls -Fla'" >> ~/.bashrc
+RUN echo "alias la='ls -alrt'" >> ~/.bashrc
 
 ## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
 ## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss

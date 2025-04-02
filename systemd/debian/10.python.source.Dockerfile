@@ -83,7 +83,7 @@ RUN apt-get update -y \
 #    && ldconfig
 #
 #RUN cd /usr/src \
-#    && wget -q https://www.openssl.org/source/openssl-1.1.1w.tar.gz \
+#    && curl -fsSL -o openssl-1.1.1w.tar.gz https://www.openssl.org/source/openssl-1.1.1w.tar.gz \
 #    && tar -xzf openssl-1.1.1w.tar.gz \
 #    && cd openssl-1.1*/ \
 #    && ./config shared --prefix=/usr/local \
