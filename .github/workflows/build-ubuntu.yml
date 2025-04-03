@@ -1,13 +1,14 @@
 name: Docker ubuntu images build
 
 on:
+  ## ref: https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#workflow_dispatch
+  workflow_dispatch:
   push:
     branches: ['*']
+  # Schedule updates (once daily)
   schedule:
-    ## Nightly Docker Image Rebuild (1:05am daily)
-    - cron: '5 1 * * *'
-#    ## Nightly Docker Image Rebuild (12am daily)
-#    - cron: '0 0 * * *'
+    ## Daily Docker Image Rebuild (3:29pm daily)
+    - cron: '29 15 * * *'
 
 ## ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
 concurrency:
