@@ -3,41 +3,34 @@
 ## ref: https://www.server-world.info/en/note?os=CentOS_Stream_9&p=docker&f=1
 
 #FROM centos:9
-FROM quay.io/centos/centos:stream9
+FROM quay.io/centos/centos:stream9 AS compile-venv-image
+LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+
+ARG BUILD_ID=devel
+LABEL build=$BUILD_ID
+
+ENV container=docker
+ENV PIP_ROOT_USER_ACTION=ignore
+
+## ref: https://pythonspeed.com/articles/multi-stage-docker-python/
+RUN python3 -m venv /opt/venv
+# Make sure we use the virtualenv:
+ENV PATH="/opt/venv/bin:$PATH"
+
+## meson is required for subsequent systemd install by install-systemd.sh appearing later in this docker build
+RUN pip3 install meson ninja jinja2
+
+FROM quay.io/centos/centos:stream9 AS build-image
+COPY --from=compile-venv-image /opt/venv /opt/venv
+
+# Make sure we use the virtualenv:
+ENV PATH="/opt/venv/bin:$PATH"
 
 ## Install systemd
 ## ref: https://linuxopsys.com/topics/install-systemd
 RUN yum groupinstall -y "Development Tools" && \
-  dnf install -y \
-    libcap-devel \
-    gperf \
-    glib2-devel \
-    jq \
-    which \
-    python3-pip
-
-## use --global option instead
-#ENV PIPX_HOME="/opt/pipx"
-#ENV PIPX_BIN_DIR="/usr/local/bin"
-
-## not necessary since /usr/local/bin is already in the PATH
-#ENV PATH="${PIPX_BIN_DIR}:${PATH}"
-RUN echo "PATH: ${PATH}"
-RUN echo "export PATH=$PATH" >> /etc/profile
-ENV PATH="/root/.local/bin:${PATH}"
-
-## ref: https://pipx.pypa.io/stable/installation/
-RUN python3 -m pip install --user pipx jinja2
-
-## not necessary since /usr/local/bin is already in PATH
-#RUN pipx ensurepath --global
-#RUN python3 -m pipx ensurepath
-
-#RUN pip install meson ninja jinja2
-## ref: https://stackoverflow.com/questions/75608323/how-do-i-solve-error-externally-managed-environment-every-time-i-use-pip-3
-## ref: https://github.com/pypa/pipx/issues/754#issuecomment-951162846
-RUN pipx install --global meson ninja
-#RUN python3 -m pipx install --global meson ninja
+  yum install -y libcap-devel gperf glib2-devel jq
+#  yum install -y libcap-devel gperf glib2-devel python3-pip jq
 
 ## Install systemd
 ## ref: https://linuxopsys.com/topics/install-systemd

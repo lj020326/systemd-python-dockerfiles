@@ -34,6 +34,8 @@ pipeline:
               dockerFile: 8.Dockerfile
             - buildImageLabel: centos9-systemd
               dockerFile: 9.Dockerfile
+            - buildImageLabel: centos10-systemd
+              dockerFile: 10.Dockerfile
         redhat-systemd:
           buildDir: systemd/redhat
           buildImageList:
@@ -93,6 +95,8 @@ pipeline:
               dockerFile: 8.python.Dockerfile
             - buildImageLabel: centos9-systemd-python
               dockerFile: 9.python.Dockerfile
+            - buildImageLabel: centos10-systemd-python
+              dockerFile: 10.python.Dockerfile
         redhat-systemd-python:
           buildDir: systemd/redhat
           buildImageList:

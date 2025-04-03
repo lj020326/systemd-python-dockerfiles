@@ -21,6 +21,7 @@ or if it doesn't work
 `docker rm -f systemd`
 
 ## Building images
+
 Intermediate container hashes are not supported as of Docker version 20.10. 
 To view intermediate container hashes:
 
