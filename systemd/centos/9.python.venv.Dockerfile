@@ -1,6 +1,6 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ARG IMAGE_REGISTRY=lj020326
-FROM $IMAGE_REGISTRY/centos8-systemd:latest
+FROM $IMAGE_REGISTRY/centos9-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
@@ -28,7 +28,26 @@ ENV TZ=UTC
 
 ENV HOME="/root"
 
-RUN dnf upgrade -y
+#RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+#COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+RUN curl -fsSL https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+
+## ref: https://linuxconfig.org/redhat-8-epel-install-guide
+## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
+## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+#RUN yum-config-manager --enable epel
+
+### ref: https://linuxconfig.org/redhat-8-epel-install-guide
+### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
+### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
+#RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+#RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+##RUN yum-config-manager --enable epel
+
+#RUN dnf upgrade -y
+RUN dnf update -y
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
@@ -38,13 +57,18 @@ RUN dnf upgrade -y
 RUN dnf makecache \
     && dnf install -y yum-utils \
     && dnf install -y gcc make \
-    && dnf install -y python3 python3-dnf \
     && dnf install --nodocs -y \
-      sudo \
-      bash \
-      which \
-      git \
-      wget
+        sudo \
+        bash \
+        which \
+        git \
+        wget
+
+RUN dnf install -y \
+    python3 \
+    python3-dnf \
+    python3-pip \
+    python3-libselinux
 
 RUN dnf install --nodocs -y \
     bzip2-devel \
@@ -57,12 +81,6 @@ RUN dnf install --nodocs -y \
     zlib-devel
 
 RUN dnf clean all
-
-####################
-## pyenv
-#WORKDIR $HOME
-#RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
-#ENV PYENV_ROOT="$HOME/.pyenv"
 
 WORKDIR /
 

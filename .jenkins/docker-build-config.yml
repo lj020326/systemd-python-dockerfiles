@@ -28,10 +28,10 @@ pipeline:
         centos-systemd:
           buildDir: systemd/centos
           buildImageList:
-            - buildImageLabel: centos7-systemd
-              dockerFile: 7.Dockerfile
-            - buildImageLabel: centos8-systemd
-              dockerFile: 8.Dockerfile
+#            - buildImageLabel: centos7-systemd
+#              dockerFile: 7.Dockerfile
+#            - buildImageLabel: centos8-systemd
+#              dockerFile: 8.Dockerfile
             - buildImageLabel: centos9-systemd
               dockerFile: 9.Dockerfile
             - buildImageLabel: centos10-systemd
@@ -39,10 +39,10 @@ pipeline:
         redhat-systemd:
           buildDir: systemd/redhat
           buildImageList:
-            - buildImageLabel: redhat7-systemd
-              dockerFile: 7.Dockerfile
-            - buildImageLabel: redhat8-systemd
-              dockerFile: 8.Dockerfile
+#            - buildImageLabel: redhat7-systemd
+#              dockerFile: 7.Dockerfile
+#            - buildImageLabel: redhat8-systemd
+#              dockerFile: 8.Dockerfile
             - buildImageLabel: redhat9-systemd
               dockerFile: 9.Dockerfile
         fedora-systemd:
@@ -101,20 +101,22 @@ pipeline:
           buildDir: systemd/redhat
           buildImageList:
             ## systemd images with python installed
-            - buildImageLabel: redhat7-systemd-python
-              dockerFile: 7.python.Dockerfile
-            - buildImageLabel: redhat8-systemd-python
-              dockerFile: 8.python.Dockerfile
+#            - buildImageLabel: redhat7-systemd-python
+#              dockerFile: 7.python.Dockerfile
+#            - buildImageLabel: redhat8-systemd-python
+#              dockerFile: 8.python.Dockerfile
             - buildImageLabel: redhat9-systemd-python
               dockerFile: 9.python.Dockerfile
+            - buildImageLabel: redhat10-systemd-python
+              dockerFile: 10.python.Dockerfile
         fedora-systemd-python:
           buildDir: systemd/fedora
           buildImageList:
             ## systemd images with python installed
-    #        - buildImageLabel: fedora35-systemd-python
-    #          dockerFile: 35.python.Dockerfile
-    #        - buildImageLabel: fedora8-systemd-python
-    #          dockerFile: 36.python.Dockerfile
+#            - buildImageLabel: fedora35-systemd-python
+#              dockerFile: 35.python.Dockerfile
+#            - buildImageLabel: fedora8-systemd-python
+#              dockerFile: 36.python.Dockerfile
             - buildImageLabel: fedora-systemd-python
               dockerFile: latest.python.Dockerfile
         debian-systemd-python:
@@ -129,8 +131,8 @@ pipeline:
           buildDir: systemd/ubuntu
           buildImageList:
             ## systemd images with python installed
-            - buildImageLabel: ubuntu2004-systemd-python
-              dockerFile: 20.04.python.Dockerfile
+#            - buildImageLabel: ubuntu2004-systemd-python
+#              dockerFile: 20.04.python.Dockerfile
             - buildImageLabel: ubuntu2204-systemd-python
               dockerFile: 22.04.python.Dockerfile
             - buildImageLabel: ubuntu2404-systemd-python

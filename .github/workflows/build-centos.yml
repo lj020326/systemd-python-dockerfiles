@@ -33,27 +33,27 @@ jobs:
 #      max-parallel: 2
       matrix:
         include:
-          - distro: centos7
-            systemd-distro:
-              name: systemd-centos7
-              dockerfile: systemd/centos/7.Dockerfile
-              context: systemd/centos
-              platforms: |-
-                linux/amd64
-#                linux/arm/v7
-#                linux/arm64
-              tags: |-
-                lj020326/centos7-systemd:latest
-            systemd-python-distro:
-              name: systemd-centos7-python
-              dockerfile: systemd/centos/7.python.Dockerfile
-              context: systemd/centos
-              platforms: |-
-                linux/amd64
-#                linux/arm/v7
-#                linux/arm64
-              tags: |-
-                lj020326/centos7-systemd-python:latest
+#          - distro: centos7
+#            systemd-distro:
+#              name: systemd-centos7
+#              dockerfile: systemd/centos/7.Dockerfile
+#              context: systemd/centos
+#              platforms: |-
+#                linux/amd64
+##                linux/arm/v7
+##                linux/arm64
+#              tags: |-
+#                lj020326/centos7-systemd:latest
+#            systemd-python-distro:
+#              name: systemd-centos7-python
+#              dockerfile: systemd/centos/7.python.Dockerfile
+#              context: systemd/centos
+#              platforms: |-
+#                linux/amd64
+##                linux/arm/v7
+##                linux/arm64
+#              tags: |-
+#                lj020326/centos7-systemd-python:latest
 
           - distro: centos8
             systemd-distro:

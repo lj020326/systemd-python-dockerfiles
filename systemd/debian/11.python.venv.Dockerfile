@@ -1,14 +1,19 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ARG IMAGE_REGISTRY=lj020326
-FROM $IMAGE_REGISTRY/ubuntu2004-systemd:latest
+FROM $IMAGE_REGISTRY/debian11-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
-#ARG PYTHON_VERSION="3.11.9"
-ARG PYTHON_VERSION="3.12.3"
-
+ARG BUILD_DATE
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
+
+## versions at https://www.python.org/ftp/python/
+#ARG PYTHON_VERSION="3.11.9"
+ARG PYTHON_VERSION="3.12.9"
+#ARG PYENV_ROOT="/pyenv"
+ARG PYENV_ROOT="/opt/pyenv"
+LABEL python_version=$PYTHON_VERSION
 
 # Set environment variables.
 ENV container=docker
@@ -33,19 +38,17 @@ ENV HOME="/root"
 ## ref: https://www.how2shout.com/linux/install-python-3-x-or-2-7-on-debian-11-bullseye-linux/
 RUN apt-get update -y
 #RUN apt-get install --no-install-recommends -y apt-utils sudo bash ca-certificates curl wget git tox
-RUN apt-get install -y \
-    apt-utils \
+RUN apt-get install -y apt-utils \
     build-essential \
-    sudo \
-    bash \
-    ca-certificates \
-    curl \
-    wget \
-    git
+    sudo bash ca-certificates \
+    curl wget git
 
 RUN apt-get install -y \
     python3 \
+    python3-pip \
     python3-apt \
+    python3-dev \
+    python3-virtualenv \
     python3-venv
 
 ## ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
@@ -104,38 +107,10 @@ RUN apt-get update -y \
 #RUN apt-get update -y
 #RUN apt install python3.11 python3-pip -y
 
-####################
-## pyenv
-#WORKDIR $HOME
-#RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
-#ENV PYENV_ROOT="$HOME/.pyenv"
-
 WORKDIR /
-RUN git clone --depth=1 https://github.com/pyenv/pyenv.git /pyenv
 
-ENV PYENV_ROOT="/pyenv"
-ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
-
-## ref: https://github.com/pyenv/pyenv/issues/2416#issuecomment-1219484906
-## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
-## ref: https://stackoverflow.com/questions/57743230/userwarning-could-not-import-the-lzma-module-your-installed-python-is-incomple#57773679
-## ref: https://superuser.com/questions/1346141/how-to-link-python-to-the-manually-compiled-openssl-rather-than-the-systems-one
-## ref: https://github.com/pyenv/pyenv/issues/2416
-#RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
-#RUN env CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
-#RUN CPPFLAGS=$(pkg-config --cflags openssl) LDFLAGS=$(pkg-config --libs openssl) \
-#RUN CPPFLAGS="-I/usr/local/openssl/include/openssl" \
-#    LDFLAGS="-L/usr/lib/openssl -L/usr/local/openssl/lib" \
-#    PYTHON_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/openssl" \
-#    pyenv install $PYTHON_VERSION
-#RUN CPPFLAGS="-I/usr/local/include/openssl" \
-#    LDFLAGS="-L/usr/local/lib" \
-#    pyenv install $PYTHON_VERSION
-#RUN PYTHON_CONFIGURE_OPTS="--with-openssl-dir=/usr/local/ssl" pyenv install $PYTHON_VERSION
-RUN pyenv install $PYTHON_VERSION
-#RUN pyenv global $PYTHON_VERSION
-#RUN pyenv rehash
-RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
+COPY install-python-venv.sh .
+RUN bash install-python-venv.sh ${PYTHON_VERSION} ${PYENV_ROOT}
 
 ## ref: https://www.baeldung.com/ops/dockerfile-path-environment-variable
 #RUN echo "export PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> ~/.bashrc
@@ -154,5 +129,7 @@ RUN echo "alias la='ls -alrt'" >> ~/.bashrc
 ##CMD ["/lib/systemd/systemd"]
 
 COPY python-info.py .
+RUN python3 python-info.py
+
 COPY start-sbin-init.sh .
 CMD ["startup-sbin-init.sh"]

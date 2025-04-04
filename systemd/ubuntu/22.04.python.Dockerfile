@@ -4,9 +4,11 @@ FROM $IMAGE_REGISTRY/ubuntu2204-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
+## versions at https://www.python.org/ftp/python/
 #ARG PYTHON_VERSION="3.11.9"
-ARG PYTHON_VERSION="3.12.3"
+ARG PYTHON_VERSION="3.12.9"
 
+ARG BUILD_DATE
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 

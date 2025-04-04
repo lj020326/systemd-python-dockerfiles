@@ -34,26 +34,28 @@ The example below uses [ansible-datacenter molecule tests](https://github.com/lj
 ```shell
 $ git clone https://github.com/lj020326/ansible-datacenter.git
 $ cd ansible-datacenter
-$ export MOLECULE_DISTRO=redhat7-systemd-python
+$ ## NOTE: registry default is docker.io
+$ export MOLECULE_IMAGE_REGISTRY=registry.example.int:5000
+$ export MOLECULE_IMAGE_LABEL=redhat7-systemd-python
 $ molecule login
 $ molecule --debug test -s bootstrap-linux-package
 $ molecule destroy
-$ MOLECULE_DISTRO=redhat8-systemd-python molecule --debug test -s bootstrap-linux-package
-$ MOLECULE_DISTRO=redhat8-systemd-python molecule login
+$ MOLECULE_IMAGE_LABEL=redhat8-systemd-python molecule --debug test -s bootstrap-linux-package
+$ MOLECULE_IMAGE_LABEL=redhat8-systemd-python molecule login
 $ molecule destroy
-$ MOLECULE_DISTRO=redhat8-systemd-python molecule converge
+$ MOLECULE_IMAGE_LABEL=redhat8-systemd-python molecule converge
 $ molecule destroy
-$ MOLECULE_DISTRO=centos8-systemd-python molecule --debug converge
+$ MOLECULE_IMAGE_LABEL=centos8-systemd-python molecule --debug converge
 $ molecule destroy
-$ MOLECULE_DISTRO=ubuntu2204-systemd-python molecule --debug converge
+$ MOLECULE_IMAGE_LABEL=ubuntu2204-systemd-python molecule --debug converge
 
 ```
 
 To log into container
 
 ```shell
-$ MOLECULE_DISTRO=redhat8-systemd-python molecule create
-$ MOLECULE_DISTRO=redhat8-systemd-python molecule login
+$ MOLECULE_IMAGE_LABEL=redhat8-systemd-python molecule create
+$ MOLECULE_IMAGE_LABEL=redhat8-systemd-python molecule login
 $ molecule destroy
 ```
 

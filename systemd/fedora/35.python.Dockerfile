@@ -4,11 +4,16 @@ FROM $IMAGE_REGISTRY/fedora35-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
-#ARG PYTHON_VERSION="3.11.9"
-ARG PYTHON_VERSION="3.12.3"
-
+ARG BUILD_DATE
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
+
+## versions at https://www.python.org/ftp/python/
+#ARG PYTHON_VERSION="3.11.9"
+ARG PYTHON_VERSION="3.12.9"
+#ARG PYENV_ROOT="/pyenv"
+ARG PYENV_ROOT="/opt/pyenv"
+LABEL python_version=$PYTHON_VERSION
 
 # Set environment variables.
 ENV container=docker
@@ -33,34 +38,36 @@ ENV HOME="/root"
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
 RUN dnf makecache \
     && dnf groupinstall -y "Development Tools" \
-    && dnf install --nodocs -y sudo bash which git \
-    && dnf install --nodocs -y readline-devel bzip2-devel libffi-devel ncurses-devel sqlite-devel openssl-devel xz-devel \
-    && dnf clean all
+    && dnf install --nodocs -y \
+        sudo \
+        bash \
+        which \
+        git \
+        wget
 
-####################
-## pyenv
-#WORKDIR $HOME
-#RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
-#ENV PYENV_ROOT="$HOME/.pyenv"
+RUN dnf install --nodocs -y \
+    bzip2-devel \
+    libffi-devel \
+    ncurses-devel \
+    openssl-devel \
+    readline-devel \
+    sqlite-devel \
+    xz-devel
+
+RUN dnf clean all
 
 WORKDIR /
-RUN git clone --depth=1 https://github.com/pyenv/pyenv.git /pyenv
 
-ENV PYENV_ROOT="/pyenv"
-ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
+COPY install-python-venv.sh .
+RUN bash install-python-venv.sh ${PYTHON_VERSION} ${PYENV_ROOT}
 
-## ref: https://github.com/pyenv/pyenv/issues/2416#issuecomment-1219484906
-## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
-## ref: https://stackoverflow.com/questions/57743230/userwarning-could-not-import-the-lzma-module-your-installed-python-is-incomple#57773679
-## ref: https://superuser.com/questions/1346141/how-to-link-python-to-the-manually-compiled-openssl-rather-than-the-systems-one
-## ref: https://github.com/pyenv/pyenv/issues/2416
-#RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
-#RUN env CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
-#RUN CPPFLAGS=$(pkg-config --cflags openssl) LDFLAGS=$(pkg-config --libs openssl) \
-RUN pyenv install $PYTHON_VERSION
-#RUN pyenv global $PYTHON_VERSION
-#RUN pyenv rehash
-RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
+## ref: https://www.baeldung.com/ops/dockerfile-path-environment-variable
+#RUN echo "export PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> ~/.bashrc
+ENV PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}"
+RUN echo "export PATH=$PATH" >> /etc/profile
+
+RUN echo "alias ll='ls -Fla'" >> ~/.bashrc
+RUN echo "alias la='ls -alrt'" >> ~/.bashrc
 
 ## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
 ## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss
@@ -69,5 +76,7 @@ RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
 ##CMD ["/usr/lib/systemd/systemd"]
 
 COPY python-info.py .
+RUN python3 python-info.py
+
 COPY start-sbin-init.sh .
 CMD ["startup-sbin-init.sh"]

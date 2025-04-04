@@ -4,11 +4,16 @@ FROM $IMAGE_REGISTRY/centos7-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
-#ARG PYTHON_VERSION="3.11.9"
-ARG PYTHON_VERSION="3.12.3"
-
+ARG BUILD_DATE
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
+
+## versions at https://www.python.org/ftp/python/
+#ARG PYTHON_VERSION="3.11.9"
+ARG PYTHON_VERSION="3.12.9"
+#ARG PYENV_ROOT="/pyenv"
+ARG PYENV_ROOT="/opt/pyenv"
+LABEL python_version=$PYTHON_VERSION
 
 # Set environment variables.
 ENV container=docker
@@ -57,11 +62,11 @@ RUN yum install -y epel-release
 RUN yum makecache \
     && yum groupinstall -y "Development tools" \
     && yum install -y \
-      sudo \
-      bash \
-      which \
-      git \
-      wget
+        sudo \
+        bash \
+        which \
+        git \
+        wget
 
 RUN yum install -y \
     python3 \
@@ -91,10 +96,6 @@ RUN yum install -y openssl11 openssl11-devel
 #ENV PYENV_ROOT="$HOME/.pyenv"
 
 WORKDIR /
-RUN git clone --depth=1 https://github.com/pyenv/pyenv.git /pyenv
-
-ENV PYENV_ROOT="/pyenv"
-ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
 ## ref: https://github.com/pyenv/pyenv/issues/281
 ## ref: https://discuss.python.org/t/build-python3-11-5-with-static-openssl-and-libffi-on-centos7/37485/5
@@ -102,20 +103,11 @@ ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 ENV LD_LIBRARY_PATH=/usr/lib:/usr/lib64
 ENV PKG_CONFIG_PATH=/usr/lib64/pkgconfig
 
-## ref: https://github.com/pyenv/pyenv/issues/2416#issuecomment-1219484906
-## ref: https://github.com/pyenv/pyenv/issues/2760#issuecomment-1868608898
-## ref: https://stackoverflow.com/questions/57743230/userwarning-could-not-import-the-lzma-module-your-installed-python-is-incomple#57773679
-## ref: https://github.com/pyenv/pyenv/issues/2416
-#RUN env CPPFLAGS="-I/usr/include/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
-#RUN env CPPFLAGS="-I/usr/include/openssl11/openssl" LDFLAGS="-L/usr/lib64/openssl -lssl -lcrypto" CFLAGS=-fPIC \
-RUN CPPFLAGS=$(pkg-config --cflags openssl11) LDFLAGS=$(pkg-config --libs openssl11) \
-    pyenv install $PYTHON_VERSION
-#RUN CPPFLAGS="-I/usr/include/openssl11" LDFLAGS="-L/usr/lib64/openssl11 -lssl -lcrypto" \
-#    pyenv install $PYTHON_VERSION
-#RUN pyenv install $PYTHON_VERSION
-#RUN pyenv global $PYTHON_VERSION
-#RUN pyenv rehash
-RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local $PYTHON_VERSION
+COPY install-python-venv.sh .
+
+RUN CPPFLAGS=$(pkg-config --cflags openssl11) \
+    LDFLAGS=$(pkg-config --libs openssl11) \
+    bash install-python-venv.sh ${PYTHON_VERSION} ${PYENV_ROOT}
 
 ## ref: https://www.baeldung.com/ops/dockerfile-path-environment-variable
 #RUN echo "export PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> ~/.bashrc
@@ -132,5 +124,7 @@ RUN echo "alias la='ls -alrt'" >> ~/.bashrc
 ##CMD ["/usr/lib/systemd/systemd"]
 
 COPY python-info.py .
+RUN python3 python-info.py
+
 COPY start-sbin-init.sh .
 CMD ["startup-sbin-init.sh"]
