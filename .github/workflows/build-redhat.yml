@@ -100,15 +100,15 @@ jobs:
                 linux/arm64
               tags: |-
                 lj020326/redhat10-systemd:latest
-            systemd-python-distro:
-              name: systemd-redhat10-python
-              dockerfile: systemd/redhat/10.python.Dockerfile
-              context: systemd/redhat
-              platforms: |-
-                linux/amd64
-                linux/arm64
-              tags: |-
-                lj020326/redhat10-systemd-python:latest
+#            systemd-python-distro:
+#              name: systemd-redhat10-python
+#              dockerfile: systemd/redhat/10.python.Dockerfile
+#              context: systemd/redhat
+#              platforms: |-
+#                linux/amd64
+#                linux/arm64
+#              tags: |-
+#                lj020326/redhat10-systemd-python:latest
 
     steps:
       - name: Checkout

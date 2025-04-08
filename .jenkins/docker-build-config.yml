@@ -45,6 +45,8 @@ pipeline:
 #              dockerFile: 8.Dockerfile
             - buildImageLabel: redhat9-systemd
               dockerFile: 9.Dockerfile
+            - buildImageLabel: redhat10-systemd
+              dockerFile: 10.Dockerfile
         fedora-systemd:
           buildDir: systemd/fedora
           buildImageList:

@@ -43,12 +43,19 @@ RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel
 RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official \
     -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 
+RUN dnf install -y yum-utils
+
 ### ref: https://linuxconfig.org/redhat-8-epel-install-guide
 ### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
 #RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 #RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 ##RUN yum-config-manager --enable epel
+
+## rpm build/installs require "source" repo enabled
+#RUN yum-config-manager --enable ubi-9-baseos-source ubi-9-appstream-source
+RUN yum-config-manager --enable ubi-9-baseos-source-rpms ubi-9-appstream-source-rpms
+RUN yum install -y rpm-build
 
 #RUN dnf upgrade -y
 RUN dnf update -y
@@ -59,7 +66,6 @@ RUN dnf update -y
 #RUN dnf makecache \
 #    && dnf groupinstall -y "Development Tools" \
 RUN dnf makecache \
-    && dnf install -y yum-utils \
     && dnf install -y gcc make \
     && dnf install -y python3 python3-dnf \
     && dnf install --nodocs -y \
@@ -80,11 +86,6 @@ RUN dnf install --nodocs -y \
 
 RUN dnf clean all
 
-## rpm build/installs require "source" repo enabled
-#RUN yum-config-manager --enable ubi-9-baseos-source ubi-9-appstream-source
-RUN yum-config-manager --enable ubi-9-baseos-source-rpms ubi-9-appstream-source-rpms
-RUN yum install -y rpm-build
-
 ## download readline bzip2 source rpms to install *-devel.rpm packages required for python build
 COPY build-rpm-source.sh .
 RUN bash build-rpm-source.sh readline
@@ -97,12 +98,6 @@ RUN bash build-rpm-source.sh readline
 ## Removed because of vulnerabilities: git-lfs
 #RUN dnf install -y diffutils git iproute jq less lsof man nano procps \
 #    perl-Digest-SHA net-tools openssh-clients rsync socat sudo time vim wget zip
-
-####################
-## pyenv
-#WORKDIR $HOME
-#RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
-#ENV PYENV_ROOT="$HOME/.pyenv"
 
 WORKDIR /
 

@@ -46,6 +46,8 @@ RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel
 RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official \
     -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 
+RUN dnf install -y yum-utils
+
 ### ref: https://linuxconfig.org/redhat-8-epel-install-guide
 ### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
@@ -53,15 +55,20 @@ RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official \
 #RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 ##RUN yum-config-manager --enable epel
 
-RUN dnf upgrade -y
+## rpm build/installs require "source" repo enabled
+RUN yum-config-manager --enable ubi-baseos-source ubi-appstream-source
+#RUN yum-config-manager --enable ubi-8-baseos-source ubi-8-appstream-source
+RUN yum install -y rpm-build
+
+#RUN dnf upgrade -y
+RUN dnf update -y
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-8
 #RUN dnf makecache \
-#    && dnf groupinstall --nobest -y "Development Tools" \
+#    && dnf groupinstall -y "Development Tools" \
 RUN dnf makecache \
-    && dnf install -y yum-utils \
     && dnf install -y gcc make \
     && dnf install -y python3 python3-dnf \
     && dnf install --nodocs -y \
@@ -84,19 +91,9 @@ RUN dnf install --nodocs -y \
 
 RUN dnf clean all
 
-## rpm build/installs require "source" repo enabled
-RUN yum-config-manager --enable ubi-baseos-source ubi-appstream-source
-RUN yum install -y rpm-build
-
 ### download readline bzip2 source rpms to install *-devel.rpm packages required for python build
 #COPY build-rpm-source.sh .
 #RUN bash build-rpm-source.sh readline
-
-####################
-## pyenv
-#WORKDIR $HOME
-#RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
-#ENV PYENV_ROOT="$HOME/.pyenv"
 
 WORKDIR /
 
