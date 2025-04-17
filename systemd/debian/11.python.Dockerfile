@@ -107,12 +107,6 @@ RUN apt-get update -y \
 #RUN apt-get update -y
 #RUN apt install python3.11 python3-pip -y
 
-####################
-## pyenv
-#WORKDIR $HOME
-#RUN git clone --depth=1 https://github.com/pyenv/pyenv.git .pyenv
-#ENV PYENV_ROOT="$HOME/.pyenv"
-
 WORKDIR /
 
 COPY install-python-venv.sh .

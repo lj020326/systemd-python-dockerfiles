@@ -59,6 +59,8 @@ pipeline:
         debian-systemd:
           buildDir: systemd/debian
           buildImageList:
+            - buildImageLabel: debian10-systemd
+              dockerFile: 10.Dockerfile
             - buildImageLabel: debian11-systemd
               dockerFile: 11.Dockerfile
             - buildImageLabel: debian12-systemd
@@ -125,6 +127,8 @@ pipeline:
           buildDir: systemd/debian
           buildImageList:
             ## systemd images with python installed
+            - buildImageLabel: debian10-systemd-python
+              dockerFile: 10.python.Dockerfile
             - buildImageLabel: debian11-systemd-python
               dockerFile: 11.python.Dockerfile
             - buildImageLabel: debian12-systemd-python

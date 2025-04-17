@@ -41,7 +41,9 @@ RUN apt-get update -y
 RUN apt-get install -y apt-utils \
     build-essential \
     sudo bash ca-certificates \
-    curl wget git
+    curl \
+    wget \
+    git
 
 RUN apt-get install -y \
     python3 \

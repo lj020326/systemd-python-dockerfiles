@@ -33,67 +33,67 @@ jobs:
 #      max-parallel: 2
       matrix:
         include:
-          - distro: debian8
-            systemd-distro:
-              name: systemd-debian8
-              dockerfile: systemd/debian/8.Dockerfile
-              context: systemd/debian
-              platforms: |-
-                linux/amd64
-              tags: |-
-                lj020326/debian8-systemd:latest
-            systemd-python-distro:
-              name: systemd-debian8-python
-              dockerfile: systemd/debian/8.python.Dockerfile
-              context: systemd/debian
-              platforms: |-
-                linux/amd64
-              tags: |-
-                lj020326/debian8-systemd-python:latest
-
-          - distro: debian9
-            systemd-distro:
-              name: systemd-debian9
-              dockerfile: systemd/debian/9.Dockerfile
-              context: systemd/debian
-              platforms: |-
-                linux/amd64
-                linux/arm/v7
-                linux/arm64
-              tags: |-
-                lj020326/debian9-systemd:latest
-            systemd-python-distro:
-              name: systemd-debian9-python
-              dockerfile: systemd/debian/9.python.Dockerfile
-              context: systemd/debian
-              platforms: |-
-                linux/amd64
+#          - distro: debian8
+#            systemd-distro:
+#              name: systemd-debian8
+#              dockerfile: systemd/debian/8.Dockerfile
+#              context: systemd/debian
+#              platforms: |-
+#                linux/amd64
+#              tags: |-
+#                lj020326/debian8-systemd:latest
+#            systemd-python-distro:
+#              name: systemd-debian8-python
+#              dockerfile: systemd/debian/8.python.Dockerfile
+#              context: systemd/debian
+#              platforms: |-
+#                linux/amd64
+#              tags: |-
+#                lj020326/debian8-systemd-python:latest
+#
+#          - distro: debian9
+#            systemd-distro:
+#              name: systemd-debian9
+#              dockerfile: systemd/debian/9.Dockerfile
+#              context: systemd/debian
+#              platforms: |-
+#                linux/amd64
+#                linux/arm/v7
 #                linux/arm64
-#                linux/arm/v7
-              tags: |-
-                lj020326/debian9-systemd-python:latest
-
-          - distro: debian10
-            systemd-distro:
-              name: systemd-debian10
-              dockerfile: systemd/debian/10.Dockerfile
-              context: systemd/debian
-              platforms: |-
-                linux/amd64
-                linux/arm64
-#                linux/arm/v7
-              tags: |-
-                lj020326/debian10-systemd:latest
-            systemd-python-distro:
-              name: systemd-debian10-python
-              dockerfile: systemd/debian/10.python.Dockerfile
-              context: systemd/debian
-              platforms: |-
-                linux/amd64
-                linux/arm64
-#                linux/arm/v7
-              tags: |-
-                lj020326/debian10-systemd-python:latest
+#              tags: |-
+#                lj020326/debian9-systemd:latest
+#            systemd-python-distro:
+#              name: systemd-debian9-python
+#              dockerfile: systemd/debian/9.python.Dockerfile
+#              context: systemd/debian
+#              platforms: |-
+#                linux/amd64
+##                linux/arm64
+##                linux/arm/v7
+#              tags: |-
+#                lj020326/debian9-systemd-python:latest
+#
+#          - distro: debian10
+#            systemd-distro:
+#              name: systemd-debian10
+#              dockerfile: systemd/debian/10.Dockerfile
+#              context: systemd/debian
+#              platforms: |-
+#                linux/amd64
+#                linux/arm64
+##                linux/arm/v7
+#              tags: |-
+#                lj020326/debian10-systemd:latest
+#            systemd-python-distro:
+#              name: systemd-debian10-python
+#              dockerfile: systemd/debian/10.python.Dockerfile
+#              context: systemd/debian
+#              platforms: |-
+#                linux/amd64
+#                linux/arm64
+##                linux/arm/v7
+#              tags: |-
+#                lj020326/debian10-systemd-python:latest
 
           - distro: debian11
             systemd-distro:
