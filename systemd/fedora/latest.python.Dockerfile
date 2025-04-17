@@ -44,6 +44,7 @@ RUN dnf makecache \
     && dnf install --nodocs -y \
         sudo \
         bash \
+        awk \
         which \
         git \
         wget
