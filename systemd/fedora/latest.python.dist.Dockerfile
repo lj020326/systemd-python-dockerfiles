@@ -4,11 +4,16 @@ FROM $IMAGE_REGISTRY/fedora-systemd:latest
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
-#ARG PYTHON_VERSION="3.11.9"
-ARG PYTHON_VERSION="3.12.3"
-
+ARG BUILD_DATE
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
+
+## versions at https://www.python.org/ftp/python/
+#ARG PYTHON_VERSION="3.11.9"
+ARG PYTHON_VERSION="3.12.9"
+#ARG PYENV_ROOT="/pyenv"
+ARG PYENV_ROOT="/opt/pyenv"
+LABEL python_version=$PYTHON_VERSION
 
 # Set environment variables.
 ENV container=docker
@@ -37,11 +42,12 @@ RUN dnf makecache \
     && dnf install -y yum-utils \
     && dnf install -y gcc make \
     && dnf install --nodocs -y \
-      sudo \
-      bash \
-      which \
-      git \
-      wget
+        sudo \
+        bash \
+        awk \
+        which \
+        git \
+        wget
 
 RUN dnf install -y \
     python3 \
@@ -69,5 +75,7 @@ RUN dnf clean all
 ##CMD ["/usr/lib/systemd/systemd"]
 
 COPY python-info.py .
+RUN python3 python-info.py
+
 COPY start-sbin-init.sh .
 CMD ["startup-sbin-init.sh"]
