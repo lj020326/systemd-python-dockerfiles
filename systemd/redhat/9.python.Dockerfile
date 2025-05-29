@@ -43,19 +43,27 @@ RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel
 RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official \
     -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 
-RUN dnf install -y yum-utils
+#RUN dnf install -y yum-utils
+
+RUN dnf update -y
 
 ### ref: https://linuxconfig.org/redhat-8-epel-install-guide
 ### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
-#RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 #RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 ##RUN yum-config-manager --enable epel
 
 ## rpm build/installs require "source" repo enabled
 #RUN yum-config-manager --enable ubi-9-baseos-source ubi-9-appstream-source
-RUN yum-config-manager --enable ubi-9-baseos-source-rpms ubi-9-appstream-source-rpms
-RUN yum install -y rpm-build
+#RUN yum-config-manager --enable ubi-9-baseos-source-rpms ubi-9-appstream-source-rpms
+RUN dnf install -y \
+    --enablerepo ubi-$(rpm -E '%{rhel}')-baseos-rpms \
+    --enablerepo ubi-$(rpm -E '%{rhel}')-baseos-source-rpms \
+    --enablerepo ubi-$(rpm -E '%{rhel}')-appstream-rpms \
+    --enablerepo ubi-$(rpm -E '%{rhel}')-appstream-source-rpms \
+    bash \
+    which
 
 #RUN dnf upgrade -y
 RUN dnf update -y
@@ -66,33 +74,9 @@ RUN dnf update -y
 #RUN dnf makecache \
 #    && dnf groupinstall -y "Development Tools" \
 RUN dnf makecache \
-    && dnf install -y gcc make \
-    && dnf install -y python3 python3-dnf \
-    && dnf install --nodocs -y \
-      sudo \
-      bash \
-      which \
-      git \
-      wget
-
-RUN dnf install --nodocs -y \
-    bzip2-devel \
-    libffi-devel \
-    ncurses-devel \
-    openssl-devel \
-    sqlite-devel \
-    xz-devel \
-    zlib-devel
+    && dnf install -y python3 python3-dnf
 
 RUN dnf clean all
-
-## download readline bzip2 source rpms to install *-devel.rpm packages required for python build
-COPY build-rpm-source.sh .
-RUN bash build-rpm-source.sh readline
-
-## ref: https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/building_running_and_managing_containers/assembly_adding-software-to-a-ubi-container_building-running-and-managing-containers#proc_adding-software-in-a-standard-ubi-container_assembly_adding-software-to-a-ubi-container
-#RUN yum install --disablerepo=* --enablerepo=ubi-9-appstream-rpms --enablerepo=ubi-9-baseos-rpms bzip2
-#RUN yum install --enablerepo=ubi-9-appstream-rpms readline-devel
 
 ### ref: https://github.com/devfile/developer-images/blob/main/base/ubi9/Dockerfile
 ## Removed because of vulnerabilities: git-lfs
@@ -100,9 +84,6 @@ RUN bash build-rpm-source.sh readline
 #    perl-Digest-SHA net-tools openssh-clients rsync socat sudo time vim wget zip
 
 WORKDIR /
-
-COPY install-python-venv.sh .
-RUN bash install-python-venv.sh ${PYTHON_VERSION} ${PYENV_ROOT}
 
 ## ref: https://www.baeldung.com/ops/dockerfile-path-environment-variable
 #RUN echo "export PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> ~/.bashrc

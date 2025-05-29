@@ -45,10 +45,12 @@ RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official \
 
 #RUN dnf install -y yum-utils
 
+RUN dnf update -y
+
 ### ref: https://linuxconfig.org/redhat-8-epel-install-guide
 ### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
-#RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 #RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 ##RUN yum-config-manager --enable epel
 
@@ -56,10 +58,10 @@ RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official \
 #RUN yum-config-manager --enable ubi-9-baseos-source ubi-9-appstream-source
 #RUN yum-config-manager --enable ubi-9-baseos-source-rpms ubi-9-appstream-source-rpms
 RUN dnf install -y \
-    --enablerepo ubi-10-baseos-rpms \
-    --enablerepo ubi-10-baseos-source-rpms \
-    --enablerepo ubi-10-appstream-rpms \
-    --enablerepo ubi-10-appstream-source-rpms \
+    --enablerepo ubi-$(rpm -E '%{rhel}')-baseos-rpms \
+    --enablerepo ubi-$(rpm -E '%{rhel}')-baseos-source-rpms \
+    --enablerepo ubi-$(rpm -E '%{rhel}')-appstream-rpms \
+    --enablerepo ubi-$(rpm -E '%{rhel}')-appstream-source-rpms \
     bash \
     which
 

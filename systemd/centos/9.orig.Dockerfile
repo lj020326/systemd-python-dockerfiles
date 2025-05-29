@@ -1,10 +1,10 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
-## ref: https://www.ansible.com/blog/developing-and-testing-ansible-roles-with-molecule-and-podman-part-1
-FROM registry.access.redhat.com/ubi10-beta/ubi-init
-#FROM registry.access.redhat.com/ubi10/ubi-init
-#FROM registry.access.redhat.com/ubi10/ubi
+## https://pythonspeed.com/articles/multi-stage-docker-python/
+## ref: https://www.server-world.info/en/note?os=CentOS_Stream_9&p=docker&f=1
 
-LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+ARG BASEOS_DIGEST
+#FROM centos:9
+FROM quay.io/centos/centos:stream9${BASEOS_DIGEST:-}
 
 ARG BUILD_DATE
 ARG BUILD_ID=devel
@@ -12,10 +12,27 @@ LABEL build=$BUILD_ID
 
 ENV container=docker
 
-## ref: https://github.com/geerlingguy/docker-centos8-ansible/blob/master/Dockerfile
-RUN (cd /lib/systemd/system/sysinit.target.wants/; \
-for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-rm -f /lib/systemd/system/multi-user.target.wants/* \
+#RUN dnf update -y
+#RUN dnf install -y systemd procps
+
+RUN dnf -y update && \
+    dnf -y install \
+    epel-release \
+    systemd \
+    procps \
+    hostname \
+    initscripts \
+    iproute \
+    openssl \
+    sudo \
+    which \
+    && rm -Rf /usr/share/doc && rm -Rf /usr/share/man \
+    && dnf clean all
+
+RUN cd /lib/systemd/system/sysinit.target.wants/; \
+    for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done
+
+RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /etc/systemd/system/*.wants/* \
     /lib/systemd/system/local-fs.target.wants/* \
     /lib/systemd/system/sockets.target.wants/*udev* \
@@ -30,6 +47,9 @@ RUN systemctl set-default multi-user.target
 RUN rm -f           \
     /etc/machine-id \
     /var/lib/dbus/machine-id
+
+RUN echo "alias ll='ls -Fla'" >> ~/.bashrc
+RUN echo "alias la='ls -alrt'" >> ~/.bashrc
 
 # The host's cgroup filesystem need's to be mounted (read-only) in the
 # container. '/run', '/run/lock' and '/tmp' need to be tmpfs filesystems when

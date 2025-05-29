@@ -2,6 +2,7 @@
 FROM centos:7
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
+ARG BUILD_DATE
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 

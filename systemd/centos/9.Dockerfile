@@ -5,6 +5,12 @@
 #FROM centos:9
 FROM quay.io/centos/centos:stream9
 
+ARG BUILD_DATE
+ARG BUILD_ID=devel
+LABEL build=$BUILD_ID
+
+ENV container=docker
+
 ## Install systemd
 ## ref: https://linuxopsys.com/topics/install-systemd
 RUN yum groupinstall -y "Development Tools" && \

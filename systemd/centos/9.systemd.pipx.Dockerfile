@@ -1,8 +1,15 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
+## https://pythonspeed.com/articles/multi-stage-docker-python/
 ## ref: https://www.server-world.info/en/note?os=CentOS_Stream_9&p=docker&f=1
 
 #FROM centos:9
 FROM quay.io/centos/centos:stream9
+
+ARG BUILD_DATE
+ARG BUILD_ID=devel
+LABEL build=$BUILD_ID
+
+ENV container=docker
 
 ## Install systemd
 ## ref: https://linuxopsys.com/topics/install-systemd

@@ -1,7 +1,10 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
-ARG BUILD_ID=devel
 FROM fedora:latest
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+LABEL build=$BUILD_ID
+
+ARG BUILD_DATE
+ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 ENV container=docker

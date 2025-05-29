@@ -1,10 +1,13 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ## ref: https://www.ansible.com/blog/developing-and-testing-ansible-roles-with-molecule-and-podman-part-1
-FROM registry.access.redhat.com/ubi9/ubi-init
+#FROM registry.access.redhat.com/ubi9/ubi-init@sha256:53d5c7ed513e3cbf841378280eada15c0c8a3b0aea3408b3e164ba47734047f6
+#FROM registry.access.redhat.com/ubi9/ubi-init
+FROM registry.access.redhat.com/ubi9/ubi-init:latest
 #FROM registry.access.redhat.com/ubi9/ubi
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
+ARG BUILD_DATE
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 

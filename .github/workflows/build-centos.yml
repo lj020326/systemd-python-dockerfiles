@@ -10,6 +10,9 @@ on:
     ## Daily Docker Image Rebuild (3:29pm daily)
     - cron: '29 15 * * *'
 
+env:
+  PYTHON_VERSION: 3.12.9
+
 ## ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
 concurrency:
 #  group: ${{ github.ref }}
@@ -163,6 +166,7 @@ jobs:
           build-args: |
             IMAGE_REGISTRY=${{ github.repository_owner }}
             BUILD_ID=${{ steps.date.outputs.date }}.${{ github.run_number }}
+            PYTHON_VERSION=${{ env.PYTHON_VERSION }}
           push: true
           tags: ${{ matrix.systemd-python-distro.tags }}
           labels: |

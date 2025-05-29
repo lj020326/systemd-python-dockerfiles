@@ -8,9 +8,6 @@ pipeline:
   timeout: 5
   timeoutUnit: "HOURS"
 
-  buildArgs:
-    IMAGE_REGISTRY: media.johnson.int:5000
-
   buildImageGroups:
     systemd-baseos:
       runGroupsInParallel: true
@@ -78,6 +75,9 @@ pipeline:
               dockerFile: 24.04.Dockerfile
     systemd-python:
       runGroupsInParallel: true
+      buildArgs:
+        IMAGE_REGISTRY: media.johnson.int:5000
+        PYTHON_VERSION: 3.12.9
       buildImageGroups:
         alpine-python:
           buildDir: openrc/alpine
