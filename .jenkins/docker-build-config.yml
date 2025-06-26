@@ -1,8 +1,8 @@
 ---
 pipeline:
   alwaysEmailList: ljohnson@dettonville.org
-  logLevel: DEBUG
   runGroupsInParallel: false
+  parallelJobsBatchSize: 4
   runInParallel: true
   failFast: true
   timeout: 5

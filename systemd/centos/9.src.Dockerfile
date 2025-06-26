@@ -1,10 +1,9 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ## https://pythonspeed.com/articles/multi-stage-docker-python/
 ## ref: https://www.server-world.info/en/note?os=CentOS_Stream_9&p=docker&f=1
-ARG BASEOS_DIGEST
+
 #FROM centos:9
-#FROM quay.io/centos/centos:stream9
-FROM quay.io/centos/centos:stream9${BASEOS_DIGEST:-}
+FROM quay.io/centos/centos:stream9
 
 ARG BUILD_DATE
 ARG BUILD_ID=devel
@@ -12,38 +11,45 @@ LABEL build=$BUILD_ID
 
 ENV container=docker
 
-RUN yum -y update \
-    && yum -y install \
-    epel-release \
-    hostname \
-    initscripts \
-    iproute \
-    openssl \
-    sudo \
-    which \
+## Install systemd
+## ref: https://linuxopsys.com/topics/install-systemd
+RUN yum groupinstall -y "Development Tools" && \
+  dnf install -y \
+    libcap-devel \
+    gperf \
+    glib2-devel \
     jq \
-    && rm -Rf /usr/share/doc && rm -Rf /usr/share/man \
-    && yum clean all
+    which \
+    python3-pip
 
-# selectively remove systemd targets -- See https://hub.docker.com/_/centos/
-RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
-    systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-    rm -f /lib/systemd/system/multi-user.target.wants/*;\
-    rm -f /etc/systemd/system/*.wants/*;\
-    rm -f /lib/systemd/system/local-fs.target.wants/*; \
-    rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-    rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-    rm -f /lib/systemd/system/basic.target.wants/*;\
-    rm -f /lib/systemd/system/anaconda.target.wants/*;
-
-# hotfix for issue #49
-RUN chmod 0400 /etc/shadow
+## use --global option instead
+#ENV PIPX_HOME="/opt/pipx"
+#ENV PIPX_BIN_DIR="/usr/local/bin"
 
 ## not necessary since /usr/local/bin is already in the PATH
 #ENV PATH="${PIPX_BIN_DIR}:${PATH}"
 RUN echo "PATH: ${PATH}"
 RUN echo "export PATH=$PATH" >> /etc/profile
 ENV PATH="/root/.local/bin:${PATH}"
+
+## ref: https://pipx.pypa.io/stable/installation/
+RUN python3 -m pip install --user pipx jinja2
+
+## not necessary since /usr/local/bin is already in PATH
+#RUN pipx ensurepath --global
+#RUN python3 -m pipx ensurepath
+
+#RUN pip install meson ninja jinja2
+## ref: https://stackoverflow.com/questions/75608323/how-do-i-solve-error-externally-managed-environment-every-time-i-use-pip-3
+## ref: https://github.com/pypa/pipx/issues/754#issuecomment-951162846
+RUN pipx install --global meson ninja
+#RUN python3 -m pipx install --global meson ninja
+
+## Install systemd
+## ref: https://linuxopsys.com/topics/install-systemd
+## ref: https://stackoverflow.com/questions/48098671/build-with-docker-and-privileged#57077772
+COPY ./install-systemd.sh /var/tmp/
+RUN bash -x /var/tmp/install-systemd.sh
 
 RUN systemctl set-default multi-user.target
 
