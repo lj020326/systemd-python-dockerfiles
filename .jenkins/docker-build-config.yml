@@ -7,6 +7,7 @@ pipeline:
   failFast: true
   timeout: 5
   timeoutUnit: "HOURS"
+  maxRandomDelaySeconds: 20
 
   buildImageGroups:
     systemd-baseos:
