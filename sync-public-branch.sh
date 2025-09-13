@@ -20,7 +20,7 @@ CONFIRM=0
 #REPO_DIR=$( git rev-parse --show-toplevel )
 REPO_DIR="$(cd "${SCRIPT_DIR}" && git rev-parse --show-toplevel)"
 
-#PUBLIC_GITIGNORE=files/git/pub.gitignore
+PUBLIC_GITIGNORE=pub.gitignore
 
 ## ref: https://stackoverflow.com/questions/53839253/how-can-i-convert-an-array-into-a-comma-separated-string
 declare -a EXCLUDES_ARRAY
