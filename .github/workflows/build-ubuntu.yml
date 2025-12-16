@@ -11,7 +11,7 @@ on:
     - cron: '29 15 * * *'
 
 env:
-  PYTHON_VERSION: 3.12.9
+  PYTHON_VERSION: 3.13.6
 
 ## ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
 concurrency:
@@ -36,50 +36,6 @@ jobs:
 #      max-parallel: 2
       matrix:
         include:
-          - distro: ubuntu1804
-            systemd-distro:
-              name: systemd-ubuntu1804
-              dockerfile: systemd/ubuntu/18.04.Dockerfile
-              context: systemd/ubuntu
-              platforms: |-
-                linux/amd64
-                linux/arm/v7
-                linux/arm64
-              tags: |-
-                lj020326/ubuntu1804-systemd:latest
-            systemd-python-distro:
-              name: systemd-ubuntu1804-python
-              dockerfile: systemd/ubuntu/18.04.python.Dockerfile
-              context: systemd/ubuntu
-              platforms: |-
-                linux/amd64
-                linux/arm/v7
-                linux/arm64
-              tags: |-
-                lj020326/ubuntu1804-systemd-python:latest
-
-          - distro: ubuntu2004
-            systemd-distro:
-              name: systemd-ubuntu2004
-              dockerfile: systemd/ubuntu/20.04.Dockerfile
-              context: systemd/ubuntu
-              platforms: |-
-                linux/amd64
-                linux/arm/v7
-                linux/arm64
-              tags: |-
-                lj020326/ubuntu2004-systemd:latest
-            systemd-python-distro:
-              name: systemd-ubuntu2004-python
-              dockerfile: systemd/ubuntu/20.04.python.Dockerfile
-              context: systemd/ubuntu
-              platforms: |-
-                linux/amd64
-                linux/arm/v7
-                linux/arm64
-              tags: |-
-                lj020326/ubuntu2004-systemd-python:latest
-
           - distro: ubuntu2204
             systemd-distro:
               name: systemd-ubuntu2204

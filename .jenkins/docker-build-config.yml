@@ -1,146 +1,114 @@
 ---
-pipeline:
-  alwaysEmailList: ljohnson@dettonville.org
-  runGroupsInParallel: false
-  parallelJobsBatchSize: 4
-  runInParallel: true
-  failFast: true
-  timeout: 5
-  timeoutUnit: "HOURS"
-  maxRandomDelaySeconds: 20
+alwaysEmailList: ljohnson@dettonville.org
+runGroupsInParallel: false
+parallelJobsBatchSize: 4
+runInParallel: true
+failFast: true
+timeout: 5
+timeoutUnit: "HOURS"
+maxRandomDelaySeconds: 20
 
-  buildImageGroups:
-    systemd-baseos:
-      runGroupsInParallel: true
-      buildImageGroups:
-        alpine:
-          buildDir: openrc/alpine
-          buildImageList:
-            - buildImageName: openrc-alpine
-              dockerFile: Dockerfile
-        aports:
-          buildDir: aports-dev
-          buildImageList:
-            - buildImageName: aports-dev
-              dockerFile: Dockerfile
-        centos-systemd:
-          buildDir: systemd/centos
-          buildImageList:
-#            - buildImageName: centos7-systemd
-#              dockerFile: 7.Dockerfile
-#            - buildImageName: centos8-systemd
-#              dockerFile: 8.Dockerfile
-            - buildImageName: centos9-systemd
-              dockerFile: 9.Dockerfile
-            - buildImageName: centos10-systemd
-              dockerFile: 10.Dockerfile
-        redhat-systemd:
-          buildDir: systemd/redhat
-          buildImageList:
-#            - buildImageName: redhat7-systemd
-#              dockerFile: 7.Dockerfile
-#            - buildImageName: redhat8-systemd
-#              dockerFile: 8.Dockerfile
-            - buildImageName: redhat9-systemd
-              dockerFile: 9.Dockerfile
-            - buildImageName: redhat10-systemd
-              dockerFile: 10.Dockerfile
-        fedora-systemd:
-          buildDir: systemd/fedora
-          buildImageList:
-    #        - buildImageName: fedora35-systemd
-    #          dockerFile: 35.Dockerfile
-    #        - buildImageName: fedora36-systemd
-    #          dockerFile: 36.Dockerfile
-            - buildImageName: fedora-systemd
-              dockerFile: latest.Dockerfile
-        debian-systemd:
-          buildDir: systemd/debian
-          buildImageList:
-            - buildImageName: debian10-systemd
-              dockerFile: 10.Dockerfile
-            - buildImageName: debian11-systemd
-              dockerFile: 11.Dockerfile
-            - buildImageName: debian12-systemd
-              dockerFile: 12.Dockerfile
-            - buildImageName: debian-sid-systemd
-              dockerFile: sid.Dockerfile
-        ubuntu-systemd:
-          buildDir: systemd/ubuntu
-          buildImageList:
-            - buildImageName: ubuntu2004-systemd
-              dockerFile: 20.04.Dockerfile
-            - buildImageName: ubuntu2204-systemd
-              dockerFile: 22.04.Dockerfile
-            - buildImageName: ubuntu2404-systemd
-              dockerFile: 24.04.Dockerfile
-    systemd-python:
-      runGroupsInParallel: true
-      buildArgs:
-        IMAGE_REGISTRY: media.johnson.int:5000
-        PYTHON_VERSION: 3.12.9
-      buildImageGroups:
-        alpine-python:
-          buildDir: openrc/alpine
-          buildImageList:
-            - buildImageName: openrc-alpine-python
-              dockerFile: python.Dockerfile
-        aports-python:
-          buildDir: aports-dev
-          buildImageList:
-            - buildImageName: aports-dev-python
-              dockerFile: python.Dockerfile
-        centos-systemd-python:
-          buildDir: systemd/centos
-          buildImageList:
-            ## systemd images with python installed
-            - buildImageName: centos7-systemd-python
-              dockerFile: 7.python.Dockerfile
-            - buildImageName: centos8-systemd-python
-              dockerFile: 8.python.Dockerfile
-            - buildImageName: centos9-systemd-python
-              dockerFile: 9.python.Dockerfile
-            - buildImageName: centos10-systemd-python
-              dockerFile: 10.python.Dockerfile
-        redhat-systemd-python:
-          buildDir: systemd/redhat
-          buildImageList:
-            ## systemd images with python installed
-#            - buildImageName: redhat7-systemd-python
-#              dockerFile: 7.python.Dockerfile
-#            - buildImageName: redhat8-systemd-python
-#              dockerFile: 8.python.Dockerfile
-            - buildImageName: redhat9-systemd-python
-              dockerFile: 9.python.Dockerfile
-            - buildImageName: redhat10-systemd-python
-              dockerFile: 10.python.Dockerfile
-        fedora-systemd-python:
-          buildDir: systemd/fedora
-          buildImageList:
-            ## systemd images with python installed
-#            - buildImageName: fedora35-systemd-python
-#              dockerFile: 35.python.Dockerfile
-#            - buildImageName: fedora8-systemd-python
-#              dockerFile: 36.python.Dockerfile
-            - buildImageName: fedora-systemd-python
-              dockerFile: latest.python.Dockerfile
-        debian-systemd-python:
-          buildDir: systemd/debian
-          buildImageList:
-            ## systemd images with python installed
-            - buildImageName: debian10-systemd-python
-              dockerFile: 10.python.Dockerfile
-            - buildImageName: debian11-systemd-python
-              dockerFile: 11.python.Dockerfile
-            - buildImageName: debian12-systemd-python
-              dockerFile: 12.python.Dockerfile
-        ubuntu-systemd-python:
-          buildDir: systemd/ubuntu
-          buildImageList:
-            ## systemd images with python installed
-#            - buildImageName: ubuntu2004-systemd-python
-#              dockerFile: 20.04.python.Dockerfile
-            - buildImageName: ubuntu2204-systemd-python
-              dockerFile: 22.04.python.Dockerfile
-            - buildImageName: ubuntu2404-systemd-python
-              dockerFile: 24.04.python.Dockerfile
+buildImageGroups:
+  systemd-baseos:
+    runGroupsInParallel: true
+    buildImageGroups:
+      alpine:
+        buildDir: openrc/alpine
+        buildImageList:
+          - buildImageName: openrc-alpine
+            dockerFile: Dockerfile
+      aports:
+        buildDir: aports-dev
+        buildImageList:
+          - buildImageName: aports-dev
+            dockerFile: Dockerfile
+      centos-systemd:
+        buildDir: systemd/centos
+        buildImageList:
+          - buildImageName: centos9-systemd
+            dockerFile: 9.Dockerfile
+          - buildImageName: centos10-systemd
+            dockerFile: 10.Dockerfile
+      redhat-systemd:
+        buildDir: systemd/redhat
+        buildImageList:
+          - buildImageName: redhat9-systemd
+            dockerFile: 9.Dockerfile
+          - buildImageName: redhat10-systemd
+            dockerFile: 10.Dockerfile
+      fedora-systemd:
+        buildDir: systemd/fedora
+        buildImageList:
+          - buildImageName: fedora-systemd
+            dockerFile: latest.Dockerfile
+      debian-systemd:
+        buildDir: systemd/debian
+        buildImageList:
+          - buildImageName: debian11-systemd
+            dockerFile: 11.Dockerfile
+          - buildImageName: debian12-systemd
+            dockerFile: 12.Dockerfile
+          - buildImageName: debian-sid-systemd
+            dockerFile: sid.Dockerfile
+      ubuntu-systemd:
+        buildDir: systemd/ubuntu
+        buildImageList:
+          - buildImageName: ubuntu2204-systemd
+            dockerFile: 22.04.Dockerfile
+          - buildImageName: ubuntu2404-systemd
+            dockerFile: 24.04.Dockerfile
+  systemd-python:
+    runGroupsInParallel: true
+    buildArgs:
+      IMAGE_REGISTRY: media.johnson.int:5000
+      PYTHON_VERSION: 3.13.6
+#        PYTHON_VERSION: 3.12.9
+    buildImageGroups:
+      alpine-python:
+        buildDir: openrc/alpine
+        buildImageList:
+          - buildImageName: openrc-alpine-python
+            dockerFile: python.Dockerfile
+      aports-python:
+        buildDir: aports-dev
+        buildImageList:
+          - buildImageName: aports-dev-python
+            dockerFile: python.Dockerfile
+      centos-systemd-python:
+        buildDir: systemd/centos
+        buildImageList:
+          ## systemd images with python installed
+          - buildImageName: centos9-systemd-python
+            dockerFile: 9.python.Dockerfile
+          - buildImageName: centos10-systemd-python
+            dockerFile: 10.python.Dockerfile
+      redhat-systemd-python:
+        buildDir: systemd/redhat
+        buildImageList:
+          ## systemd images with python installed
+          - buildImageName: redhat9-systemd-python
+            dockerFile: 9.python.Dockerfile
+          - buildImageName: redhat10-systemd-python
+            dockerFile: 10.python.Dockerfile
+      fedora-systemd-python:
+        buildDir: systemd/fedora
+        buildImageList:
+          ## systemd images with python installed
+          - buildImageName: fedora-systemd-python
+            dockerFile: latest.python.Dockerfile
+      debian-systemd-python:
+        buildDir: systemd/debian
+        buildImageList:
+          ## systemd images with python installed
+          - buildImageName: debian11-systemd-python
+            dockerFile: 11.python.Dockerfile
+          - buildImageName: debian12-systemd-python
+            dockerFile: 12.python.Dockerfile
+      ubuntu-systemd-python:
+        buildDir: systemd/ubuntu
+        buildImageList:
+          ## systemd images with python installed
+          - buildImageName: ubuntu2204-systemd-python
+            dockerFile: 22.04.python.Dockerfile
+          - buildImageName: ubuntu2404-systemd-python
+            dockerFile: 24.04.python.Dockerfile
