@@ -34,14 +34,19 @@ on:
 jobs:
   build_alpine:
     uses: ./.github/workflows/build-alpine.yml
+    secrets: inherit
   build_centos:
     uses: ./.github/workflows/build-centos.yml
+    secrets: inherit
   build_debian:
     uses: ./.github/workflows/build-debian.yml
+    secrets: inherit
   build_redhat:
     uses: ./.github/workflows/build-redhat.yml
+    secrets: inherit
   build_ubuntu:
     uses: ./.github/workflows/build-ubuntu.yml
+    secrets: inherit
   verify_all_green:
     if: github.ref == 'refs/heads/main'
     needs:
