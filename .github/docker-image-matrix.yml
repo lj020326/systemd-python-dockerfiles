@@ -60,12 +60,12 @@ matrix:
     name: fedora
     systemd-distro:
       context: "systemd/fedora"
-      dockerfile: "systemd/fedora/Dockerfile"
+      dockerfile: "systemd/fedora/latest.Dockerfile"
       platforms: "linux/amd64"
       tags: "lj020326/fedora-systemd:latest"
     systemd-python-distro:
       context: "systemd/fedora"
-      dockerfile: "systemd/fedora/python.Dockerfile"
+      dockerfile: "systemd/fedora/latest.python.Dockerfile"
       platforms: "linux/amd64"
       tags: "lj020326/fedora-systemd-python:latest"
 
