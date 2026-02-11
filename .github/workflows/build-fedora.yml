@@ -1,14 +1,12 @@
 name: Docker fedora images build
+permissions:
+  contents: read
+  checks: write
 
+## ref: https://github.com/marketplace/actions/ansible-molecule
 on:
-  ## ref: https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#workflow_dispatch
-  workflow_dispatch:
-  push:
-    branches: ['*']
-  # Schedule updates (once daily)
-  schedule:
-    ## Daily Docker Image Rebuild (3:29pm daily)
-    - cron: '29 15 * * *'
+  workflow_call:  # allow this workflow to be called from other workflows
+  workflow_dispatch:  # allow this workflow to be called from user
 
 env:
   PYTHON_VERSION: 3.13.6
