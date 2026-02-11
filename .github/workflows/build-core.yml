@@ -1,0 +1,64 @@
+name: Core Docker Builder
+on:
+  workflow_call:
+    inputs:
+      distro_data:
+        required: true
+        type: string # JSON string containing the matrix row
+    secrets:
+      DOCKER_HUB_TOKEN:
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        [cite_start]uses: actions/checkout@v4 [cite: 7]
+
+      - name: Login to DockerHub
+        [cite_start]uses: docker/login-action@v3 [cite: 8, 25]
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Set up QEMU
+        [cite_start]uses: docker/setup-qemu-action@v3 [cite: 8, 26]
+
+      - name: Set up Docker Buildx
+        [cite_start]uses: docker/setup-buildx-action@v3 [cite: 9, 26]
+
+      - name: Get Date and Build ID
+        id: vars
+        run: |
+          DATE=$(date +'%Y%m%d')
+          echo "date=$DATE" >> $GITHUB_OUTPUT
+          echo "build_id=$DATE.${{ github.run_number }}" >> $GITHUB_OUTPUT [cite: 9, 10, 27]
+
+      # Part 1: systemd-distro
+      - name: Build Systemd Base
+        [cite_start]uses: docker/build-push-action@v5 [cite: 10]
+        with:
+          context: ${{ fromJSON(inputs.distro_data).systemd-distro.context }}
+          file: ${{ fromJSON(inputs.distro_data).systemd-distro.dockerfile }}
+          platforms: ${{ fromJSON(inputs.distro_data).systemd-distro.platforms }}
+          push: true
+          tags: ${{ fromJSON(inputs.distro_data).systemd-distro.tags }}
+          build-args: |
+            BUILD_ID=${{ steps.vars.outputs.build_id }}
+            BUILD_DATE=${{ steps.vars.outputs.date }} [cite: 11, 28]
+
+      # Part 2: systemd-python-distro
+      - name: Build Systemd Python
+        [cite_start]uses: docker/build-push-action@v5 [cite: 12]
+        with:
+          context: ${{ fromJSON(inputs.distro_data).systemd-python-distro.context }}
+          file: ${{ fromJSON(inputs.distro_data).systemd-python-distro.dockerfile }}
+          platforms: ${{ fromJSON(inputs.distro_data).systemd-python-distro.platforms }}
+          push: true
+          tags: ${{ fromJSON(inputs.distro_data).systemd-python-distro.tags }}
+          build-args: |
+            IMAGE_REGISTRY=${{ github.repository_owner }}
+            PYTHON_VERSION=3.13.6
+            BUILD_ID=${{ steps.vars.outputs.build_id }}
+            BUILD_DATE=${{ steps.vars.outputs.date }} [cite: 14, 31, 46]

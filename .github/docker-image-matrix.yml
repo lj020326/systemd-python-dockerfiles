@@ -1,0 +1,27 @@
+# .github/docker-matrix.yml
+matrix:
+  - distro: alpine
+    name: alpine
+    systemd-distro:
+      context: "."
+      dockerfile: "openrc/alpine/Dockerfile"
+      platforms: "linux/amd64"
+      tags: "lj020326/openrc-alpine:latest"
+    systemd-python-distro:
+      context: "openrc/alpine"
+      dockerfile: "openrc/alpine/python.Dockerfile"
+      platforms: "linux/amd64"
+      tags: "lj020326/openrc-alpine-python:latest"
+
+  - distro: debian12
+    name: debian12
+    systemd-distro:
+      context: "systemd/debian"
+      dockerfile: "systemd/debian/12.Dockerfile"
+      platforms: "linux/amd64,linux/arm64"
+      tags: "lj020326/debian12-systemd:latest"
+    systemd-python-distro:
+      context: "systemd/debian"
+      dockerfile: "systemd/debian/12.python.Dockerfile"
+      platforms: "linux/amd64,linux/arm64"
+      tags: "lj020326/debian12-systemd-python:latest"

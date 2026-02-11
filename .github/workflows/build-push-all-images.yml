@@ -1,67 +1,31 @@
 name: Build and push all docker images
-permissions:
-  contents: read
-  checks: write
-
-concurrency:
-  group: >-
-    ${{ github.workflow }}-${{
-      github.event.pull_request.number || github.sha
-    }}
-  cancel-in-progress: true
-
 on:
-  # Allows manual triggering
-  workflow_dispatch:
   push:
-    branches:
-      - main
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
-    branches:
-      - main
-      - stable-*
-    tags:
-      - "*"
-  # Schedule run (once daily)
-  schedule:
-    ## Daily Docker Image Rebuild (10:29am daily)
-    - cron: '29 10 * * *'
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
-  build_alpine:
-    uses: ./.github/workflows/build-alpine.yml
-    secrets: inherit
-  build_centos:
-    uses: ./.github/workflows/build-centos.yml
-    secrets: inherit
-  build_debian:
-    uses: ./.github/workflows/build-debian.yml
-    secrets: inherit
-  build_redhat:
-    uses: ./.github/workflows/build-redhat.yml
-    secrets: inherit
-  build_ubuntu:
-    uses: ./.github/workflows/build-ubuntu.yml
-    secrets: inherit
-  verify_all_green:
-    if: github.ref == 'refs/heads/main'
-    needs:
-      - build_alpine
-      - build_centos
-      - build_debian
-      - build_redhat
-      - build_ubuntu
+  load-config:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - run: >-
-          python -c "assert set([
-          '${{ needs.build_alpine.result }}',
-          '${{ needs.build_centos.result }}',
-          '${{ needs.build_debian.result }}',
-          '${{ needs.build_redhat.result }}'
-          '${{ needs.build_ubuntu.result }}'
-          ]) == {'success'}"
+      - uses: actions/checkout@v4
+      - id: set-matrix
+        name: Read YAML config
+        run: |
+          # Use yq (pre-installed on Ubuntu runners) to convert YAML to JSON for the matrix
+          JSON=$(yq -o=json -I=0 '.matrix' .github/docker-image-matrix.yml)
+          echo "matrix=$JSON" >> $GITHUB_OUTPUT
+
+  build:
+    needs: load-config
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.load-config.outputs.matrix) }}
+    # Reference your core builder workflow
+    uses: ./.github/workflows/build-core.yml
+    with:
+      distro_data: ${{ toJson(matrix) }}
+    secrets: inherit
