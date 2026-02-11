@@ -11,22 +11,15 @@ on:
 env:
   PYTHON_VERSION: 3.13.6
 
-## ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
-concurrency:
-#  group: ${{ github.ref }}
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+### ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
+#concurrency:
+##  group: ${{ github.ref }}
+#  group: ${{ github.workflow }}-${{ github.ref }}
+#  cancel-in-progress: true
 
 jobs:
   docker-systemd-fedora:
     runs-on: ubuntu-latest
-
-#    ## ref: https://docs.github.com/en/actions/examples/using-concurrency-expressions-and-a-test-matrix
-#    concurrency:
-#      group: ${{ github.workflow }}-${{ github.ref }}
-#      cancel-in-progress: true
-##      group: ${{ github.workflow }}-systemd-redhat-${{ github.ref }}
-###      cancel-in-progress: true
 
     strategy:
       fail-fast: false
