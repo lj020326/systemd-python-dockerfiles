@@ -1,6 +1,7 @@
 # .github/docker-image-matrix.yml
 matrix:
   - name: alpine
+    version: latest
     context: "."
     path: "openrc/alpine"
     platforms: "linux/amd64"
@@ -12,6 +13,7 @@ matrix:
         lj020326/openrc-alpine-python:latest
 
   - name: aports-dev
+    version: latest
     context: "."
     path: "aports-dev"
     platforms: "linux/amd64"
