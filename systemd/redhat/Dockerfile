@@ -1,8 +1,12 @@
-## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
-## ref: https://www.server-world.info/en/note?os=CentOS_Stream_9&p=docker&f=1
+ARG VERSION=10
 
-#FROM centos:10
-FROM quay.io/centos/centos:stream10
+## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
+## ref: https://www.ansible.com/blog/developing-and-testing-ansible-roles-with-molecule-and-podman-part-1
+FROM registry.access.redhat.com/ubi${VERSION}/ubi-init
+#FROM registry.access.redhat.com/ubi${VERSION}-beta/ubi-init
+#FROM registry.access.redhat.com/ubi${VERSION}/ubi
+
+LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
 ARG BUILD_DATE
 ARG BUILD_ID=devel
@@ -47,6 +51,7 @@ VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 STOPSIGNAL SIGRTMIN+3
 
 ## ref: https://unix.stackexchange.com/questions/276340/linux-command-systemctl-status-is-not-working-inside-a-docker-container
-CMD ["/sbin/init"]
+#CMD ["/sbin/init"]
 #CMD ["/usr/sbin/init"]
 #CMD ["/usr/lib/systemd/systemd"]
+CMD ["/usr/sbin/init"]

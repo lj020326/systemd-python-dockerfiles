@@ -1,15 +1,18 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ARG IMAGE_REGISTRY=lj020326
-FROM $IMAGE_REGISTRY/debian12-systemd:latest
+ARG VERSION=12
+
+FROM $IMAGE_REGISTRY/systemd-debian:${VERSION}
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
-
-#ARG PYTHON_VERSION="3.11.9"
-ARG PYTHON_VERSION="3.12.3"
 
 ARG BUILD_DATE
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
+
+## versions at https://www.python.org/ftp/python/
+#ARG PYTHON_VERSION="3.11.9"
+ARG PYTHON_VERSION="3.12.9"
 
 # Set environment variables.
 ENV container=docker

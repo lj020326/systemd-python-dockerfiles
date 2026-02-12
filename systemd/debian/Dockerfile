@@ -1,5 +1,6 @@
-## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
-FROM centos:7
+ARG VERSION=12
+
+FROM debian:${VERSION}
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
 ARG BUILD_DATE
@@ -7,18 +8,17 @@ ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
 
 ENV container=docker
+ENV LC_ALL=C
+ENV DEBIAN_FRONTEND=noninteractive
 
-COPY ./repos/centos7.yum.conf /etc/yum.conf
-COPY ./repos/centos7-linux-base.repo.ini /etc/yum.repos.d/CentOS-Base.repo
+## ref: https://stackoverflow.com/questions/68802802/repository-http-security-debian-org-debian-security-buster-updates-inrelease
+#RUN apt-get --allow-releaseinfo-change-suite update \
+RUN apt-get update \
+    && apt-get install -y apt-utils \
+    && apt-get install -y dbus systemd systemd-sysv systemd-cron rsyslog iproute2 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}') \
-    -o /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}')
-
-RUN yum -y update
-RUN yum -y install systemd
-#RUN yum clean all
-
-## ref: https://github.com/geerlingguy/docker-centos8-ansible/blob/master/Dockerfile
 RUN cd /lib/systemd/system/sysinit.target.wants/; \
     for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done
 
@@ -28,9 +28,14 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /lib/systemd/system/sockets.target.wants/*udev* \
     /lib/systemd/system/sockets.target.wants/*initctl* \
     /lib/systemd/system/basic.target.wants/* \
-    /lib/systemd/system/anaconda.target.wants/*
+    /lib/systemd/system/anaconda.target.wants/* \
+    /lib/systemd/system/plymouth* \
+    /lib/systemd/system/systemd-update-utmp*
+
+RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 
 RUN systemctl set-default multi-user.target
+RUN systemctl mask dev-hugepages.mount sys-fs-fuse-connections.mount
 
 # The machine-id should be generated when creating the container. This will be
 # done automatically if the file is not present, so let's delete it.
@@ -56,6 +61,6 @@ VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 STOPSIGNAL SIGRTMIN+3
 
 ## ref: https://unix.stackexchange.com/questions/276340/linux-command-systemctl-status-is-not-working-inside-a-docker-container
-CMD ["/sbin/init"]
-#CMD ["/usr/sbin/init"]
-#CMD ["/usr/lib/systemd/systemd"]
+#CMD ["/sbin/init"]
+#CMD ["/lib/systemd/systemd"]
+CMD ["/usr/sbin/init"]

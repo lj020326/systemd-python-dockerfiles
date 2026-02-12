@@ -1,6 +1,8 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ARG IMAGE_REGISTRY=lj020326
-FROM $IMAGE_REGISTRY/centos10-systemd:latest
+ARG VERSION=latest
+
+FROM $IMAGE_REGISTRY/systemd-fedora:${VERSION}
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
@@ -30,24 +32,8 @@ ENV HOME="/root"
 
 #RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-#COPY ./rpm-gpg-key-centos.txt /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-RUN curl -fsSL https://centos.org/keys/RPM-GPG-KEY-CentOS-Official -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-
-## ref: https://linuxconfig.org/redhat-8-epel-install-guide
-## ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
-## ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
-RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
-#RUN yum-config-manager --enable epel
-
-### ref: https://linuxconfig.org/redhat-8-epel-install-guide
-### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
-### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
-#RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
-#RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
-##RUN yum-config-manager --enable epel
-
-#RUN dnf upgrade -y
-RUN dnf update -y
+### ref: https://stackoverflow.com/questions/56908604/trying-to-install-epel-release-on-fedora-30-no-match-for-argument-epel-relea
+#RUN dnf -y install passenger
 
 ## MUST install devel libs for python-ldap to work
 ## ref: https://github.com/bdellegrazie/docker-centos-systemd/blob/master/Dockerfile-7
@@ -60,18 +46,19 @@ RUN dnf makecache \
     && dnf install --nodocs -y \
         sudo \
         bash \
+        awk \
         which \
         git \
         wget
 
 RUN dnf install -y \
     python3 \
-    python3-dnf \
     python3-pip \
     python3-libselinux
 
 RUN dnf install --nodocs -y \
     bzip2-devel \
+    krb5-devel \
     libffi-devel \
     ncurses-devel \
     openssl-devel \

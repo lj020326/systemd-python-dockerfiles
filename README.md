@@ -9,13 +9,13 @@ The systemd-python enabled docker images defined here can be found on [dockerhub
 
 [![GitHub issues](https://img.shields.io/github/issues/lj020326/systemd-python-dockerfiles.svg?style=flat)](https://github.com/lj020326/systemd-python-dockerfiles/issues)
 [![GitHub stars](https://img.shields.io/github/stars/lj020326/systemd-python-dockerfiles.svg?style=flat)](https://github.com/lj020326/systemd-python-dockerfiles/stargazers)
-[![Docker Pulls - centos8-systemd-python](https://img.shields.io/docker/pulls/lj020326/centos8-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/centos8-systemd-python/)
-[![Docker Pulls - centos8-systemd-python](https://img.shields.io/docker/pulls/lj020326/centos9-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/centos9-systemd-python/)
-[![Docker Pulls - centos8-systemd-python](https://img.shields.io/docker/pulls/lj020326/centos10-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/centos10-systemd-python/)
-[![Docker Pulls - redhat8-systemd-python](https://img.shields.io/docker/pulls/lj020326/redhat8-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/redhat8-systemd-python/)
-[![Docker Pulls - redhat9-systemd-python](https://img.shields.io/docker/pulls/lj020326/redhat9-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/redhat9-systemd-python/)
-[![Docker Pulls - ubuntu2204-systemd-python](https://img.shields.io/docker/pulls/lj020326/ubuntu2204-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/ubuntu2204-systemd-python/)
-[![Docker Pulls - debian12-systemd-python](https://img.shields.io/docker/pulls/lj020326/debian12-systemd-python.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/debian12-systemd-python/)
+[![Docker Pulls - systemd-python-centos:8](https://img.shields.io/docker/pulls/lj020326/systemd-python-centos:8.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-centos:8/)
+[![Docker Pulls - systemd-python-centos:8](https://img.shields.io/docker/pulls/lj020326/systemd-python-centos:9.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-centos:9/)
+[![Docker Pulls - systemd-python-centos:8](https://img.shields.io/docker/pulls/lj020326/systemd-python-centos:10.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-centos:10/)
+[![Docker Pulls - systemd-python-redhat:8](https://img.shields.io/docker/pulls/lj020326/systemd-python-redhat:8.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-redhat:8/)
+[![Docker Pulls - systemd-python-redhat:9](https://img.shields.io/docker/pulls/lj020326/systemd-python-redhat:9.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-redhat:9/)
+[![Docker Pulls - systemd-python-ubuntu:2204](https://img.shields.io/docker/pulls/lj020326/systemd-python-ubuntu:2204.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-ubuntu:2204/)
+[![Docker Pulls - systemd-python-debian:12](https://img.shields.io/docker/pulls/lj020326/systemd-python-debian:12.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-debian:12/)
 
 ## Directory structure
 
@@ -31,33 +31,33 @@ $ git clone https://github.com/lj020326/ansible-datacenter.git
 $ cd ansible-datacenter
 $ ## NOTE: registry default is docker.io
 $ export MOLECULE_IMAGE_REGISTRY=registry.example.int:5000
-$ export MOLECULE_IMAGE_LABEL=redhat7-systemd-python
+$ export MOLECULE_IMAGE_LABEL=systemd-python-redhat:7
 $ molecule login
 $ molecule --debug test -s bootstrap-linux-package
 $ molecule destroy
-$ MOLECULE_IMAGE_LABEL=redhat8-systemd-python molecule --debug test -s bootstrap-linux-package
-$ MOLECULE_IMAGE_LABEL=redhat8-systemd-python molecule login
+$ MOLECULE_IMAGE_LABEL=systemd-python-redhat:8 molecule --debug test -s bootstrap-linux-package
+$ MOLECULE_IMAGE_LABEL=systemd-python-redhat:8 molecule login
 $ molecule destroy
-$ MOLECULE_IMAGE_LABEL=redhat8-systemd-python molecule converge
+$ MOLECULE_IMAGE_LABEL=systemd-python-redhat:8 molecule converge
 $ molecule destroy
-$ MOLECULE_IMAGE_LABEL=centos8-systemd-python molecule --debug converge
+$ MOLECULE_IMAGE_LABEL=systemd-python-centos:8 molecule --debug converge
 $ molecule destroy
-$ MOLECULE_IMAGE_LABEL=ubuntu2204-systemd-python molecule --debug converge
+$ MOLECULE_IMAGE_LABEL=systemd-python-ubuntu:2204 molecule --debug converge
 
 ```
 
 To log into container
 
 ```shell
-$ MOLECULE_IMAGE_LABEL=redhat8-systemd-python molecule create
-$ MOLECULE_IMAGE_LABEL=redhat8-systemd-python molecule login
+$ MOLECULE_IMAGE_LABEL=systemd-python-redhat:8 molecule create
+$ MOLECULE_IMAGE_LABEL=systemd-python-redhat:8 molecule login
 $ molecule destroy
 ```
 
 To log into pure public docker images:
 ```shell
 docker exec -it lj020326/centos9-systemd:latest bash
-docker exec -it lj020326/centos9-systemd-python:latest bash
+docker exec -it lj020326/systemd-python-centos:9:latest bash
 ```
 
 To log into pure private docker image:
@@ -69,8 +69,8 @@ $ docker pull media.johnson.int:5000/centos9-systemd:latest
 $ docker run -d --name centos9-systemd --privileged --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro media.johnson.int:5000/centos9-systemd
 $ docker exec -it centos9-systemd bash
 ## run the python enabled systemd container image
-$ docker run -d --name centos9-systemd-python --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro media.johnson.int:5000/centos9-systemd-python
-$ docker exec -it centos9-systemd-python bash
+$ docker run -d --name systemd-python-centos:9 --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro media.johnson.int:5000/systemd-python-centos:9
+$ docker exec -it systemd-python-centos:9 bash
 ```
 
 To override entrypoint and run bash instead:
@@ -89,7 +89,7 @@ $ docker build -t centos9-systemd --build-arg IMAGE_REGISTRY=media.johnson.int:5
 
 To build image from project root:
 ```shell
-$ docker build -t redhat9-systemd-python \
+$ docker build -t systemd-python-redhat:9 \
   --build-arg IMAGE_REGISTRY=media.johnson.int:5000 \
   -f systemd/redhat/9.python.Dockerfile \
   systemd/redhat/
@@ -101,7 +101,7 @@ If you want to start a debug session when a build fails, you can use
 To build in debug mode:
 ```shell
 $ export BUILDX_EXPERIMENTAL=1
-$ docker buildx debug --on=error build -t redhat9-systemd-python \
+$ docker buildx debug --on=error build -t systemd-python-redhat:9 \
   --build-arg IMAGE_REGISTRY=media.johnson.int:5000 \
   -f systemd/redhat/9.python.Dockerfile \
   systemd/redhat/
@@ -111,9 +111,9 @@ To build an image using centos9-systemd as an example:
 ```shell
 $ cd centos/
 $ docker build -t centos9-systemd --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 9.Dockerfile .
-$ docker build -t centos9-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 9.python.Dockerfile .
+$ docker build -t systemd-python-centos:9 --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 9.python.Dockerfile .
 $ cd ../debian
-$ docker build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
+$ docker build -t systemd-python-debian:8 --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
 ```
 
 ### Running bash in image

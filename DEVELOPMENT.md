@@ -18,7 +18,7 @@ To view intermediate container hashes:
 
 ```shell
 $ export DOCKER_BUILDKIT=0
-$ docker build -t centos9-systemd-python -f systemd/centos/9.python.Dockerfile .
+$ docker build -t systemd-python-centos:9 -f systemd/centos/python.Dockerfile .
 $ docker run --rm -it <id_last_working_layer> /bin/sh -il
 ```
 
@@ -206,7 +206,7 @@ If you want to start a debug session when a build fails, you can use
 ```shell
 $ export BUILDX_EXPERIMENTAL=1
 $ docker buildx debug --on=error build .
-$ docker buildx debug --on=error build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
+$ docker buildx debug --on=error build -t systemd-python-debian:8 --build-arg VERSION=8 --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f python.Dockerfile .
 ```
 
 UPDATE
@@ -214,7 +214,7 @@ Intermediate container hashes are not supported as of Docker version 20.10.
 To view intermediate container hashes:
 
 ```shell
-$ DOCKER_BUILDKIT=0 docker build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
+$ DOCKER_BUILDKIT=0 docker build -t systemd-python-debian:8 --build-arg VERSION=8 --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f python.Dockerfile .
 DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
             BuildKit is currently disabled; enable it by removing the DOCKER_BUILDKIT=0
             environment-variable.

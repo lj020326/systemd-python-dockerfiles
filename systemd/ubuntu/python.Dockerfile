@@ -1,19 +1,17 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ARG IMAGE_REGISTRY=lj020326
-FROM $IMAGE_REGISTRY/debian11-systemd:latest
+ARG VERSION=24.04
+
+FROM $IMAGE_REGISTRY/systemd-ubuntu:${VERSION}
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
+
+#ARG PYTHON_VERSION="3.11.9"
+ARG PYTHON_VERSION="3.12.3"
 
 ARG BUILD_DATE
 ARG BUILD_ID=devel
 LABEL build=$BUILD_ID
-
-## versions at https://www.python.org/ftp/python/
-#ARG PYTHON_VERSION="3.11.9"
-ARG PYTHON_VERSION="3.12.9"
-#ARG PYENV_ROOT="/pyenv"
-ARG PYENV_ROOT="/opt/pyenv"
-LABEL python_version=$PYTHON_VERSION
 
 # Set environment variables.
 ENV container=docker
@@ -38,17 +36,21 @@ ENV HOME="/root"
 ## ref: https://www.how2shout.com/linux/install-python-3-x-or-2-7-on-debian-11-bullseye-linux/
 RUN apt-get update -y
 #RUN apt-get install --no-install-recommends -y apt-utils sudo bash ca-certificates curl wget git tox
-RUN apt-get install -y apt-utils \
+RUN apt-get install -y \
+    apt-utils \
     build-essential \
-    sudo bash ca-certificates \
-    curl wget git
+    sudo \
+    bash \
+    ca-certificates \
+    curl \
+    wget \
+    git
 
 RUN apt-get install -y \
     python3 \
     python3-pip \
     python3-apt \
     python3-dev \
-    python3-virtualenv \
     python3-venv
 
 ## ref: https://stackoverflow.com/questions/75159821/installing-python-3-11-1-on-a-docker-container
@@ -107,19 +109,6 @@ RUN apt-get update -y \
 #RUN apt-get update -y
 #RUN apt install python3.11 python3-pip -y
 
-WORKDIR /
-
-COPY install-python-venv.sh .
-RUN bash install-python-venv.sh ${PYTHON_VERSION} ${PYENV_ROOT}
-
-## ref: https://www.baeldung.com/ops/dockerfile-path-environment-variable
-#RUN echo "export PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> ~/.bashrc
-ENV PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}"
-RUN echo "export PATH=$PATH" >> /etc/profile
-
-RUN echo "alias ll='ls -Fla'" >> ~/.bashrc
-RUN echo "alias la='ls -alrt'" >> ~/.bashrc
-
 ## ref: https://www.baeldung.com/linux/docker-cmd-multiple-commands
 ## ref: https://taiwodevlab.hashnode.dev/running-multiple-commands-on-docker-container-start-cl3gc8etn04k4mynvg4ub3wss
 #CMD ["/sbin/init"]
@@ -129,7 +118,5 @@ RUN echo "alias la='ls -alrt'" >> ~/.bashrc
 ##CMD ["/lib/systemd/systemd"]
 
 COPY python-info.py .
-RUN python3 python-info.py
-
 COPY start-sbin-init.sh .
 CMD ["startup-sbin-init.sh"]

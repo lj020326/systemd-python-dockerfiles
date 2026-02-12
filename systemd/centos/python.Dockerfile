@@ -1,6 +1,8 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
 ARG IMAGE_REGISTRY=lj020326
-FROM $IMAGE_REGISTRY/centos10-systemd:latest
+ARG VERSION=10
+
+FROM $IMAGE_REGISTRY/systemd-centos:${VERSION}
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 

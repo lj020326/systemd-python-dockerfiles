@@ -1,8 +1,7 @@
-## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
-FROM registry.access.redhat.com/ubi7/ubi-init
-#FROM registry.access.redhat.com/rhel7:latest
-#FROM richxsl/rhel7
+ARG VERSION=latest
 
+## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
+FROM fedora:${VERSION}
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
 ARG BUILD_DATE
@@ -11,6 +10,11 @@ LABEL build=$BUILD_ID
 
 ENV container=docker
 
+RUN dnf -y update \
+    && dnf -y install systemd \
+    && dnf clean all
+
+## ref: https://github.com/geerlingguy/docker-centos8-ansible/blob/master/Dockerfile
 RUN cd /lib/systemd/system/sysinit.target.wants/; \
     for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done
 
@@ -29,6 +33,9 @@ RUN systemctl set-default multi-user.target
 RUN rm -f           \
     /etc/machine-id \
     /var/lib/dbus/machine-id
+
+RUN echo "alias ll='ls -Fla'" >> ~/.bashrc
+RUN echo "alias la='ls -alrt'" >> ~/.bashrc
 
 # The host's cgroup filesystem need's to be mounted (read-only) in the
 # container. '/run', '/run/lock' and '/tmp' need to be tmpfs filesystems when

@@ -1,6 +1,10 @@
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
+## ref: https://github.com/devfile/developer-images/blob/main/base/ubi9/Dockerfile
+## ref: https://access.redhat.com/articles/4238681
 ARG IMAGE_REGISTRY=lj020326
-FROM $IMAGE_REGISTRY/redhat8-systemd:latest
+ARG VERSION=10
+
+FROM $IMAGE_REGISTRY/systemd-redhat:${VERSION}
 
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
@@ -29,15 +33,13 @@ ENV TZ=UTC
 ENV HOME="/root"
 
 RUN dnf --disableplugin subscription-manager update -y
-RUN sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf
+# Safely disable subscription manager only if the config exists
+RUN if [ -f /etc/yum/pluginconf.d/subscription-manager.conf ]; then \
+        sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/subscription-manager.conf; \
+    fi
 
-## ref: https://stackoverflow.com/questions/65878769/cannot-install-docker-in-a-rhel-server
-COPY ./repos/centos8-linux-baseOS.repo.ini /etc/yum.repos.d/CentOS-Linux-BaseOS.repo
-#COPY ./repos/centos8-linux-extras.repo.ini /etc/yum.repos.d/CentOS-Linux-Extras.repo
-COPY ./repos/centos8-linux-appstream.repo.ini /etc/yum.repos.d/CentOS-Linux-AppStream.repo
-
-COPY ./repos/redhat-ubi.repo.ini /etc/yum.repos.d/ubi.repo
-COPY ./repos/redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
+#COPY ./repos/redhat-ubi.repo.ini /etc/yum.repos.d/ubi.repo
+#COPY ./repos/redhat-epel.repo.ini /etc/yum.repos.d/epel.repo
 
 RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}') \
     -o /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel}')
@@ -46,19 +48,30 @@ RUN curl https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$(rpm -E '%{rhel
 RUN curl https://centos.org/keys/RPM-GPG-KEY-CentOS-Official \
     -o /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 
-RUN dnf install -y yum-utils
+#RUN dnf install -y yum-utils
+
+RUN dnf update -y
 
 ### ref: https://linuxconfig.org/redhat-8-epel-install-guide
 ### ref: https://www.redhat.com/en/blog/whats-epel-and-how-do-i-use-it
 ### ref: https://docs.rackspace.com/support/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat
-#RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 #RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E '%{rhel}').noarch.rpm
 ##RUN yum-config-manager --enable epel
 
 ## rpm build/installs require "source" repo enabled
-RUN yum-config-manager --enable ubi-baseos-source ubi-appstream-source
-#RUN yum-config-manager --enable ubi-8-baseos-source ubi-8-appstream-source
-RUN yum install -y rpm-build
+#RUN yum-config-manager --enable ubi-9-baseos-source ubi-9-appstream-source
+#RUN yum-config-manager --enable ubi-9-baseos-source-rpms ubi-9-appstream-source-rpms
+#RUN dnf install -y \
+#    --enablerepo ubi-$(rpm -E '%{rhel}')-baseos-rpms \
+#    --enablerepo ubi-$(rpm -E '%{rhel}')-baseos-source-rpms \
+#    --enablerepo ubi-$(rpm -E '%{rhel}')-appstream-rpms \
+#    --enablerepo ubi-$(rpm -E '%{rhel}')-appstream-source-rpms \
+#    bash \
+#    which
+
+RUN dnf install -y bash which || \
+    dnf install -y --enablerepo=ubi-$(rpm -E '%{rhel}')-baseos-rpms bash which
 
 #RUN dnf upgrade -y
 RUN dnf update -y
@@ -69,36 +82,16 @@ RUN dnf update -y
 #RUN dnf makecache \
 #    && dnf groupinstall -y "Development Tools" \
 RUN dnf makecache \
-    && dnf install -y gcc make \
-    && dnf install -y python3 python3-dnf \
-    && dnf install --nodocs -y \
-      sudo \
-      bash \
-      which \
-      git \
-      wget
-
-RUN dnf install --nodocs -y \
-    bzip2-devel \
-    krb5-devel \
-    libffi-devel \
-    ncurses-devel \
-    openssl-devel \
-    readline-devel \
-    sqlite-devel \
-    xz-devel \
-    zlib-devel
+    && dnf install -y python3 python3-dnf
 
 RUN dnf clean all
 
-### download readline bzip2 source rpms to install *-devel.rpm packages required for python build
-#COPY build-rpm-source.sh .
-#RUN bash build-rpm-source.sh readline
+### ref: https://github.com/devfile/developer-images/blob/main/base/ubi9/Dockerfile
+## Removed because of vulnerabilities: git-lfs
+#RUN dnf install -y diffutils git iproute jq less lsof man nano procps \
+#    perl-Digest-SHA net-tools openssh-clients rsync socat sudo time vim wget zip
 
 WORKDIR /
-
-COPY install-python-venv.sh .
-RUN bash install-python-venv.sh ${PYTHON_VERSION} ${PYENV_ROOT}
 
 ## ref: https://www.baeldung.com/ops/dockerfile-path-environment-variable
 #RUN echo "export PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> ~/.bashrc

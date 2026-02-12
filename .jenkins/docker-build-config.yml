@@ -3,7 +3,7 @@ alwaysEmailList: ljohnson@dettonville.org
 runGroupsInParallel: false
 parallelJobsBatchSize: 4
 runInParallel: true
-failFast: true
+#failFast: true
 timeout: 5
 timeoutUnit: "HOURS"
 maxRandomDelaySeconds: 20
@@ -11,104 +11,163 @@ maxRandomDelaySeconds: 20
 buildImageGroups:
   systemd-baseos:
     runGroupsInParallel: true
+    dockerFile: Dockerfile
     buildImageGroups:
       alpine:
         buildDir: openrc/alpine
         buildImageList:
           - buildImageName: openrc-alpine
-            dockerFile: Dockerfile
       aports:
         buildDir: aports-dev
         buildImageList:
           - buildImageName: aports-dev
-            dockerFile: Dockerfile
       centos-systemd:
         buildDir: systemd/centos
         buildImageList:
-          - buildImageName: centos9-systemd
-            dockerFile: 9.Dockerfile
-          - buildImageName: centos10-systemd
-            dockerFile: 10.Dockerfile
+          - buildImageName: systemd-centos
+            buildTags: "9"
+            buildArgs:
+              VERSION: "9"
+          - buildImageName: systemd-centos
+            buildTags: "10"
+            buildArgs:
+              VERSION: "10"
       redhat-systemd:
         buildDir: systemd/redhat
         buildImageList:
-          - buildImageName: redhat9-systemd
-            dockerFile: 9.Dockerfile
-          - buildImageName: redhat10-systemd
-            dockerFile: 10.Dockerfile
+          - buildImageName: systemd-redhat
+            buildTags: "9"
+            buildArgs:
+              VERSION: "9"
+          - buildImageName: systemd-redhat
+            buildTags: "10"
+            buildArgs:
+              VERSION: "10"
       fedora-systemd:
         buildDir: systemd/fedora
         buildImageList:
           - buildImageName: fedora-systemd
-            dockerFile: latest.Dockerfile
+            buildArgs:
+              VERSION: "latest"
       debian-systemd:
         buildDir: systemd/debian
         buildImageList:
-          - buildImageName: debian11-systemd
-            dockerFile: 11.Dockerfile
-          - buildImageName: debian12-systemd
-            dockerFile: 12.Dockerfile
+          - buildImageName: systemd-debian
+            buildTags: "11"
+            buildArgs:
+              VERSION: "11"
+          - buildImageName: systemd-debian
+            buildTags: "12"
+            buildArgs:
+              VERSION: "12"
           - buildImageName: debian-sid-systemd
-            dockerFile: sid.Dockerfile
+            buildTags: "sid"
+            buildArgs:
+              VERSION: "sid"
       ubuntu-systemd:
         buildDir: systemd/ubuntu
         buildImageList:
-          - buildImageName: ubuntu2204-systemd
-            dockerFile: 22.04.Dockerfile
-          - buildImageName: ubuntu2404-systemd
-            dockerFile: 24.04.Dockerfile
+          - buildImageName: systemd-ubuntu
+            buildTags: "22.04"
+            buildArgs:
+              VERSION: "22.04"
+          - buildImageName: systemd-ubuntu
+            buildTags: "24.04"
+            buildArgs:
+              VERSION: "24.04"
+  ## systemd images with python installed
   systemd-python:
     runGroupsInParallel: true
+    dockerFile: python.Dockerfile
     buildArgs:
       IMAGE_REGISTRY: media.johnson.int:5000
-      PYTHON_VERSION: 3.13.6
-#        PYTHON_VERSION: 3.12.9
+      PYTHON_VERSION: "3.13.6"
     buildImageGroups:
       alpine-python:
         buildDir: openrc/alpine
         buildImageList:
           - buildImageName: openrc-alpine-python
-            dockerFile: python.Dockerfile
+            buildArgs:
+              IMAGE_REGISTRY: media.johnson.int:5000
+              PYTHON_VERSION: "3.13.6"
+              VERSION: "latest"
       aports-python:
         buildDir: aports-dev
+        dockerFile: python.Dockerfile
         buildImageList:
           - buildImageName: aports-dev-python
-            dockerFile: python.Dockerfile
+            buildArgs:
+              IMAGE_REGISTRY: media.johnson.int:5000
+              PYTHON_VERSION: "3.13.6"
+              VERSION: "latest"
       centos-systemd-python:
         buildDir: systemd/centos
         buildImageList:
-          ## systemd images with python installed
-          - buildImageName: centos9-systemd-python
-            dockerFile: 9.python.Dockerfile
-          - buildImageName: centos10-systemd-python
-            dockerFile: 10.python.Dockerfile
+          - buildImageName: systemd-python-centos
+            buildTags: "9"
+            buildArgs:
+              IMAGE_REGISTRY: media.johnson.int:5000
+              PYTHON_VERSION: "3.13.6"
+              VERSION: "9"
+          - buildImageName: systemd-python-centos
+            buildTags: "10"
+            buildArgs:
+              IMAGE_REGISTRY: media.johnson.int:5000
+              PYTHON_VERSION: "3.13.6"
+              VERSION: "10"
       redhat-systemd-python:
         buildDir: systemd/redhat
         buildImageList:
-          ## systemd images with python installed
-          - buildImageName: redhat9-systemd-python
-            dockerFile: 9.python.Dockerfile
-          - buildImageName: redhat10-systemd-python
-            dockerFile: 10.python.Dockerfile
+          - buildImageName: systemd-python-redhat
+            buildTags: "9"
+            buildArgs:
+              IMAGE_REGISTRY: media.johnson.int:5000
+              PYTHON_VERSION: "3.13.6"
+              VERSION: "9"
+          - buildImageName: systemd-python-redhat
+            buildTags: "10"
+            buildArgs:
+              IMAGE_REGISTRY: media.johnson.int:5000
+              PYTHON_VERSION: "3.13.6"
+              VERSION: "10"
       fedora-systemd-python:
         buildDir: systemd/fedora
         buildImageList:
           ## systemd images with python installed
           - buildImageName: fedora-systemd-python
-            dockerFile: latest.python.Dockerfile
+            buildArgs:
+              IMAGE_REGISTRY: media.johnson.int:5000
+              PYTHON_VERSION: "3.13.6"
+              VERSION: "latest"
       debian-systemd-python:
         buildDir: systemd/debian
         buildImageList:
           ## systemd images with python installed
-          - buildImageName: debian11-systemd-python
-            dockerFile: 11.python.Dockerfile
-          - buildImageName: debian12-systemd-python
-            dockerFile: 12.python.Dockerfile
+          - buildImageName: systemd-python-debian
+            buildTags: "11"
+            buildArgs:
+              IMAGE_REGISTRY: media.johnson.int:5000
+              PYTHON_VERSION: "3.13.6"
+              VERSION: "11"
+          - buildImageName: systemd-python-debian
+            buildTags: "12"
+            buildArgs:
+              IMAGE_REGISTRY: media.johnson.int:5000
+              PYTHON_VERSION: "3.13.6"
+              VERSION: "12"
       ubuntu-systemd-python:
         buildDir: systemd/ubuntu
         buildImageList:
           ## systemd images with python installed
-          - buildImageName: ubuntu2204-systemd-python
-            dockerFile: 22.04.python.Dockerfile
-          - buildImageName: ubuntu2404-systemd-python
-            dockerFile: 24.04.python.Dockerfile
+          - buildImageName: systemd-python-ubuntu
+            buildTags: "22.04"
+            buildArgs:
+              IMAGE_REGISTRY: media.johnson.int:5000
+              PYTHON_VERSION: "3.13.6"
+              VERSION: "22.04"
+          - buildImageName: systemd-python-ubuntu
+            buildTags: "24.04"
+            buildArgs:
+              IMAGE_REGISTRY: media.johnson.int:5000
+              PYTHON_VERSION: "3.13.6"
+              VERSION: "24.04"

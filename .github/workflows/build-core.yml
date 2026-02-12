@@ -39,14 +39,15 @@ jobs:
       - name: Build Systemd Base
         uses: docker/build-push-action@v5
         with:
-          context: ${{ fromJSON(inputs.distro_data).systemd-distro.context }}
-          file: ${{ fromJSON(inputs.distro_data).systemd-distro.dockerfile }}
-          platforms: ${{ fromJSON(inputs.distro_data).systemd-distro.platforms }}
+          context: ${{ fromJSON(inputs.distro_data).context }}
+          file: ${{ fromJSON(inputs.distro_data).systemd-distro.path }}/Dockerfile
+          platforms: ${{ fromJSON(inputs.distro_data).platforms }}
           push: true
           # Forces a pull of the base image to ensure it exists locally
           pull: true
           tags: ${{ fromJSON(inputs.distro_data).systemd-distro.tags }}
           build-args: |
+            VERSION=${{ fromJSON(inputs.distro_data).version }}
             BUILD_ID=${{ steps.vars.outputs.build_id }}
             BUILD_DATE=${{ steps.vars.outputs.date }}
 
@@ -54,15 +55,16 @@ jobs:
       - name: Build Systemd Python
         uses: docker/build-push-action@v5
         with:
-          context: ${{ fromJSON(inputs.distro_data).systemd-python-distro.context }}
-          file: ${{ fromJSON(inputs.distro_data).systemd-python-distro.dockerfile }}
-          platforms: ${{ fromJSON(inputs.distro_data).systemd-python-distro.platforms }}
+          context: ${{ fromJSON(inputs.distro_data).context }}
+          file: ${{ fromJSON(inputs.distro_data).systemd-python-distro.path }}/python.Dockerfile
+          platforms: ${{ fromJSON(inputs.distro_data).platforms }}
           push: true
           # Forces a pull of the base image to ensure it exists locally
           pull: true
           tags: ${{ fromJSON(inputs.distro_data).systemd-python-distro.tags }}
           build-args: |
             IMAGE_REGISTRY=${{ github.repository_owner }}
+            VERSION=${{ fromJSON(inputs.distro_data).version }}
             PYTHON_VERSION=3.13.6
             BUILD_ID=${{ steps.vars.outputs.build_id }}
             BUILD_DATE=${{ steps.vars.outputs.date }}

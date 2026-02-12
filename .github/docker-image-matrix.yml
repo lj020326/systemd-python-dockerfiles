@@ -1,96 +1,107 @@
 # .github/docker-image-matrix.yml
 matrix:
-  - distro: alpine
-    name: alpine
+  - name: alpine
+    context: "."
+    path: "openrc/alpine"
+    platforms: "linux/amd64"
     systemd-distro:
-      context: "."
-      dockerfile: "openrc/alpine/Dockerfile"
-      platforms: "linux/amd64"
-      tags: "lj020326/openrc-alpine:latest"
+      tags: |-
+        lj020326/openrc-alpine:latest
     systemd-python-distro:
-      context: "openrc/alpine"
-      dockerfile: "openrc/alpine/python.Dockerfile"
-      platforms: "linux/amd64"
-      tags: "lj020326/openrc-alpine-python:latest"
+      tags: |-
+        lj020326/openrc-alpine-python:latest
 
-  - distro: aports-dev
-    name: aports-dev
+  - name: aports-dev
+    context: "."
+    path: "aports-dev"
+    platforms: "linux/amd64"
     systemd-distro:
-      context: .
-      dockerfile: aports-dev/Dockerfile
-      platforms: |-
-        linux/amd64
       tags: |-
         lj020326/aports-dev:latest
     systemd-python-distro:
-      context: aports-dev
-      dockerfile: aports-dev/python.Dockerfile
-      platforms: |-
-        linux/amd64
       tags: |-
         lj020326/aports-dev-python:latest
 
-  - distro: centos
-    name: centos
+  - name: centos8
+    version: 8
+    context: "systemd/centos"
+    path: "systemd/centos"
+    platforms: "linux/amd64"
     systemd-distro:
-      context: "systemd/centos"
-      dockerfile: "systemd/centos/8.Dockerfile"
-      platforms: "linux/amd64"
-      tags: "lj020326/centos8-systemd:latest"
+      tags: |-
+        lj020326/systemd-centos:8
     systemd-python-distro:
-      context: "systemd/centos"
-      dockerfile: "systemd/centos/8.python.Dockerfile"
-      platforms: "linux/amd64"
-      tags: "lj020326/centos8-systemd-python:latest"
+      tags: |-
+        lj020326/systemd-python-centos:8
 
-  - distro: debian12
-    name: debian12
+  - name: centos9
+    version: 9
+    context: "systemd/centos"
+    path: "systemd/centos"
+    platforms: "linux/amd64"
     systemd-distro:
-      context: "systemd/debian"
-      dockerfile: "systemd/debian/12.Dockerfile"
-      platforms: "linux/amd64,linux/arm64"
-      tags: "lj020326/debian12-systemd:latest"
+      tags: |-
+        lj020326/systemd-centos:9
     systemd-python-distro:
-      context: "systemd/debian"
-      dockerfile: "systemd/debian/12.python.Dockerfile"
-      platforms: "linux/amd64,linux/arm64"
-      tags: "lj020326/debian12-systemd-python:latest"
+      tags: |-
+        lj020326/systemd-python-centos:9
 
-  - distro: fedora
-    name: fedora
+  - name: debian12
+    version: 12
+    context: "systemd/debian"
+    path: "systemd/debian"
+    platforms: "linux/amd64,linux/arm64"
     systemd-distro:
-      context: "systemd/fedora"
-      dockerfile: "systemd/fedora/latest.Dockerfile"
-      platforms: "linux/amd64"
-      tags: "lj020326/fedora-systemd:latest"
+      tags: |-
+        lj020326/systemd-debian:12
     systemd-python-distro:
-      context: "systemd/fedora"
-      dockerfile: "systemd/fedora/latest.python.Dockerfile"
-      platforms: "linux/amd64"
-      tags: "lj020326/fedora-systemd-python:latest"
+      tags: |-
+        lj020326/systemd-python-debian:12
 
-  - distro: redhat
-    name: redhat
+  - name: fedora
+    version: latest
+    context: "systemd/fedora"
+    path: "systemd/fedora"
+    platforms: "linux/amd64"
     systemd-distro:
-      context: "systemd/redhat"
-      dockerfile: "systemd/redhat/8.Dockerfile"
-      platforms: "linux/amd64"
-      tags: "lj020326/redhat8-systemd:latest"
+      tags: |-
+        lj020326/fedora-systemd:latest
     systemd-python-distro:
-      context: "systemd/redhat"
-      dockerfile: "systemd/redhat/8.python.Dockerfile"
-      platforms: "linux/amd64"
-      tags: "lj020326/redhat8-systemd-python:latest"
+      tags: |-
+        lj020326/fedora-systemd-python:latest
 
-  - distro: ubuntu
-    name: ubuntu
+  - name: redhat8
+    version: 8
+    context: "systemd/redhat"
+    path: "systemd/redhat"
+    platforms: "linux/amd64"
     systemd-distro:
-      context: "systemd/ubuntu"
-      dockerfile: "systemd/ubuntu/22.04.Dockerfile"
-      platforms: "linux/amd64,linux/arm64"
-      tags: "lj020326/ubuntu2204-systemd:latest"
+      tags: |-
+        lj020326/systemd-redhat:8
     systemd-python-distro:
-      context: "systemd/ubuntu"
-      dockerfile: "systemd/ubuntu/22.04.python.Dockerfile"
-      platforms: "linux/amd64,linux/arm64"
-      tags: "lj020326/ubuntu2204-systemd-python:latest"
+      tags: |-
+        lj020326/systemd-python-redhat:8
+
+  - name: ubuntu22
+    version: 22.04
+    context: "systemd/ubuntu"
+    path: "systemd/ubuntu"
+    platforms: "linux/amd64,linux/arm64"
+    systemd-distro:
+      tags: |-
+        lj020326/systemd-ubuntu:22.04
+    systemd-python-distro:
+      tags: |-
+        lj020326/systemd-python-ubuntu:2204
+
+  - name: ubuntu24
+    version: 24.04
+    context: "systemd/ubuntu"
+    path: "systemd/ubuntu"
+    platforms: "linux/amd64,linux/arm64"
+    systemd-distro:
+      tags: |-
+        lj020326/systemd-ubuntu:24.04
+    systemd-python-distro:
+      tags: |-
+        lj020326/systemd-python-ubuntu:2404

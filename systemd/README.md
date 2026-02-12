@@ -31,10 +31,11 @@ $ export DOCKER_BUILDKIT=0
 
 To build image:
 ```shell
-$ docker build -t redhat9-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f systemd/redhat/9.python.Dockerfile systemd/redhat/
-$ docker build -t redhat9-systemd-python \
+$ docker build -t systemd-python-redhat:9 --build-arg IMAGE_REGISTRY=media.johnson.int:5000 --build-arg VERSION=9 -f systemd/redhat/python.Dockerfile systemd/redhat/
+$ docker build -t systemd-python-redhat:9 \
   --build-arg IMAGE_REGISTRY=media.johnson.int:5000 \
-  -f systemd/redhat/9.python.Dockerfile \
+  --build-arg VERSION=9 \
+  -f systemd/redhat/python.Dockerfile \
   systemd/redhat/
 ```
 
@@ -44,19 +45,20 @@ If you want to start a debug session when a build fails, you can use
 To build in debug mode:
 ```shell
 $ export BUILDX_EXPERIMENTAL=1
-$ docker buildx debug --on=error build -t redhat9-systemd-python \
+$ docker buildx debug --on=error build -t systemd-python-redhat:9 \
   --build-arg IMAGE_REGISTRY=media.johnson.int:5000 \
-  -f systemd/redhat/9.python.Dockerfile \
+  --build-arg VERSION=9 \
+  -f systemd/redhat/python.Dockerfile \
   systemd/redhat/
 ```
 
 To build an image using centos9-systemd as an example:
 ```shell
 $ cd centos/
-$ docker build -t centos9-systemd --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 9.Dockerfile .
-$ docker build -t centos9-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 9.python.Dockerfile .
+$ docker build -t centos9-systemd --build-arg VERSION=9 --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f Dockerfile .
+$ docker build -t systemd-python-centos:9 --build-arg VERSION=9 --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f python.Dockerfile .
 $ cd ../debian
-$ docker build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
+$ docker build -t systemd-python-debian:8 --build-arg VERSION=8 --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f python.Dockerfile .
 ```
 
 ### If getting TLS cert validation error for custom registry
@@ -186,7 +188,7 @@ $ export BUILDX_EXPERIMENTAL=1
 ## to view intermediate hashes
 $ export DOCKER_BUILDKIT=0
 $ docker buildx debug --on=error build .
-$ docker buildx debug --on=error build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
+$ docker buildx debug --on=error build -t systemd-python-debian:8 --build-arg VERSION=8 --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f python.Dockerfile .
 ```
 
 UPDATE
@@ -194,7 +196,7 @@ Intermediate container hashes are not supported as of Docker version 20.10.
 To view intermediate container hashes:
 
 ```shell
-$ DOCKER_BUILDKIT=0 docker build -t debian8-systemd-python --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f 8.python.Dockerfile .
+$ DOCKER_BUILDKIT=0 docker build -t systemd-python-debian:8 --build-arg VERSION=8 --build-arg IMAGE_REGISTRY=media.johnson.int:5000 -f python.Dockerfile .
 DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
             BuildKit is currently disabled; enable it by removing the DOCKER_BUILDKIT=0
             environment-variable.
