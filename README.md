@@ -8,14 +8,6 @@ The systemd-python enabled docker images defined here can be found on [dockerhub
 ## Status
 
 [![GitHub issues](https://img.shields.io/github/issues/lj020326/systemd-python-dockerfiles.svg?style=flat)](https://github.com/lj020326/systemd-python-dockerfiles/issues)
-[![GitHub stars](https://img.shields.io/github/stars/lj020326/systemd-python-dockerfiles.svg?style=flat)](https://github.com/lj020326/systemd-python-dockerfiles/stargazers)
-[![Docker Pulls - systemd-python-centos:8](https://img.shields.io/docker/pulls/lj020326/systemd-python-centos.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-centos/tags/8/)
-[![Docker Pulls - systemd-python-centos:8](https://img.shields.io/docker/pulls/lj020326/systemd-python-centos.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-centos/tags/9/)
-[![Docker Pulls - systemd-python-centos:8](https://img.shields.io/docker/pulls/lj020326/systemd-python-centos.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-centos/tags/10/)
-[![Docker Pulls - systemd-python-redhat:8](https://img.shields.io/docker/pulls/lj020326/systemd-python-redhat.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-redhat/tags/8/)
-[![Docker Pulls - systemd-python-redhat:9](https://img.shields.io/docker/pulls/lj020326/systemd-python-redhat.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-redhat/tags/9/)
-[![Docker Pulls - systemd-python-ubuntu:2204](https://img.shields.io/docker/pulls/lj020326/systemd-python-ubuntu.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-ubuntu/tags/2204/)
-[![Docker Pulls - systemd-python-debian:12](https://img.shields.io/docker/pulls/lj020326/systemd-python-debian.svg?style=flat)](https://hub.docker.com/repository/docker/lj020326/systemd-python-debian/tags/12/)
 
 ## Directory structure
 
