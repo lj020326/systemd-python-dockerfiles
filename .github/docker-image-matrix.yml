@@ -36,6 +36,18 @@ matrix:
       tags: |-
         lj020326/systemd-python-centos:9
 
+  - name: debian11
+    version: 11
+    context: "systemd/debian"
+    path: "systemd/debian"
+    platforms: "linux/amd64,linux/arm64"
+    systemd-distro:
+      tags: |-
+        lj020326/systemd-debian:11
+    systemd-python-distro:
+      tags: |-
+        lj020326/systemd-python-debian:11
+
   - name: debian12
     version: 12
     context: "systemd/debian"
@@ -82,7 +94,7 @@ matrix:
         lj020326/systemd-ubuntu:22.04
     systemd-python-distro:
       tags: |-
-        lj020326/systemd-python-ubuntu:2204
+        lj020326/systemd-python-ubuntu:22.04
 
   - name: ubuntu24
     version: 24.04
@@ -94,4 +106,4 @@ matrix:
         lj020326/systemd-ubuntu:24.04
     systemd-python-distro:
       tags: |-
-        lj020326/systemd-python-ubuntu:2404
+        lj020326/systemd-python-ubuntu:24.04
