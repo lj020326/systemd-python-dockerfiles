@@ -17,10 +17,12 @@ buildImageGroups:
         buildDir: openrc/alpine
         buildImageList:
           - buildImageName: openrc-alpine
+            buildTags: "latest"
       aports:
         buildDir: aports-dev
         buildImageList:
           - buildImageName: aports-dev
+            buildTags: "latest"
       centos-systemd:
         buildDir: systemd/centos
         buildImageList:
@@ -53,13 +55,17 @@ buildImageGroups:
         buildDir: systemd/debian
         buildImageList:
           - buildImageName: systemd-debian
-            buildTags: "11"
             buildArgs:
               VERSION: "11"
+            buildTags:
+              - "11"
+              - "bullseye"
           - buildImageName: systemd-debian
-            buildTags: "12"
             buildArgs:
               VERSION: "12"
+            buildTags:
+              - "12"
+              - "bookworm"
           - buildImageName: debian-sid-systemd
             buildTags: "sid"
             buildArgs:
@@ -68,13 +74,18 @@ buildImageGroups:
         buildDir: systemd/ubuntu
         buildImageList:
           - buildImageName: systemd-ubuntu
-            buildTags: "22.04"
             buildArgs:
               VERSION: "22.04"
+            buildTags:
+              - "22.04"
+              - "jammy"
           - buildImageName: systemd-ubuntu
-            buildTags: "24.04"
             buildArgs:
               VERSION: "24.04"
+            buildTags:
+              - "24.04"
+              - "noble"
+
   ## systemd images with python installed
   systemd-python:
     runGroupsInParallel: true
@@ -91,6 +102,7 @@ buildImageGroups:
               IMAGE_REGISTRY: media.johnson.int:5000
               PYTHON_VERSION: "3.13.6"
               VERSION: "latest"
+            buildTags: "latest"
       aports-python:
         buildDir: aports-dev
         dockerFile: python.Dockerfile
@@ -100,36 +112,37 @@ buildImageGroups:
               IMAGE_REGISTRY: media.johnson.int:5000
               PYTHON_VERSION: "3.13.6"
               VERSION: "latest"
+            buildTags: "latest"
       centos-systemd-python:
         buildDir: systemd/centos
         buildImageList:
           - buildImageName: systemd-python-centos
-            buildTags: "9"
             buildArgs:
               IMAGE_REGISTRY: media.johnson.int:5000
               PYTHON_VERSION: "3.13.6"
               VERSION: "9"
+            buildTags: "9"
           - buildImageName: systemd-python-centos
-            buildTags: "10"
             buildArgs:
               IMAGE_REGISTRY: media.johnson.int:5000
               PYTHON_VERSION: "3.13.6"
               VERSION: "10"
+            buildTags: "10"
       redhat-systemd-python:
         buildDir: systemd/redhat
         buildImageList:
           - buildImageName: systemd-python-redhat
-            buildTags: "9"
             buildArgs:
               IMAGE_REGISTRY: media.johnson.int:5000
               PYTHON_VERSION: "3.13.6"
               VERSION: "9"
+            buildTags: "9"
           - buildImageName: systemd-python-redhat
-            buildTags: "10"
             buildArgs:
               IMAGE_REGISTRY: media.johnson.int:5000
               PYTHON_VERSION: "3.13.6"
               VERSION: "10"
+            buildTags: "10"
       fedora-systemd-python:
         buildDir: systemd/fedora
         buildImageList:
@@ -139,35 +152,45 @@ buildImageGroups:
               IMAGE_REGISTRY: media.johnson.int:5000
               PYTHON_VERSION: "3.13.6"
               VERSION: "latest"
+            buildTags:
+              - "latest"
       debian-systemd-python:
         buildDir: systemd/debian
         buildImageList:
           ## systemd images with python installed
           - buildImageName: systemd-python-debian
-            buildTags: "11"
             buildArgs:
               IMAGE_REGISTRY: media.johnson.int:5000
               PYTHON_VERSION: "3.13.6"
               VERSION: "11"
+            buildTags:
+              - "11"
+              - "bullseye"
           - buildImageName: systemd-python-debian
-            buildTags: "12"
             buildArgs:
               IMAGE_REGISTRY: media.johnson.int:5000
               PYTHON_VERSION: "3.13.6"
               VERSION: "12"
+            buildTags:
+              - "12"
+              - "bookworm"
       ubuntu-systemd-python:
         buildDir: systemd/ubuntu
         buildImageList:
           ## systemd images with python installed
           - buildImageName: systemd-python-ubuntu
-            buildTags: "22.04"
             buildArgs:
               IMAGE_REGISTRY: media.johnson.int:5000
               PYTHON_VERSION: "3.13.6"
               VERSION: "22.04"
+            buildTags:
+              - "22.04"
+              - "jammy"
           - buildImageName: systemd-python-ubuntu
-            buildTags: "24.04"
             buildArgs:
               IMAGE_REGISTRY: media.johnson.int:5000
               PYTHON_VERSION: "3.13.6"
               VERSION: "24.04"
+            buildTags:
+              - "24.04"
+              - "noble"

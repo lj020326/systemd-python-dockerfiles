@@ -36,6 +36,18 @@ matrix:
       tags: |-
         lj020326/systemd-python-centos:9
 
+  - name: centos10
+    version: "10"
+    context: "systemd/centos"
+    path: "systemd/centos"
+    platforms: "linux/amd64"
+    systemd-distro:
+      tags: |-
+        lj020326/systemd-centos:10
+    systemd-python-distro:
+      tags: |-
+        lj020326/systemd-python-centos:10
+
   - name: debian11
     version: 11
     context: "systemd/debian"
