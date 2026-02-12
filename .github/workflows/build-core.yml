@@ -56,7 +56,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ${{ fromJSON(inputs.distro_data).context }}
-          file: ${{ fromJSON(inputs.distro_data).systemd-python-distro.path }}/python.Dockerfile
+          file: ${{ fromJSON(inputs.distro_data).path }}/python.Dockerfile
           platforms: ${{ fromJSON(inputs.distro_data).platforms }}
           push: true
           # Forces a pull of the base image to ensure it exists locally
