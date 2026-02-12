@@ -46,7 +46,7 @@ buildImageGroups:
       fedora-systemd:
         buildDir: systemd/fedora
         buildImageList:
-          - buildImageName: fedora-systemd
+          - buildImageName: systemd-fedora
             buildArgs:
               VERSION: "latest"
       debian-systemd:
@@ -134,7 +134,7 @@ buildImageGroups:
         buildDir: systemd/fedora
         buildImageList:
           ## systemd images with python installed
-          - buildImageName: fedora-systemd-python
+          - buildImageName: systemd-python-fedora
             buildArgs:
               IMAGE_REGISTRY: media.johnson.int:5000
               PYTHON_VERSION: "3.13.6"
