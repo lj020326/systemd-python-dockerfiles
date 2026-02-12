@@ -9,6 +9,9 @@ LABEL build=$BUILD_ID
 
 ENV container=docker
 
+# 1. Install systemd and procps-ng (for process management)
+RUN dnf -y install systemd procps-ng && dnf clean all
+
 # Path fix for CentOS 8-10: Use /usr/lib instead of /lib
 # This cleans up systemd units to allow it to run properly in a container
 # Step 8: Robust cleanup for systemd in container
