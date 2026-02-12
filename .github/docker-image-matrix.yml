@@ -2,7 +2,6 @@
 matrix:
   - name: alpine
     version: latest
-#    context: "."
     context: "openrc/alpine"
     path: "openrc/alpine"
     platforms: "linux/amd64"
@@ -15,7 +14,7 @@ matrix:
 
   - name: aports-dev
     version: latest
-    context: "."
+    context: "aports-dev"
     path: "aports-dev"
     platforms: "linux/amd64"
     systemd-distro:
@@ -24,18 +23,6 @@ matrix:
     systemd-python-distro:
       tags: |-
         lj020326/aports-dev-python:latest
-
-  - name: centos8
-    version: 8
-    context: "systemd/centos"
-    path: "systemd/centos"
-    platforms: "linux/amd64"
-    systemd-distro:
-      tags: |-
-        lj020326/systemd-centos:8
-    systemd-python-distro:
-      tags: |-
-        lj020326/systemd-python-centos:8
 
   - name: centos9
     version: 9
@@ -68,10 +55,10 @@ matrix:
     platforms: "linux/amd64"
     systemd-distro:
       tags: |-
-        lj020326/fedora-systemd:latest
+        lj020326/systemd-fedora:latest
     systemd-python-distro:
       tags: |-
-        lj020326/fedora-systemd-python:latest
+        lj020326/systemd-python-fedora:latest
 
   - name: redhat8
     version: 8
