@@ -1,4 +1,8 @@
-FROM alpine:latest
+ARG VERSION="latest"
+
+# Use the Docker Hub Mirror (often cached on GHA runners)
+#FROM alpine:latest
+FROM public.ecr.aws/docker/library/alpine:${VERSION}
 
 RUN apk add --no-cache openrc \
     && rm -rf "/tmp/"* \

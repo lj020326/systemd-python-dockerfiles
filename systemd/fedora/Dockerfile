@@ -1,7 +1,9 @@
 ARG VERSION=latest
 
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
-FROM fedora:${VERSION}
+#FROM fedora:${VERSION}
+# Use the Docker Hub Mirror (often cached on GHA runners)
+FROM public.ecr.aws/docker/library/fedora:${VERSION}
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
 ARG BUILD_DATE

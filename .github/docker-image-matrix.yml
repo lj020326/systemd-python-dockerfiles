@@ -19,10 +19,10 @@ matrix:
     platforms: "linux/amd64"
     systemd-distro:
       tags: |-
-        lj020326/aports-dev:latest
+        lj020326/aports-dev:edge
     systemd-python-distro:
       tags: |-
-        lj020326/aports-dev-python:latest
+        lj020326/aports-dev-python:edge
 
   - name: centos9
     version: 9

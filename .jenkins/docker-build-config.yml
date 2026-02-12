@@ -18,11 +18,15 @@ buildImageGroups:
         buildImageList:
           - buildImageName: openrc-alpine
             buildTags: "latest"
+            buildArgs:
+              VERSION: "latest"
       aports:
         buildDir: aports-dev
         buildImageList:
           - buildImageName: aports-dev
-            buildTags: "latest"
+            buildTags: "edge"
+            buildArgs:
+              VERSION: "edge"
       centos-systemd:
         buildDir: systemd/centos
         buildImageList:

@@ -1,7 +1,9 @@
 ARG VERSION=24.04
 
 ## ref: https://schneide.blog/2019/10/21/using-parameterized-docker-builds/
-FROM ubuntu:${VERSION}
+#FROM ubuntu:${VERSION}
+# Use the Docker Hub Mirror (often cached on GHA runners)
+FROM public.ecr.aws/docker/library/ubuntu:${VERSION}
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
 ARG BUILD_DATE
