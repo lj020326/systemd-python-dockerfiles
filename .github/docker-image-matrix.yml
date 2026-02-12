@@ -2,10 +2,9 @@
 matrix:
   - name: alpine
     version: latest
-    context: "openrc/alpine"
-    path: "."
 #    context: "."
-#    path: "openrc/alpine"
+    context: "openrc/alpine"
+    path: "openrc/alpine"
     platforms: "linux/amd64"
     systemd-distro:
       tags: |-
