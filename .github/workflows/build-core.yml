@@ -45,6 +45,8 @@ jobs:
           push: true
           # Forces a pull of the base image to ensure it exists locally
           pull: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           tags: ${{ fromJSON(inputs.distro_data).systemd-distro.tags }}
           build-args: |
             VERSION=${{ fromJSON(inputs.distro_data).version }}

@@ -1,6 +1,8 @@
 ARG VERSION=12
 
-FROM debian:${VERSION}
+# Use the Docker Hub Mirror (often cached on GHA runners)
+#FROM debian:${VERSION}
+FROM public.ecr.aws/docker/library/debian:${VERSION}
 LABEL maintainer="Lee Johnson <lee.james.johnson@gmail.com>"
 
 ARG BUILD_DATE
