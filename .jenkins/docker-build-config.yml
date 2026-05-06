@@ -89,6 +89,12 @@ buildImageGroups:
             buildTags:
               - "24.04"
               - "noble"
+          - buildImageName: systemd-ubuntu
+            buildArgs:
+              VERSION: "26.04"
+            buildTags:
+              - "26.04"
+              - "resolute"
 
   ## systemd images with python installed
   systemd-python:
@@ -198,3 +204,11 @@ buildImageGroups:
             buildTags:
               - "24.04"
               - "noble"
+          - buildImageName: systemd-python-ubuntu
+            buildArgs:
+              IMAGE_REGISTRY: media.johnson.int:5000
+              PYTHON_VERSION: "3.13.6"
+              VERSION: "26.04"
+            buildTags:
+              - "26.04"
+              - "resolute"

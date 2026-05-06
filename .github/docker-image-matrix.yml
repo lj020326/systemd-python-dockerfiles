@@ -119,3 +119,15 @@ matrix:
     systemd-python-distro:
       tags: |-
         lj020326/systemd-python-ubuntu:24.04
+
+  - name: ubuntu26
+    version: 26.04
+    context: "systemd/ubuntu"
+    path: "systemd/ubuntu"
+    platforms: "linux/amd64,linux/arm64"
+    systemd-distro:
+      tags: |-
+        lj020326/systemd-ubuntu:26.04
+    systemd-python-distro:
+      tags: |-
+        lj020326/systemd-python-ubuntu:26.04
