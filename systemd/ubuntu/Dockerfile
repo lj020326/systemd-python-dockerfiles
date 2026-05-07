@@ -23,9 +23,6 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN cd /lib/systemd/system/sysinit.target.wants/; \
-    for i in *; do [ $i = systemd-tmpfiles-setup.service ] || rm -f $i; done
-
 RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
     /etc/systemd/system/*.wants/* \
     /lib/systemd/system/local-fs.target.wants/* \
@@ -39,7 +36,15 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
 #RUN sed -i 's/^\(module(load="imklog")\)/#\1/' /etc/rsyslog.conf
 
 RUN systemctl set-default multi-user.target
-RUN systemctl mask dev-hugepages.mount sys-fs-fuse-connections.mount
+
+# Keep only the essential masks for Docker
+#RUN systemctl mask dev-hugepages.mount sys-fs-fuse-connections.mount
+RUN systemctl mask \
+    dev-hugepages.mount \
+    sys-fs-fuse-connections.mount \
+    display-manager.service \
+    graphical.target \
+    systemd-logind.service
 
 # The machine-id should be generated when creating the container. This will be
 # done automatically if the file is not present, so let's delete it.
@@ -50,6 +55,11 @@ RUN rm -f           \
 RUN echo "alias ll='ls -Fla'" >> ~/.bashrc
 RUN echo "alias la='ls -alrt'" >> ~/.bashrc
 
+# STOPSIGNAL for clean systemd exit
+# A different stop signal is required, so systemd will initiate a shutdown when
+# running 'docker stop <container>'.
+STOPSIGNAL SIGRTMIN+3
+
 # The host's cgroup filesystem need's to be mounted (read-only) in the
 # container. '/run', '/run/lock' and '/tmp' need to be tmpfs filesystems when
 # running the container without 'CAP_SYS_ADMIN'.
@@ -57,14 +67,12 @@ RUN echo "alias la='ls -alrt'" >> ~/.bashrc
 # NOTE: For running Debian stretch, 'CAP_SYS_ADMIN' still needs to be added, as
 #       stretch's version of systemd is not recent enough. Buster will run just
 #       fine without 'CAP_SYS_ADMIN'.
-#VOLUME [ "/sys/fs/cgroup" ]
-VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
+VOLUME ["/sys/fs/cgroup"]
 
-# A different stop signal is required, so systemd will initiate a shutdown when
-# running 'docker stop <container>'.
-STOPSIGNAL SIGRTMIN+3
+# Ensure a writable path exists for Ansible's initial connection
+RUN mkdir -p /root/.ansible/tmp && chmod 700 /root/.ansible
 
 ## ref: https://unix.stackexchange.com/questions/276340/linux-command-systemctl-status-is-not-working-inside-a-docker-container
-#CMD ["/sbin/init"]
+CMD ["/sbin/init"]
 #CMD ["/lib/systemd/systemd"]
-CMD ["/usr/sbin/init"]
+#CMD ["/usr/sbin/init"]
